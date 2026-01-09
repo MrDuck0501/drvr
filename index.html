@@ -1,211 +1,287 @@
-import React, { useState, useEffect } from 'react';
-import { 
-  Box, Camera, Heart, Share2, ChevronRight, 
-  Menu, X, Youtube, Instagram, Globe,
-  Gamepad2, Sparkles, Navigation, Cpu, Terminal,
-  Layers, Zap, Play, ShoppingBag, Users, ShieldCheck,
-  Music, BookOpen, ExternalLink
-} from 'lucide-react';
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>鴨先生與兔小姐的 VR 攻略站</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .glass { background: rgba(30, 41, 59, 0.4); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .blob { filter: blur(140px); pointer-events: none; }
+    </style>
+</head>
+<body class="bg-[#0f172a] text-slate-100 selection:bg-cyan-500/30 selection:text-cyan-400 relative overflow-x-hidden">
 
-const App = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const navLinks = [
-    { name: '攻略中心', href: '#guide' },
-    { name: '精選遊戲', href: '#games' },
-    { name: '專業配件', href: '#gear' },
-    { name: '玩家社群', href: '#community' },
-  ];
-
-  /**
-   * 【核心內容資料修改指南】
-   * * 若要更換圖片，請修改下方對應項目的 image 網址 (src)。
-   * 您可以使用 Unsplash (https://unsplash.com) 尋找免費的高畫質圖片，
-   * 或是使用您自己託管的圖片連結。
-   */
-  const featureContent = [
-    {
-      title: "節奏開啟，沉浸從這裡開始",
-      subtitle: "收錄十多款人氣音樂遊戲",
-      content: "兔小姐大力推薦，帶你進入節奏世界！",
-      tag: "音遊推薦",
-      // 修改這裡的網址來換圖
-      image: "https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&fit=crop&q=80&w=800",
-      icon: <Music className="w-6 h-6" />,
-      color: "from-pink-500 to-purple-600",
-      link: "#"
-    },
-    {
-      title: "熱門遊戲推薦",
-      subtitle: "VR 世界怎能少了它們！",
-      content: "熱門遊戲大集合，為您篩選最值得入手的經典大作。",
-      tag: "遊戲攻略",
-      image: "https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?auto=format&fit=crop&q=80&w=800",
-      icon: <Gamepad2 className="w-6 h-6" />,
-      color: "from-blue-500 to-cyan-600",
-      link: "#"
-    },
-    {
-      title: "選對配件，體驗更輕鬆",
-      subtitle: "最舒適、安全又好用的夥伴",
-      content: "鴨先生與兔小姐陪你挑選適合的 VR 配件，讓遊玩不再痠痛。",
-      tag: "精選配件",
-      image: "https://images.unsplash.com/photo-1676288176918-2023924f369d?auto=format&fit=crop&q=80&w=800",
-      icon: <Layers className="w-6 h-6" />,
-      color: "from-emerald-500 to-teal-600",
-      link: "#"
-    },
-    {
-      title: "DRVR 讓沉浸更安心舒適",
-      subtitle: "從電池安全到配戴舒適",
-      content: "DRVR 專為玩家設計，讓你專注體驗、不分心。",
-      tag: "個人商城",
-      image: "https://images.unsplash.com/photo-1592477976563-0c50162d95e6?auto=format&fit=crop&q=80&w=800",
-      icon: <ShoppingBag className="w-6 h-6" />,
-      color: "from-orange-500 to-red-600",
-      link: "#"
-    },
-    {
-      title: "Meta Horizon+",
-      subtitle: "20 多款遊戲無限暢玩",
-      content: "從免費訂閱開始，一起暢遊 VR 世界！訂閱期間超划算。",
-      tag: "訂閱推薦",
-      image: "https://images.unsplash.com/photo-1617802690992-15d93263d3a9?auto=format&fit=crop&q=80&w=800",
-      icon: <Zap className="w-6 h-6" />,
-      color: "from-indigo-500 to-blue-700",
-      link: "#"
-    },
-    {
-      title: "VR 資源一網打盡",
-      subtitle: "LINE、臉書、巴哈姆特通通有",
-      content: "鴨兔帶你一鍵加入最熱鬧的 VR 玩家社群，情報不漏接！",
-      tag: "社群連結",
-      image: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=800",
-      icon: <Users className="w-6 h-6" />,
-      color: "from-slate-600 to-slate-800",
-      link: "#"
-    }
-  ];
-
-  return (
-    <div className="min-h-screen bg-[#0f172a] text-slate-100 font-sans selection:bg-cyan-500/30 selection:text-cyan-400 relative">
-      {/* 背景層 */}
-      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-        <div className="absolute inset-0 opacity-[0.05]" 
-             style={{ backgroundImage: `repeating-linear-gradient(45deg, #ffffff 0px, #ffffff 1px, transparent 1px, transparent 12px)` }}>
+    <!-- 背景裝飾 -->
+    <div class="fixed inset-0 z-0 overflow-hidden">
+        <div class="absolute inset-0 opacity-[0.05]" 
+             style="background-image: repeating-linear-gradient(45deg, #ffffff 0px, #ffffff 1px, transparent 1px, transparent 12px);">
         </div>
-        <div className="absolute top-[-15%] left-[-10%] w-[60%] h-[60%] bg-cyan-600/20 rounded-full blur-[140px]"></div>
-        <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-blue-600/15 rounded-full blur-[140px]"></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] h-[70%] bg-indigo-500/10 rounded-full blur-[180px]"></div>
-      </div>
-
-      {/* 導覽列 */}
-      <nav className={`fixed w-full z-[100] transition-all duration-500 ${scrolled ? 'bg-slate-900/80 backdrop-blur-xl border-b border-white/10 py-4' : 'bg-transparent py-8'}`}>
-        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-          <div className="flex items-center space-x-3 group cursor-pointer">
-            <div className="bg-gradient-to-br from-cyan-400 to-blue-600 p-2 rounded-xl group-hover:rotate-12 transition-all shadow-[0_0_15px_rgba(34,211,238,0.4)]">
-              <Box className="text-white w-6 h-6" />
-            </div>
-            <div className="flex flex-col leading-none">
-              <span className="text-xl font-black tracking-tighter text-white uppercase">Duck & Rabbit</span>
-              <span className="text-[10px] font-bold tracking-[0.3em] text-cyan-400 uppercase">VR Guide Station</span>
-            </div>
-          </div>
-          <div className="hidden lg:flex items-center space-x-10">
-            {navLinks.map((link) => (
-              <a key={link.name} href={link.href} className="text-xs font-bold tracking-[0.2em] text-slate-300 hover:text-cyan-400 transition-colors uppercase">{link.name}</a>
-            ))}
-            <button className="bg-cyan-500 hover:bg-cyan-400 text-white px-6 py-2.5 rounded-full text-xs font-bold transition-all shadow-lg">立即購機攻略</button>
-          </div>
-          <button className="lg:hidden text-white" onClick={() => setIsMenuOpen(!isMenuOpen)}>{isMenuOpen ? <X /> : <Menu />}</button>
-        </div>
-      </nav>
-
-      {/* Hero */}
-      <header className="relative pt-48 pb-24 px-6 z-10 text-center">
-        <div className="max-w-7xl mx-auto">
-          <div className="inline-flex items-center space-x-2 bg-cyan-500/10 border border-cyan-500/20 px-4 py-2 rounded-full mb-8 backdrop-blur-md">
-            <Sparkles className="w-4 h-4 text-cyan-400 animate-pulse" />
-            <span className="text-xs font-bold tracking-[0.2em] text-cyan-200 uppercase">讓 VR 不再遙不可及</span>
-          </div>
-          <h1 className="text-5xl md:text-8xl font-black mb-8 tracking-tighter text-white">鴨先生與兔小姐的<br/><span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 to-indigo-400">VR 攻略站</span></h1>
-          <p className="text-lg text-slate-300 max-w-2xl mx-auto mb-12 font-light">專注於 Meta Quest 攻略、配件與遊戲分享。我們提供最完整、最溫暖的指引，讓每位玩家都能玩得聰明又開心。</p>
-          <div className="flex flex-col sm:flex-row justify-center gap-5">
-             <button className="px-10 py-4 bg-white text-slate-900 rounded-2xl font-bold flex items-center justify-center space-x-2 shadow-xl hover:bg-cyan-500 hover:text-white transition-all"><Youtube className="w-5 h-5" /><span>訂閱攻略頻道</span></button>
-             <button className="px-10 py-4 bg-slate-800/40 border border-slate-700 rounded-2xl font-bold flex items-center justify-center space-x-2 hover:bg-slate-700 transition-all backdrop-blur-md"><ShoppingBag className="w-5 h-5 text-cyan-400" /><span>前往 DRVR 商城</span></button>
-          </div>
-        </div>
-      </header>
-
-      {/* 攻略卡片區 */}
-      <section id="guide" className="py-24 px-6 z-10 relative">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-             <h2 className="text-4xl font-black mb-4 text-white">核心內容導覽</h2>
-             <p className="text-slate-400 uppercase tracking-widest text-xs font-bold">探索虛擬次元的必備指南</p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            {featureContent.map((item, i) => (
-              <div key={i} className="group relative bg-slate-800/40 border border-white/10 rounded-[2.5rem] overflow-hidden hover:border-cyan-400/50 transition-all duration-500 backdrop-blur-md flex flex-col">
-                
-                {/* 圖片顯示區塊 */}
-                <div className="relative h-48 overflow-hidden">
-                  <img 
-                    src={item.image} 
-                    alt={item.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&q=80&w=800"; }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-60"></div>
-                  
-                  <div className={`absolute top-4 left-4 w-10 h-10 rounded-xl bg-gradient-to-br ${item.color} flex items-center justify-center text-white shadow-lg`}>
-                    {item.icon}
-                  </div>
-                </div>
-                
-                <div className="p-8 flex flex-col flex-grow justify-between">
-                   <div>
-                      <div className="inline-block px-3 py-1 bg-cyan-500/10 text-cyan-300 text-[10px] font-bold tracking-widest rounded-lg mb-4 uppercase border border-cyan-500/20">
-                        {item.tag}
-                      </div>
-                      <h3 className="text-2xl font-bold mb-2 group-hover:text-cyan-300 transition-colors">{item.title}</h3>
-                      <p className="text-sm font-bold text-slate-300 mb-4 font-mono">{item.subtitle}</p>
-                      <p className="text-slate-400 text-sm leading-relaxed mb-8">{item.content}</p>
-                   </div>
-                   <a href={item.link} className="flex items-center text-sm font-black text-cyan-400 group-hover:translate-x-2 transition-transform">
-                     進入攻略中心 <ChevronRight className="w-4 h-4 ml-1" />
-                   </a>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 頁尾 */}
-      <footer className="py-12 px-6 border-t border-white/10 relative z-10">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="flex items-center space-x-3">
-             <Box className="text-cyan-400 w-5 h-5" />
-             <span className="text-sm font-bold tracking-widest">DUCK & RABBIT VR © 2026</span>
-          </div>
-          <div className="flex space-x-6">
-            <Youtube className="w-5 h-5 text-slate-400 hover:text-red-500 cursor-pointer transition-colors" />
-            <Instagram className="w-5 h-5 text-slate-400 hover:text-pink-500 cursor-pointer transition-colors" />
-            <Globe className="w-5 h-5 text-slate-400 hover:text-cyan-400 cursor-pointer transition-colors" />
-          </div>
-        </div>
-      </footer>
+        <div class="absolute top-[-15%] left-[-10%] w-[60%] h-[60%] bg-cyan-600/20 rounded-full blob"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-blue-600/15 rounded-full blob"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] h-[70%] bg-indigo-500/10 rounded-full blob"></div>
     </div>
-  );
-};
 
-export default App;
+    <!-- 導覽列 -->
+    <nav id="navbar" class="fixed w-full z-[100] transition-all duration-500 py-8">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            <div class="flex items-center space-x-3 group cursor-pointer">
+                <div class="bg-gradient-to-br from-cyan-400 to-blue-600 p-2 rounded-xl group-hover:rotate-12 transition-all shadow-[0_0_15px_rgba(34,211,238,0.4)]">
+                    <i data-lucide="box" class="text-white w-6 h-6"></i>
+                </div>
+                <div class="flex flex-col leading-none">
+                    <span class="text-xl font-black tracking-tighter text-white uppercase">Duck & Rabbit</span>
+                    <span class="text-[10px] font-bold tracking-[0.3em] text-cyan-400 uppercase">VR Guide Station</span>
+                </div>
+            </div>
+            
+            <div class="hidden lg:flex items-center space-x-8">
+                <a href="#guide" class="text-xs font-bold tracking-[0.2em] text-slate-300 hover:text-cyan-400 transition-colors uppercase">攻略中心</a>
+                <a href="#games" class="text-xs font-bold tracking-[0.2em] text-slate-300 hover:text-cyan-400 transition-colors uppercase">精選遊戲</a>
+                <a href="#gear" class="text-xs font-bold tracking-[0.2em] text-slate-300 hover:text-cyan-400 transition-colors uppercase">專業配件</a>
+                
+                <!-- 複製按鈕 -->
+                <button onclick="copySourceCode()" id="copyBtn" class="flex items-center space-x-2 px-4 py-2 rounded-xl text-xs font-bold transition-all border bg-white/5 border-white/10 text-white hover:bg-white/10">
+                    <i data-lucide="copy" class="w-4 h-4"></i>
+                    <span id="copyBtnText">複製到 GitHub</span>
+                </button>
+
+                <button class="bg-cyan-500 hover:bg-cyan-400 text-white px-6 py-2.5 rounded-full text-xs font-bold transition-all shadow-lg shadow-cyan-500/20">立即購機攻略</button>
+            </div>
+            
+            <button class="lg:hidden text-white" onclick="toggleMobileMenu()">
+                <i data-lucide="menu" id="menuIcon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobileMenu" class="fixed inset-0 z-[200] bg-slate-950 hidden flex-col p-8 transition-opacity duration-300 opacity-0">
+        <div class="flex justify-between items-center mb-12">
+            <span class="font-black text-xl tracking-tighter">DUCK & RABBIT</span>
+            <button onclick="toggleMobileMenu()"><i data-lucide="x" class="w-8 h-8"></i></button>
+        </div>
+        <div class="flex flex-col space-y-8">
+            <a href="#guide" onclick="toggleMobileMenu()" class="text-2xl font-bold">攻略中心</a>
+            <a href="#games" onclick="toggleMobileMenu()" class="text-2xl font-bold">精選遊戲</a>
+            <a href="#gear" onclick="toggleMobileMenu()" class="text-2xl font-bold">專業配件</a>
+            <button onclick="copySourceCode(); toggleMobileMenu();" class="flex items-center space-x-3 text-xl font-bold text-cyan-400">
+                <i data-lucide="copy" class="w-6 h-6"></i>
+                <span>複製專案原始碼</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Hero -->
+    <header class="relative pt-48 pb-24 px-6 z-10 text-center">
+        <div class="max-w-7xl mx-auto">
+            <div class="inline-flex items-center space-x-2 bg-cyan-500/10 border border-cyan-500/20 px-4 py-2 rounded-full mb-8 backdrop-blur-md">
+                <i data-lucide="sparkles" class="w-4 h-4 text-cyan-400 animate-pulse"></i>
+                <span class="text-xs font-bold tracking-[0.2em] text-cyan-200 uppercase">讓 VR 不再遙不可及</span>
+            </div>
+            <h1 class="text-5xl md:text-8xl font-black mb-8 tracking-tighter text-white leading-tight">
+                鴨先生與兔小姐的<br>
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 to-indigo-400 italic">VR 攻略站</span>
+            </h1>
+            <p class="text-lg text-slate-300 max-w-2xl mx-auto mb-12 font-light">專注於 Meta Quest 攻略、配件與遊戲分享。我們提供最完整、最溫暖的指引，讓每位玩家都能玩得聰明又開心。</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-5">
+                 <button class="px-10 py-4 bg-white text-slate-900 rounded-2xl font-bold flex items-center justify-center space-x-2 shadow-xl hover:bg-cyan-500 hover:text-white transition-all group">
+                   <i data-lucide="youtube" class="w-5 h-5 group-hover:text-red-500 transition-colors"></i>
+                   <span>訂閱攻略頻道</span>
+                 </button>
+                 <button class="px-10 py-4 bg-slate-800/40 border border-slate-700 rounded-2xl font-bold flex items-center justify-center space-x-2 hover:bg-slate-700 transition-all backdrop-blur-md">
+                   <i data-lucide="shopping-bag" class="w-5 h-5 text-cyan-400"></i>
+                   <span>前往 DRVR 商城</span>
+                 </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 攻略卡片區 -->
+    <section id="guide" class="py-24 px-6 z-10 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                 <h2 class="text-4xl font-black mb-4 text-white">核心內容導覽</h2>
+                 <p class="text-slate-400 uppercase tracking-widest text-xs font-bold">探索虛擬次元的必備指南</p>
+            </div>
+            
+            <!-- Grid Container -->
+            <div id="feature-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <!-- 內容會透過 JS 注入 -->
+            </div>
+        </div>
+    </section>
+
+    <!-- 頁尾 -->
+    <footer class="py-12 px-6 border-t border-white/10 relative z-10">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center space-x-3">
+                 <i data-lucide="box" class="text-cyan-400 w-5 h-5"></i>
+                 <span class="text-sm font-bold tracking-widest uppercase">Duck & Rabbit VR © 2026</span>
+            </div>
+            <div class="flex space-x-6 text-slate-400">
+                <i data-lucide="youtube" class="w-5 h-5 hover:text-red-500 cursor-pointer transition-colors"></i>
+                <i data-lucide="instagram" class="w-5 h-5 hover:text-pink-500 cursor-pointer transition-colors"></i>
+                <i data-lucide="globe" class="w-5 h-5 hover:text-cyan-400 cursor-pointer transition-colors"></i>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 初始化圖標
+        lucide.createIcons();
+
+        // 內容資料
+        const features = [
+            {
+                title: "節奏開啟，沉浸從這裡開始",
+                subtitle: "收錄十多款人氣音樂遊戲",
+                content: "兔小姐大力推薦，帶你進入節奏世界！",
+                tag: "音遊推薦",
+                image: "https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&fit=crop&q=80&w=800",
+                icon: "music",
+                color: "from-pink-500 to-purple-600"
+            },
+            {
+                title: "熱門遊戲推薦",
+                subtitle: "VR 世界怎能少了它們！",
+                content: "熱門遊戲大集合，為您篩選最值得入手的經典大作。",
+                tag: "遊戲攻略",
+                image: "https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?auto=format&fit=crop&q=80&w=800",
+                icon: "gamepad-2",
+                color: "from-blue-500 to-cyan-600"
+            },
+            {
+                title: "選對配件，體驗更輕鬆",
+                subtitle: "最舒適、安全又好用的夥伴",
+                content: "鴨先生與兔小姐陪你挑選適合的 VR 配件，讓遊玩不再痠痛。",
+                tag: "精選配件",
+                image: "https://images.unsplash.com/photo-1676288176918-2023924f369d?auto=format&fit=crop&q=80&w=800",
+                icon: "layers",
+                color: "from-emerald-500 to-teal-600"
+            },
+            {
+                title: "DRVR 讓沉浸更安心舒適",
+                subtitle: "從電池安全到配戴舒適",
+                content: "DRVR 專為玩家設計，讓你專注體驗、不分心。",
+                tag: "個人商城",
+                image: "https://images.unsplash.com/photo-1592477976563-0c50162d95e6?auto=format&fit=crop&q=80&w=800",
+                icon: "shopping-bag",
+                color: "from-orange-500 to-red-600"
+            },
+            {
+                title: "Meta Horizon+",
+                subtitle: "20 多款遊戲無限暢玩",
+                content: "從免費訂閱開始，一起暢遊 VR 世界！訂閱期間超划算。",
+                tag: "訂閱推薦",
+                image: "https://images.unsplash.com/photo-1617802690992-15d93263d3a9?auto=format&fit=crop&q=80&w=800",
+                icon: "zap",
+                color: "from-indigo-500 to-blue-700"
+            },
+            {
+                title: "VR 資源一網打盡",
+                subtitle: "LINE、臉書、巴哈姆特通通有",
+                content: "鴨兔帶你一鍵加入最熱鬧的 VR 玩家社群，情報不漏接！",
+                tag: "社群連結",
+                image: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=800",
+                icon: "users",
+                color: "from-slate-600 to-slate-800"
+            }
+        ];
+
+        // 注入卡片
+        const grid = document.getElementById('feature-grid');
+        features.forEach(item => {
+            const card = `
+                <div class="group relative bg-slate-800/40 border border-white/10 rounded-[2.5rem] overflow-hidden hover:border-cyan-400/50 transition-all duration-500 glass flex flex-col">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-60"></div>
+                        <div class="absolute top-4 left-4 w-10 h-10 rounded-xl bg-gradient-to-br ${item.color} flex items-center justify-center text-white shadow-lg">
+                            <i data-lucide="${item.icon}" class="w-6 h-6"></i>
+                        </div>
+                    </div>
+                    <div class="p-8 flex flex-col flex-grow justify-between">
+                        <div>
+                            <div class="inline-block px-3 py-1 bg-cyan-500/10 text-cyan-300 text-[10px] font-bold tracking-widest rounded-lg mb-4 uppercase border border-cyan-500/20">${item.tag}</div>
+                            <h3 class="text-2xl font-bold mb-2 group-hover:text-cyan-300 transition-colors">${item.title}</h3>
+                            <p class="text-sm font-bold text-slate-300 mb-4 font-mono">${item.subtitle}</p>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-8">${item.content}</p>
+                        </div>
+                        <a href="#" class="flex items-center text-sm font-black text-cyan-400 group-hover:translate-x-2 transition-transform">
+                            進入攻略中心 <i data-lucide="chevron-right" class="w-4 h-4 ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+            `;
+            grid.innerHTML += card;
+        });
+        lucide.createIcons(); // 再次為注入的內容生成圖標
+
+        // 滾動效果
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('bg-slate-900/80', 'backdrop-blur-xl', 'border-b', 'border-white/10', 'py-4');
+                nav.classList.remove('py-8');
+            } else {
+                nav.classList.remove('bg-slate-900/80', 'backdrop-blur-xl', 'border-b', 'border-white/10', 'py-4');
+                nav.classList.add('py-8');
+            }
+        });
+
+        // 行動版選單開關
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                setTimeout(() => {
+                    menu.classList.add('opacity-100', 'flex');
+                    menu.classList.remove('opacity-0');
+                }, 10);
+            } else {
+                menu.classList.add('opacity-0');
+                menu.classList.remove('opacity-100');
+                setTimeout(() => {
+                    menu.classList.add('hidden');
+                    menu.classList.remove('flex');
+                }, 300);
+            }
+        }
+
+        // 複製全站代碼
+        function copySourceCode() {
+            const fullSource = document.documentElement.outerHTML;
+            const textArea = document.createElement("textarea");
+            textArea.value = fullSource;
+            textArea.style.position = "fixed";
+            textArea.style.left = "-9999px";
+            document.body.appendChild(textArea);
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                const btnText = document.getElementById('copyBtnText');
+                const btn = document.getElementById('copyBtn');
+                
+                const originalText = btnText.innerText;
+                btnText.innerText = "已複製！貼到 GitHub 即可";
+                btn.classList.add('border-emerald-500', 'text-emerald-400', 'bg-emerald-500/10');
+                
+                setTimeout(() => {
+                    btnText.innerText = originalText;
+                    btn.classList.remove('border-emerald-500', 'text-emerald-400', 'bg-emerald-500/10');
+                }, 3000);
+            } catch (err) {
+                console.error('複製失敗', err);
+            }
+            document.body.removeChild(textArea);
+        }
+    </script>
+</body>
+</html>
