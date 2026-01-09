@@ -4,6 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>鴨先生與兔小姐的 VR 攻略站</title>
+
+    <!-- 社群分享預覽設定 -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://duck-and-rabbit-vr.station">
+    <meta property="og:title" content="鴨先生與兔小姐的 VR 攻略站">
+    <meta property="og:description" content="Meta Quest 專業購機指南、配件開箱與極致沉浸遊戲評測。陪伴玩家玩得聰明、玩得開心！">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1622979135225-d2ba2697133e?auto=format&fit=crop&q=80&w=1200&h=630">
+
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Lucide Icons -->
@@ -19,6 +27,7 @@
         body { 
             font-family: 'Inter', 'Noto Sans TC', sans-serif; 
             background-color: var(--deep-blue);
+            color: white;
         }
 
         /* 全域玻璃質感升級 */
@@ -36,7 +45,7 @@
         
         .neon-text-green { color: var(--neon-green); text-shadow: 0 0 12px rgba(0, 255, 0, 0.6); }
 
-        /* 數位雨 Canvas 樣式 - 純綠色 */
+        /* 數位雨 Canvas 樣式 */
         #matrix-canvas {
             position: fixed;
             top: 0;
@@ -57,26 +66,6 @@
             to { opacity: 1; transform: scale(1.02); }
         }
 
-        .line-icon-custom {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 32px;
-            height: 32px;
-            border: 2px solid currentColor;
-            border-radius: 50%;
-            font-size: 8px;
-            font-weight: 900;
-            line-height: 1;
-        }
-
-        .title-render-fix {
-            padding-left: 0.1em;
-            padding-right: 0.2em;
-            display: inline-block;
-        }
-
-        /* 下拉選單動畫 */
         .dropdown-content {
             display: none;
             opacity: 0;
@@ -89,45 +78,91 @@
             transform: translateY(0);
         }
 
-        /* ENTER DIMENSION 質感微調 */
         .explore-link {
             font-size: 9px;
             letter-spacing: 0.3em;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
             font-weight: 900;
             text-transform: uppercase;
         }
-        .explore-link:hover {
-            color: #fff;
-            text-shadow: 0 0 8px var(--neon-green);
-        }
 
-        /* 專題卡片特定通透感處理 */
         .feature-card {
             background: rgba(255, 255, 255, 0.02);
             backdrop-filter: blur(25px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            cursor: pointer;
         }
         .feature-card:hover {
             background: rgba(255, 255, 255, 0.05);
             border-color: rgba(0, 255, 0, 0.5);
             transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        /* 頁面切換動畫 */
+        .page {
+            display: none;
+            min-height: 100vh;
+            position: relative;
+            z-index: 10;
+        }
+        .page.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 音樂分頁專屬樣式 */
+        .category-header {
+            border-left: 4px solid var(--neon-green);
+            padding-left: 1rem;
+            margin: 3rem 0 2rem 0;
+        }
+        .game-item-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+        .game-item-card:hover {
+            border-color: rgba(0, 255, 0, 0.3);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* 統一圖片容器樣式 */
+        .game-image-container {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            border-radius: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .game-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .title-render-fix {
+            padding-left: 0.1em;
+            padding-right: 0.2em;
+            display: inline-block;
         }
     </style>
 </head>
-<body class="text-slate-100 selection:bg-green-500/30 selection:text-green-400 relative overflow-x-hidden">
+<body class="selection:bg-green-500/30 selection:text-green-400 overflow-x-hidden">
 
-    <!-- 數位矩陣背景 (純綠色) -->
     <canvas id="matrix-canvas"></canvas>
 
     <!-- 導覽列 -->
     <nav id="navbar" class="fixed w-full z-[100] transition-all duration-500 py-8">
         <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
             <!-- 品牌標誌 -->
-            <div class="flex items-center space-x-4 group cursor-pointer" onclick="window.scrollTo(0,0)">
+            <div class="flex items-center space-x-4 group cursor-pointer" onclick="showPage('home')">
                 <div class="bg-gradient-to-br from-green-400 to-green-700 p-2.5 rounded-xl group-hover:rotate-12 transition-all shadow-[0_0_20px_rgba(34,211,238,0.4)]">
                     <i data-lucide="gamepad-2" class="text-white w-8 h-8"></i>
                 </div>
@@ -138,29 +173,24 @@
             </div>
             
             <div class="hidden lg:flex items-center space-x-10">
-                <!-- 推薦金領取置頂 -->
                 <a href="#" class="text-sm font-black tracking-[0.2em] text-green-400 hover:text-white transition-colors uppercase flex items-center">
                     <i data-lucide="gift" class="w-4 h-4 mr-2"></i>
                     <span>推薦金領取</span>
                 </a>
-
-                <a href="#guide" class="text-sm font-black tracking-[0.2em] text-slate-100 hover:text-green-400 transition-colors uppercase">VR 攻略全書</a>
-                
+                <a href="#guide" onclick="showPage('home')" class="text-sm font-black tracking-[0.2em] text-slate-100 hover:text-green-400 transition-colors uppercase">VR 攻略全書</a>
                 <button class="bg-green-500 hover:bg-green-400 text-black px-8 py-3 rounded-full text-sm font-black transition-all shadow-lg shadow-green-500/30">立即購機攻略</button>
-
+                
                 <!-- 漢堡選單 (快速導航) -->
                 <div class="relative group">
-                    <button id="dropdownBtn" class="p-2 text-slate-100 hover:text-green-400 transition-colors border border-white/10 rounded-xl hover:border-green-500/50 glass">
+                    <button id="dropdownBtn" class="p-2 text-slate-100 hover:text-green-400 border border-white/10 rounded-xl glass">
                         <i data-lucide="menu" class="w-6 h-6"></i>
                     </button>
-                    <!-- 下拉內容 -->
-                    <div id="dropdownMenu" class="dropdown-content absolute top-full mt-4 left-0 w-64 glass border border-green-500/30 rounded-2xl overflow-hidden shadow-2xl">
-                        <div class="px-6 py-3 bg-green-500/10 text-[10px] font-bold text-green-400 tracking-widest border-b border-white/5 uppercase">Quick Navigation</div>
-                        <a href="#" class="block px-6 py-4 text-xs font-bold hover:bg-green-500/20 hover:text-green-400 transition-all border-b border-white/5">新手入坑必看</a>
-                        <a href="#" class="block px-6 py-4 text-xs font-bold hover:bg-green-500/20 hover:text-green-400 transition-all border-b border-white/5">推薦金領取教學</a>
-                        <a href="#" class="block px-6 py-4 text-xs font-bold hover:bg-green-500/20 hover:text-green-400 transition-all border-b border-white/5">Quest 3S 深度評測</a>
-                        <a href="#" class="block px-6 py-4 text-xs font-bold hover:bg-green-500/20 hover:text-green-400 transition-all border-b border-white/5 font-mono tracking-tighter text-[10px]">DRVR 武裝模組重構中</a>
-                        <a href="#" class="block px-6 py-4 text-xs font-bold hover:bg-green-500/20 hover:text-green-400 transition-all">聯繫鴨兔領航員</a>
+                    <div id="dropdownMenu" class="dropdown-content absolute top-full mt-4 right-0 w-64 glass border border-green-500/30 rounded-2xl overflow-hidden shadow-2xl">
+                        <div class="px-6 py-3 bg-green-500/10 text-[10px] font-bold text-green-400 tracking-widest border-b border-white/5 uppercase font-mono">Quick Navigation</div>
+                        <a href="#" onclick="showPage('home')" class="block px-6 py-4 text-xs font-bold hover:bg-green-500/20 hover:text-green-400 border-b border-white/5">首頁攻略</a>
+                        <a href="#" class="block px-6 py-4 text-xs font-bold hover:bg-green-500/20 hover:text-green-400 border-b border-white/5">推薦金領取教學</a>
+                        <a href="#" class="block px-6 py-4 text-xs font-bold hover:bg-green-500/20 hover:text-green-400 border-b border-white/5 font-mono tracking-tighter text-[10px]">DRVR 武裝模組重構中</a>
+                        <a href="#" class="block px-6 py-4 text-xs font-bold hover:bg-green-500/20 hover:text-green-400">聯繫鴨兔領航員</a>
                     </div>
                 </div>
             </div>
@@ -171,77 +201,266 @@
         </div>
     </nav>
 
-    <!-- Mobile Menu -->
+    <!-- Mobile Menu Overlay -->
     <div id="mobileMenu" class="fixed inset-0 z-[200] bg-blue-950/95 backdrop-blur-2xl hidden flex-col p-8 transition-all duration-300 opacity-0">
         <div class="flex justify-between items-center mb-12">
             <span class="font-black text-2xl tracking-tighter text-green-400 font-mono">SYSTEM_MENU</span>
             <button onclick="toggleMobileMenu()"><i data-lucide="x" class="w-10 h-10 text-white"></i></button>
         </div>
         <div class="flex flex-col space-y-10">
-            <a href="#guide" onclick="toggleMobileMenu()" class="text-3xl font-black text-white">VR 攻略全書</a>
-            <a href="#" class="text-3xl font-black text-green-400">推薦金領取</a>
-            <a href="#" class="text-3xl font-black text-green-400 font-mono text-2xl uppercase">DRVR Reset</a>
+            <a href="#guide" onclick="toggleMobileMenu(); showPage('home');" class="text-3xl font-black text-white">VR 攻略全書</a>
+            <a href="#" onclick="toggleMobileMenu();" class="text-3xl font-black text-green-400">推薦金領取</a>
+            <a href="#" onclick="toggleMobileMenu();" class="text-3xl font-black text-green-400 font-mono text-2xl uppercase">DRVR Reset</a>
         </div>
     </div>
 
-    <!-- Hero Section -->
-    <header class="relative pt-64 pb-32 px-6 z-10 text-center">
-        <div class="max-w-5xl mx-auto">
-            <div class="inline-flex items-center space-x-3 bg-green-500/20 border-2 border-green-500/40 px-6 py-3 rounded-full mb-10 backdrop-blur-md">
-                <i data-lucide="gift" class="w-5 h-5 text-green-400"></i>
-                <span class="text-sm font-black tracking-[0.2em] text-green-100 uppercase">新玩家 30 美金推薦金領取</span>
-            </div>
-            
-            <h1 class="text-6xl md:text-9xl font-black mb-10 text-white leading-[1.2] drop-shadow-2xl">
-                <span class="title-render-fix">鴨先生與兔小姐</span><br>
-                <span class="bg-clip-text text-transparent bg-gradient-to-r from-green-300 to-green-600 italic title-render-fix">VR 攻略站</span>
-            </h1>
-            
-            <p class="text-xl md:text-2xl text-slate-200 max-w-3xl mx-auto font-medium leading-relaxed mb-12">
-                我們致力於讓每位玩家都能玩得聰明又開心。從 Meta Quest 入門到極致沉浸，這裡有最完整、最溫暖的指引。
-            </p>
-        </div>
-    </header>
-
-    <!-- 任務簡報區 (Mission Brief) -->
-    <section class="px-6 pb-32 z-10 relative">
-        <div class="max-w-4xl mx-auto briefing-box glass p-12 neon-border-green rounded-[4rem] relative overflow-hidden">
-            <div class="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 blur-3xl rounded-full"></div>
-            
-            <!-- 修改標題為：Quest 我們是誰 -->
-            <h2 class="text-lg font-black text-green-400 mb-6 flex items-center tracking-widest font-mono uppercase">
-                <span class="mr-3 text-2xl">■</span> Quest 我們是誰
-            </h2>
-            <div class="space-y-6 text-lg md:text-xl text-gray-200 leading-relaxed font-normal relative z-10">
-                <p>我們是對 VR 充滿熱愛的鴨兔搭檔。你能在這裡找到：最新主機開箱、配件選購建議、熱門遊戲實況、評測與玩法解析。</p>
-                <p class="text-green-300/80">我們提供手把手購機教學與報關攻略，確保您的情報永遠不漏接。</p>
-            </div>
-            
-            <div class="flex justify-between items-end border-t border-green-500/20 pt-10 mt-6">
-                <div class="space-y-2">
-                    <span class="text-xs text-green-800 font-mono font-bold block uppercase tracking-widest">System Ready</span>
-                    <span class="text-sm text-slate-400 font-mono uppercase font-bold tracking-tighter">Mission: Making VR accessible for everyone.</span>
+    <!-- 主頁面 Home Page -->
+    <div id="home-page" class="page active">
+        <header class="relative pt-64 pb-32 px-6 text-center">
+            <div class="max-w-5xl mx-auto">
+                <div class="inline-flex items-center space-x-3 bg-green-500/20 border-2 border-green-500/40 px-6 py-3 rounded-full mb-10 backdrop-blur-md">
+                    <i data-lucide="gift" class="w-5 h-5 text-green-400"></i>
+                    <span class="text-sm font-black tracking-[0.2em] text-green-100 uppercase">新玩家 30 美金推薦金領取</span>
                 </div>
-                <div id="sync-container" class="text-right">
-                    <span id="sync-value" class="sync-pulse text-lg text-green-400 font-mono font-black">數據同步中... 88%</span>
+                <h1 class="text-6xl md:text-9xl font-black mb-10 text-white leading-[1.2] drop-shadow-2xl">
+                    <span class="title-render-fix">鴨先生與兔小姐</span><br>
+                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-green-300 to-green-600 italic title-render-fix">VR 攻略站</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-slate-200 max-w-3xl mx-auto font-medium leading-relaxed mb-12">
+                    我們致力於讓每位玩家都能玩得聰明又開心。從 Meta Quest 入門到極致沉浸，這裡有最完整、最溫暖的指引。
+                </p>
+            </div>
+        </header>
+
+        <section class="px-6 pb-32">
+            <div class="max-w-4xl mx-auto briefing-box glass p-12 neon-border-green rounded-[4rem] relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 blur-3xl rounded-full"></div>
+                <h2 class="text-lg font-black text-green-400 mb-6 flex items-center tracking-widest font-mono uppercase">
+                    <span class="mr-3 text-2xl">■</span> Quest 我們是誰
+                </h2>
+                <div class="space-y-6 text-lg md:text-xl text-gray-200 leading-relaxed font-normal relative z-10">
+                    <p>我們是對 VR 充滿熱愛的鴨兔搭檔。你能在這裡找到：最新主機開箱、配件選購建議、熱門遊戲實況、評測與玩法解析。</p>
+                    <p class="text-green-300/80 font-bold">我們提供手把手購機教學與報關攻略，確保您的情報永遠不漏接。</p>
+                </div>
+                <div class="flex justify-between items-end border-t border-green-500/20 pt-10 mt-6">
+                    <div class="space-y-2">
+                        <span class="text-xs text-green-800 font-mono font-bold block uppercase tracking-widest">System Ready</span>
+                        <span class="text-sm text-slate-400 font-mono uppercase font-bold tracking-tighter">Mission: Making VR accessible for everyone.</span>
+                    </div>
+                    <div class="text-right">
+                        <span id="sync-value" class="sync-pulse text-lg text-green-400 font-mono font-black">數據同步中... 88%</span>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- 內容區 -->
-    <section id="guide" class="py-32 px-6 z-10 relative">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-20">
-                 <h2 class="text-5xl font-black mb-6 text-white uppercase tracking-tight neon-text-green">次元解密：VR 攻略全書</h2>
-                 <div class="h-1.5 w-32 bg-green-500 mx-auto rounded-full mb-6 shadow-[0_0_15px_#00ff00]"></div>
+        <section id="guide" class="py-32 px-6">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-20">
+                     <h2 class="text-5xl font-black mb-6 text-white uppercase tracking-tight neon-text-green">次元解密：VR 攻略全書</h2>
+                     <div class="h-1.5 w-32 bg-green-500 mx-auto rounded-full mb-6 shadow-[0_0_15px_#00ff00]"></div>
+                </div>
+                <div id="feature-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-14">
+                    <!-- JS 注入卡片 -->
+                </div>
             </div>
+        </section>
+    </div>
+
+    <!-- Page 1 內容 (Quest 音律次元：必玩音樂遊戲全攻略) -->
+    <div id="page1" class="page pt-48 pb-32 px-6">
+        <div class="max-w-6xl mx-auto">
+            <button onclick="showPage('home')" class="mb-12 flex items-center text-green-400 font-black tracking-widest hover:text-white transition-all uppercase">
+                <i data-lucide="arrow-left" class="mr-2"></i> Back to Mainframe
+            </button>
             
-            <div id="feature-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-14">
-                <!-- 由 JS 動態注入具有高通透感的卡片 -->
-            </div>
+            <header class="mb-16">
+                <h2 class="text-5xl md:text-7xl font-black mb-6 neon-text-green uppercase italic title-render-fix">Quest 音律次元：遊戲特輯</h2>
+                <p class="text-xl text-slate-300 max-w-4xl leading-relaxed">
+                    讓節奏成為你的本能，在虛擬空間中盡情揮灑！鴨先生與兔小姐為您精選了最頂尖的 VR 音樂神作。這不僅是遊戲，更是一場感官與靈魂的進化旅程。
+                </p>
+            </header>
+
+            <!-- 1. 視覺律動 // 頂尖舞蹈模組 -->
+            <section class="mb-20">
+                <div class="category-header">
+                    <h3 class="text-3xl font-black tracking-widest text-white uppercase font-mono">Module_01 // 視覺律動：舞蹈模組</h3>
+                </div>
+                <div class="space-y-8">
+                    <!-- 幻音騎士 -->
+                    <div class="game-item-card">
+                        <div class="flex flex-col md:flex-row gap-8 items-start">
+                            <div class="md:w-80 flex-shrink-0">
+                                <div class="game-image-container shadow-2xl">
+                                    <img src="https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&fit=crop&q=80&w=600" alt="幻音騎士">
+                                </div>
+                            </div>
+                            <div class="flex-grow">
+                                <h4 class="text-2xl font-black mb-4 text-green-400">幻音騎士 (Synth Riders)</h4>
+                                <p class="text-slate-300 leading-relaxed mb-6">
+                                    流動感的極致展現！穿越賽博空間，隨著 Zedd、Lady Gaga 等巨星的旋律舞動四肢，感受音樂綢帶在指尖滑過的快感。個人心目中的音遊王者，其精緻的打擊感與流動性，絕對值得您反覆挑戰。
+                                </p>
+                                <a href="https://www.meta.com/zh-tw/experiences/synth-riders/2436558143118760/" target="_blank" class="inline-flex items-center px-6 py-3 bg-green-500 text-black font-black rounded-lg hover:bg-white transition-all text-sm uppercase">
+                                    <i data-lucide="external-link" class="w-4 h-4 mr-2"></i> 前往商店觀看
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 動感音旅 -->
+                    <div class="game-item-card">
+                        <div class="flex flex-col md:flex-row gap-8 items-start">
+                            <div class="md:w-80 flex-shrink-0">
+                                <div class="game-image-container shadow-2xl">
+                                    <img src="https://images.unsplash.com/photo-1514525253344-7624fe96db58?auto=format&fit=crop&q=80&w=600" alt="動感音旅">
+                                </div>
+                            </div>
+                            <div class="flex-grow">
+                                <h4 class="text-2xl font-black mb-4 text-cyan-400">動感音旅 (Audio Trip)</h4>
+                                <p class="text-slate-300 leading-relaxed mb-6">
+                                    這是一場霓虹燈光下的感官饗宴！用雙手節奏球精準捕捉律動，支援多人連線共舞，讓社交與節拍在虛擬次元完美融合。如果您追求色彩繽紛的視覺震撼，幻音騎士绝对值得一試。
+                                </p>
+                                <a href="https://www.meta.com/zh-tw/experiences/2436558143118760/" target="_blank" class="inline-flex items-center px-6 py-3 bg-cyan-500 text-black font-black rounded-lg hover:bg-white transition-all text-sm uppercase">
+                                    <i data-lucide="external-link" class="w-4 h-4 mr-2"></i> 前往商店觀看
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- LES MILLS XR DANCE -->
+                    <div class="game-item-card">
+                        <div class="flex flex-col md:flex-row gap-8 items-start">
+                            <div class="md:w-80 flex-shrink-0">
+                                <div class="game-image-container shadow-2xl">
+                                    <img src="https://images.unsplash.com/photo-1547153760-18fc86324498?auto=format&fit=crop&q=80&w=600" alt="LES MILLS XR DANCE">
+                                </div>
+                            </div>
+                            <div class="flex-grow">
+                                <h4 class="text-2xl font-black mb-4 text-pink-400">LES MILLS XR DANCE</h4>
+                                <p class="text-slate-300 leading-relaxed mb-6">
+                                    釋放對舞蹈的狂熱！專業教練引導、頂尖編舞設計，將有氧健身與舞蹈節奏完美整合。讓您在愉快舞動的同時，也能達到高效體能訓練，在家中客廳即可體驗世界級的動感活力。
+                                </p>
+                                <a href="https://www.meta.com/zh-tw/experiences/les-mills-xr-dance-fitness-rhythm/6212696172191478/" target="_blank" class="inline-flex items-center px-6 py-3 bg-pink-500 text-black font-black rounded-lg hover:bg-white transition-all text-sm uppercase">
+                                    <i data-lucide="external-link" class="w-4 h-4 mr-2"></i> 前往商店觀看
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Samba de Amigo -->
+                    <div class="game-item-card">
+                        <div class="flex flex-col md:flex-row gap-8 items-start">
+                            <div class="md:w-80 flex-shrink-0">
+                                <div class="game-image-container shadow-2xl">
+                                    <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=600" alt="Samba de Amigo">
+                                </div>
+                            </div>
+                            <div class="flex-grow">
+                                <h4 class="text-2xl font-black mb-4 text-orange-400">Samba de Amigo : 虛擬搖搖派對</h4>
+                                <p class="text-slate-300 leading-relaxed mb-6">
+                                    經典沙鈴重現！融合最新的 MR 混合實境技術，讓家客廳瞬間化身拉丁熱舞派對。收錄 40 首以上全球流行樂曲，介面充滿趣味且老少咸宜，是我個人極力推薦的健身休閒神作。
+                                </p>
+                                <a href="https://www.meta.com/zh-tw/experiences/samba-de-amigo-virtual-party/5736173679792982/" target="_blank" class="inline-flex items-center px-6 py-3 bg-orange-500 text-black font-black rounded-lg hover:bg-white transition-all text-sm uppercase">
+                                    <i data-lucide="external-link" class="w-4 h-4 mr-2"></i> 前往商店觀看
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. 重擊靈魂 // 硬核鼓手模組 -->
+            <section class="mb-20">
+                <div class="category-header">
+                    <h3 class="text-3xl font-black tracking-widest text-white uppercase font-mono">Module_02 // 重擊靈魂：模擬鼓手</h3>
+                </div>
+                <div class="space-y-8">
+                    <!-- Ragnarock -->
+                    <div class="game-item-card">
+                        <div class="flex flex-col md:flex-row gap-8 items-start">
+                            <div class="md:w-80 flex-shrink-0">
+                                <div class="game-image-container shadow-2xl border-red-500/20">
+                                    <img src="https://images.unsplash.com/photo-1519892300165-cb5542fb47c7?auto=format&fit=crop&q=80&w=600" alt="Ragnarock">
+                                </div>
+                            </div>
+                            <div class="flex-grow">
+                                <h4 class="text-2xl font-black mb-4 text-red-500">Ragnarock</h4>
+                                <p class="text-slate-300 leading-relaxed mb-6">
+                                    航向維京史詩！伴隨激昂的搖滾與重金屬樂，揮舞鼓槌擊碎符文。打擊感磅礡且充滿力量，讓您宛如置身巨型慶典現場的傳奇鼓手。適合想要宣洩體力與熱血的硬核玩家！
+                                </p>
+                                <a href="https://www.meta.com/zh-tw/experiences/ragnarock/3749621795127676/" target="_blank" class="inline-flex items-center px-6 py-3 bg-red-600 text-white font-black rounded-lg hover:bg-white hover:text-black transition-all text-sm uppercase">
+                                    <i data-lucide="external-link" class="w-4 h-4 mr-2"></i> 前往商店觀看
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Smash Drums -->
+                    <div class="game-item-card">
+                        <div class="flex flex-col md:flex-row gap-8 items-start">
+                            <div class="md:w-80 flex-shrink-0">
+                                <div class="game-image-container shadow-2xl border-blue-500/20">
+                                    <img src="https://images.unsplash.com/photo-1524230659192-35f3d704ec13?auto=format&fit=crop&q=80&w=600" alt="Smash Drums">
+                                </div>
+                            </div>
+                            <div class="flex-grow">
+                                <h4 class="text-2xl font-black mb-4 text-blue-400">Smash Drums</h4>
+                                <p class="text-slate-300 leading-relaxed mb-6">
+                                    完美承襲街機爵士鼓精髓！在各種充滿沉浸感的搖滾場景中釋放壓力。音樂曲風多樣，操作直覺，是新手玩家踏入 VR 爵士鼓世界的最佳入門首選。
+                                </p>
+                                <a href="https://www.meta.com/zh-tw/experiences/3630025217090808/" target="_blank" class="inline-flex items-center px-6 py-3 bg-blue-500 text-black font-black rounded-lg hover:bg-white transition-all text-sm uppercase">
+                                    <i data-lucide="external-link" class="w-4 h-4 mr-2"></i> 前往商店觀看
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Paradiddle -->
+                    <div class="game-item-card">
+                        <div class="flex flex-col md:flex-row gap-8 items-start">
+                            <div class="md:w-80 flex-shrink-0">
+                                <div class="game-image-container shadow-2xl border-purple-500/20">
+                                    <img src="https://images.unsplash.com/photo-1543443258-92b04ad5ecf5?auto=format&fit=crop&q=80&w=600" alt="Paradiddle">
+                                </div>
+                            </div>
+                            <div class="flex-grow">
+                                <h4 class="text-2xl font-black mb-4 text-purple-400">Paradiddle</h4>
+                                <p class="text-slate-300 leading-relaxed mb-6">
+                                    最硬核的打鼓模擬器！這不僅是遊戲，更是專業的練習工具。自由配置鼓組、拟真物理反饋，讓您在虛擬空間中錄製並分享屬於您的靈魂演奏。成為傳奇鼓手，就從這裡開始。
+                                </p>
+                                <a href="https://www.meta.com/zh-tw/experiences/paradiddle/5719805344724551/" target="_blank" class="inline-flex items-center px-6 py-3 bg-purple-500 text-black font-black rounded-lg hover:bg-white transition-all text-sm uppercase">
+                                    <i data-lucide="external-link" class="w-4 h-4 mr-2"></i> 前往商店觀看
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. 跨界節奏 // 綜合戰鬥模組 -->
+            <section class="mb-20">
+                <div class="category-header">
+                    <h3 class="text-3xl font-black tracking-widest text-white uppercase font-mono">Module_03 // 跨界節奏：綜合戰鬥</h3>
+                </div>
+                <div class="space-y-8">
+                    <!-- Pistol Whip -->
+                    <div class="game-item-card">
+                        <div class="flex flex-col md:flex-row gap-8 items-start">
+                            <div class="md:w-80 flex-shrink-0">
+                                <div class="game-image-container shadow-2xl border-yellow-500/20">
+                                    <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=600" alt="Pistol Whip">
+                                </div>
+                            </div>
+                            <div class="flex-grow">
+                                <h4 class="text-2xl font-black mb-4 text-yellow-400">Pistol Whip</h4>
+                                <p class="text-slate-300 leading-relaxed mb-6">
+                                    節奏、火藥、與電影英雄的終極結合！在極簡且絕美的視覺風格中閃避子彈，隨著強勁的節拍精準反擊。感受 John Wick 般的極致快感，這是每一位 Quest 玩家都必須收藏的節奏動作神作。
+                                </p>
+                                <a href="https://www.meta.com/zh-tw/experiences/pistol-whip/2104963472963790/" target="_blank" class="inline-flex items-center px-6 py-3 bg-yellow-500 text-black font-black rounded-lg hover:bg-white transition-all text-sm uppercase">
+                                    <i data-lucide="external-link" class="w-4 h-4 mr-2"></i> 前往商店觀看
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
-    </section>
+    </div>
 
     <!-- Footer -->
     <footer class="py-24 px-6 border-t border-white/5 relative z-10 text-center">
@@ -251,14 +470,12 @@
                     <i data-lucide="gamepad-2" class="text-green-400 w-8 h-8 group-hover:rotate-12 transition-transform duration-500"></i>
                     <span class="text-xl font-black tracking-[0.3em] uppercase neon-text-green">Duck & Rabbit VR</span>
                 </div>
-                
                 <div class="flex items-center space-x-12 text-slate-400">
                     <i data-lucide="youtube" class="w-8 h-8 hover:text-red-500 cursor-pointer transition-all hover:scale-125"></i>
                     <i data-lucide="facebook" class="w-8 h-8 hover:text-blue-500 cursor-pointer transition-all hover:scale-125"></i>
-                    <div class="line-icon-custom hover:text-green-500 hover:border-green-500 cursor-pointer transition-all hover:scale-125">LINE</div>
+                    <div class="line-icon-custom hover:text-green-500 border border-slate-500 rounded-full w-8 h-8 flex items-center justify-center text-[7px] font-black cursor-pointer transition-all hover:scale-125">LINE</div>
                     <i data-lucide="shopping-cart" class="w-8 h-8 hover:text-cyan-400 cursor-pointer transition-all hover:scale-125"></i>
                 </div>
-
                 <div class="space-y-4">
                     <p class="text-xs text-green-900 font-mono tracking-[0.5em] uppercase font-bold">Stay Immersive. Play Smarter.</p>
                     <p class="text-sm text-slate-500 tracking-widest font-bold">© 2023 鴨先生與兔小姐 — <span class="text-slate-300 font-black font-mono">虛擬次元的絕對攻略領航員</span></p>
@@ -270,9 +487,19 @@
     <script>
         lucide.createIcons();
 
-        // 數據定義
+        // 頁面顯示邏輯
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            const target = document.getElementById(pageId + '-page') || document.getElementById(pageId);
+            if (target) {
+                target.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
         const features = [
             {
+                id: "page1",
                 title: "節奏開啟，沉浸從這裡開始",
                 subtitle: "收錄十多款人氣音樂遊戲",
                 content: "兔小姐大力推薦，帶你進入節奏世界！探索最動感的虛擬旋律。",
@@ -304,7 +531,7 @@
                 subtitle: "個人專屬商城升級預備",
                 content: "我們正在為您準備更極致的配戴方案，確保長效沉浸不分心決策。敬請期待。",
                 tag: "商城重構中",
-                image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800",
+                image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=800",
                 icon: "loader",
                 color: "from-slate-700 to-slate-950"
             },
@@ -328,47 +555,45 @@
             }
         ];
 
-        // 渲染具有高通透感的卡片
         const grid = document.getElementById('feature-grid');
         features.forEach(item => {
-            grid.innerHTML += `
-                <div class="group feature-card rounded-[2.5rem] overflow-hidden flex flex-col h-full relative z-10">
-                    <div class="relative h-64 overflow-hidden">
-                        <img src="${item.image}" alt="" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 brightness-125 saturate-125 group-hover:brightness-150 opacity-70 group-hover:opacity-100" onerror="this.src='https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&q=80&w=800'">
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#05051a] via-[#05051a]/40 to-transparent opacity-90"></div>
-                        <div class="absolute top-6 left-6 w-12 h-12 rounded-2xl bg-gradient-to-br ${item.color} flex items-center justify-center text-white shadow-xl border border-white/10">
-                            <i data-lucide="${item.icon}" class="w-6 h-6"></i>
-                        </div>
+            const card = document.createElement('div');
+            card.className = "group feature-card rounded-[2.5rem] overflow-hidden flex flex-col h-full relative z-10";
+            card.onclick = () => item.id ? showPage(item.id) : null;
+            card.innerHTML = `
+                <div class="relative h-64 overflow-hidden">
+                    <img src="${item.image}" alt="" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 brightness-125 saturate-125 group-hover:brightness-150 opacity-70 group-hover:opacity-100" onerror="this.src='https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&q=80&w=800'">
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#05051a] via-[#05051a]/40 to-transparent opacity-90"></div>
+                    <div class="absolute top-6 left-6 w-12 h-12 rounded-2xl bg-gradient-to-br ${item.color} flex items-center justify-center text-white shadow-xl border border-white/10">
+                        <i data-lucide="${item.icon}" class="w-6 h-6"></i>
                     </div>
-                    <div class="p-10 flex flex-col flex-grow relative">
-                        <div class="inline-block px-4 py-1.5 bg-green-500/10 text-green-400 text-[10px] font-black tracking-widest rounded-lg mb-6 uppercase border border-green-500/20 w-fit">${item.tag}</div>
-                        <h3 class="text-2xl font-black mb-3 text-white group-hover:text-green-300 transition-colors">${item.title}</h3>
-                        <p class="text-[10px] font-bold text-green-600/60 mb-5 tracking-widest uppercase font-mono">${item.subtitle}</p>
-                        <p class="text-slate-400 text-lg leading-relaxed mb-12 flex-grow font-light">${item.content}</p>
-                        
-                        <div class="mt-auto flex justify-end">
-                            <a href="#" class="explore-link text-green-400 flex items-center group/btn">
-                                ENTER DIMENSION 
-                                <i data-lucide="chevron-right" class="w-3 h-3 ml-2 group-hover/btn:translate-x-1 transition-transform"></i>
-                            </a>
+                </div>
+                <div class="p-10 flex flex-col flex-grow relative text-left text-shadow">
+                    <div class="inline-block px-4 py-1.5 bg-green-500/10 text-green-400 text-[10px] font-black tracking-widest rounded-lg mb-6 uppercase border border-green-500/20 w-fit">${item.tag}</div>
+                    <h3 class="text-2xl font-black mb-3 text-white group-hover:text-green-300 transition-colors">${item.title}</h3>
+                    <p class="text-[10px] font-bold text-green-600/60 mb-5 tracking-widest uppercase font-mono">${item.subtitle}</p>
+                    <p class="text-slate-400 text-lg leading-relaxed mb-12 flex-grow font-light">${item.content}</p>
+                    <div class="mt-auto flex justify-end">
+                        <div class="explore-link text-green-400 flex items-center group/btn">
+                            ENTER DIMENSION 
+                            <i data-lucide="chevron-right" class="w-3 h-3 ml-2 group-hover/btn:translate-x-1 transition-transform"></i>
                         </div>
                     </div>
                 </div>
             `;
+            grid.appendChild(card);
         });
         lucide.createIcons();
 
-        // 數位雨背景邏輯 (純綠色)
+        // 數位雨
         const canvas = document.getElementById('matrix-canvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-
         const characters = "0101010101010101";
         const fontSize = 16;
         const columns = canvas.width / fontSize;
         const drops = Array(Math.floor(columns)).fill(1);
-
         function drawMatrix() {
             ctx.fillStyle = "rgba(5, 5, 26, 0.15)";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -377,15 +602,12 @@
                 const text = characters.charAt(Math.floor(Math.random() * characters.length));
                 ctx.fillStyle = "#00ff00";
                 ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.985) {
-                    drops[i] = 0;
-                }
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.985) drops[i] = 0;
                 drops[i]++;
             }
         }
         setInterval(drawMatrix, 50);
 
-        // 數據同步跳動邏輯
         function initSyncCounter() {
             const syncElement = document.getElementById('sync-value');
             let percentage = 88;
@@ -397,18 +619,14 @@
         }
         initSyncCounter();
 
-        // 下拉選單點擊邏輯
         const dropdownBtn = document.getElementById('dropdownBtn');
         const dropdownMenu = document.getElementById('dropdownMenu');
         dropdownBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             dropdownMenu.classList.toggle('show');
         });
-        document.addEventListener('click', () => {
-            dropdownMenu.classList.remove('show');
-        });
+        document.addEventListener('click', () => dropdownMenu.classList.remove('show'));
 
-        // UI 滾動互動
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
             if (window.scrollY > 50) {
