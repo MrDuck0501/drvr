@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>熱門遊戲推薦 - 鴨先生與兔小姐的 VR 攻略站</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body class="selection:bg-green-500/30 selection:text-green-400 overflow-x-hidden">
+
+    <canvas id="matrix-canvas"></canvas>
+
+    <!-- 導覽列 -->
+    <nav id="navbar" class="fixed w-full z-[100] transition-all duration-500 py-8">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            <div class="flex items-center space-x-4 group cursor-pointer" onclick="location.href='index.html'">
+                <div
+                    class="bg-gradient-to-br from-green-400 to-green-700 p-2.5 rounded-xl group-hover:rotate-12 transition-all shadow-[0_0_20px_rgba(34,211,238,0.4)]">
+                    <i data-lucide="gamepad-2" class="text-white w-8 h-8"></i>
+                </div>
+                <div class="flex flex-col leading-none">
+                    <span class="text-2xl font-black tracking-tighter text-white uppercase font-mono">Duck &
+                        Rabbit</span>
+                    <span class="text-[12px] font-bold tracking-[0.4em] text-green-400 uppercase">VR Guide
+                        Station</span>
+                </div>
+            </div>
+
+            <div class="mb-10 flex justify-center space-x-6">
+                <!-- Facebook -->
+                <a href="https://www.facebook.com/profile.php?id=61557386747389" target="_blank"
+                    class="text-slate-500 hover:text-blue-500 transition-colors">
+                    <i data-lucide="facebook" class="w-6 h-6"></i>
+                </a>
+                <!-- YouTube -->
+                <a href="https://www.youtube.com/@a0916991876" target="_blank"
+                    class="text-slate-500 hover:text-red-500 transition-colors">
+                    <i data-lucide="youtube" class="w-6 h-6"></i>
+                </a>
+
+                <!-- Email -->
+                <a href="mailto:duck0800080123@Gmail.com" class="text-slate-500 hover:text-green-400 transition-colors">
+                    <i data-lucide="mail" class="w-6 h-6"></i>
+                </a>
+            </div>
+            <div class="hidden lg:flex items-center space-x-10">
+                <a href="index.html"
+                    class="text-sm font-black tracking-[0.2em] text-slate-300 hover:text-green-400 transition-colors uppercase">返回主頁</a>
+                <a href="welcome.html"
+                    class="text-sm font-black tracking-[0.2em] text-yellow-400 hover:text-yellow-300 transition-colors uppercase flex items-center">
+                    <i data-lucide="gift" class="w-4 h-4 mr-2"></i>購機前攻略 (領$60)
+                </a>
+
+                <a href="games.html"
+                    class="text-sm font-black tracking-[0.2em] text-green-400 transition-colors uppercase">熱門遊戲推薦</a>
+                <a href="subscription.html"
+                    class="text-sm font-black tracking-[0.2em] text-slate-100 hover:text-green-400 transition-colors uppercase">訂閱攻略</a>
+                <a href="community.html"
+                    class="text-sm font-black tracking-[0.2em] text-slate-100 hover:text-green-400 transition-colors uppercase">網路資源</a>
+            </div>
+
+            <button class="lg:hidden text-white p-2" onclick="toggleMobileMenu()">
+                <i data-lucide="menu" id="menuIcon" class="w-8 h-8"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu"
+        class="fixed inset-0 z-[200] bg-blue-950/95 backdrop-blur-2xl hidden flex-col p-8 transition-all duration-300 opacity-0">
+        <div class="flex justify-between items-center mb-12">
+            <span class="font-black text-2xl tracking-tighter text-green-400 font-mono">SYSTEM_MENU</span>
+            <button onclick="toggleMobileMenu()"><i data-lucide="x" class="w-10 h-10 text-white"></i></button>
+        </div>
+        <div class="flex flex-col space-y-10">
+            <a href="index.html" onclick="toggleMobileMenu()"
+                class="text-3xl font-black text-white hover:text-cyan-400">返回主頁</a>
+            <a href="welcome.html" onclick="toggleMobileMenu()"
+                class="text-3xl font-black text-yellow-400 hover:text-yellow-300">購機前攻略 (領$60)</a>
+
+            <a href="games.html" onclick="toggleMobileMenu()" class="text-3xl font-black text-green-400">熱門遊戲推薦</a>
+            <a href="subscription.html" onclick="toggleMobileMenu()"
+                class="text-3xl font-black text-white hover:text-green-400">訂閱攻略</a>
+            <a href="community.html" onclick="toggleMobileMenu()"
+                class="text-3xl font-black text-white hover:text-green-400">網路資源</a>
+        </div>
+    </div>
+
+    <!-- 主內容區 -->
+    <main class="relative z-10 pt-48 pb-32 px-6">
+        <div class="max-w-7xl mx-auto">
+            <!-- Header -->
+            <div class="mb-24 text-center">
+                <div
+                    class="inline-flex items-center space-x-3 bg-green-500/20 border-2 border-green-500/40 px-6 py-3 rounded-full mb-10 backdrop-blur-md">
+                    <i data-lucide="music" class="w-5 h-5 text-green-400"></i>
+                    <span class="text-sm font-black tracking-[0.2em] text-green-100 uppercase">Hot Rhythm &
+                        Battle</span>
+                </div>
+                <h1 class="text-6xl md:text-8xl font-black text-white mb-8 tracking-tighter leading-none">
+                    熱音 <span class="text-green-400">舞鬥</span>
+                </h1>
+                <p class="text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed">
+                    鴨先生與兔小姐嚴選！從經典擊砍到優雅律動，再到熱血沸騰的戰鬥。整合了我們親自介紹的 YouTube 攻略，看完手癢就直接點商店連結吧！
+                </p>
+            </div>
+
+            <!-- Categories Selection -->
+            <div class="flex flex-wrap justify-center gap-4 mb-24">
+                <a href="#multiplayer"
+                    class="px-10 py-5 glass rounded-full text-slate-300 font-bold hover:bg-green-500/20 hover:text-green-400 transition-all uppercase tracking-widest text-xl">多人連線</a>
+                <a href="#rhythm"
+                    class="px-10 py-5 glass rounded-full text-slate-300 font-bold hover:bg-green-500/20 hover:text-green-400 transition-all uppercase tracking-widest text-xl">音樂節奏</a>
+                <a href="#action"
+                    class="px-10 py-5 glass rounded-full text-slate-300 font-bold hover:bg-green-500/20 hover:text-green-400 transition-all uppercase tracking-widest text-xl">熱血戰鬥</a>
+                <a href="#fitness"
+                    class="px-10 py-5 glass rounded-full text-slate-300 font-bold hover:bg-green-500/20 hover:text-green-400 transition-all uppercase tracking-widest text-xl">運動健身</a>
+                <a href="#casual"
+                    class="px-10 py-5 glass rounded-full text-slate-300 font-bold hover:bg-green-500/20 hover:text-green-400 transition-all uppercase tracking-widest text-xl">療癒休閒</a>
+            </div>
+
+            <!-- Category: Multiplayer -->
+            <section id="multiplayer" class="mb-32 px-4">
+                <div class="flex items-center space-x-6 mb-16 group">
+                    <div class="h-14 w-3 bg-amber-500 rounded-full shadow-[0_0_20px_#f59e0b]"></div>
+                    <h2
+                        class="text-4xl md:text-6xl font-black text-white italic tracking-tighter uppercase transition-all group-hover:pl-4 font-mono">
+                        多人連線 <span
+                            class="text-sm font-mono not-italic text-amber-500/50 block mt-2 tracking-[0.5em]">MULTIPLAYER
+                            &
+                            CO-OP</span>
+                    </h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                    <!-- Dungeons of Eternity -->
+                    <div
+                        class="group glass rounded-[3rem] overflow-hidden flex flex-col hover:border-amber-500/50 transition-all card-glow">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="assets/images/2e9a88a18b9b18e5bb8b4e20c189bfd7.png"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                alt="Dungeons of Eternity">
+                            <div class="absolute inset-x-6 bottom-6 flex flex-wrap gap-2">
+                                <span
+                                    class="px-3 py-1 bg-blue-500/10 text-blue-400 text-[10px] font-black tracking-widest rounded-lg border border-blue-500/20 uppercase">多人連線</span>
+                                <span
+                                    class="px-3 py-1 bg-green-500/10 text-green-400 text-[10px] font-black tracking-widest rounded-lg border border-green-500/20 uppercase">打寶強化</span>
+                            </div>
+                        </div>
+                        <div class="p-8 flex flex-col flex-grow">
+                            <h3 class="text-2xl font-black text-white mb-4 uppercase">Dungeons of Eternity</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
+                                目前最推的多人連線遊戲！武器豐富、砍殺手感極佳。打寶取得新武裝，與隊友共同征服地牢。
+                            </p>
+                            <div class="flex flex-col gap-3">
+                                <div class="flex gap-4">
+                                    <a href="https://www.meta.com/zh-tw/experiences/dungeons-of-eternity/6341779295861881/"
+                                        target="_blank"
+                                        class="w-full py-4 bg-green-500 text-black text-center font-black rounded-2xl shadow-lg hover:bg-green-400 transition-colors text-xs uppercase">前往商店</a>
+                                    <a href="https://www.youtube.com/watch?v=utkfsCAz9hA" target="_blank"
+                                        class="w-full py-4 bg-red-500/10 text-red-400 border border-red-500/50 text-center font-black rounded-2xl hover:bg-red-500 hover:text-white transition-all text-xs uppercase flex items-center justify-center gap-2">
+                                        <i data-lucide="youtube" class="w-4 h-4"></i>
+                                        <span>觀看介紹</span>
+                                    </a>
+                                </div>
+                                <a href="https://forum.gamer.com.tw/C.php?bsn=60606&snA=3544" target="_blank"
+                                    class="w-full py-3 bg-amber-500/10 text-amber-400 border border-amber-500/30 text-center font-bold rounded-xl hover:bg-amber-500 hover:text-black transition-all text-xs uppercase">
+                                    巴哈討論 (作者: oonakooo)
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- After the Fall -->
+                    <div
+                        class="group glass rounded-[3rem] overflow-hidden flex flex-col hover:border-amber-500/50 transition-all card-glow">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="assets/images/7c79b4c45932fb82ca07b7f3c70c3cab.png"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                alt="After the Fall">
+                            <div class="absolute inset-x-6 bottom-6 flex flex-wrap gap-2">
+                                <span
+                                    class="px-3 py-1 bg-green-500/10 text-green-400 text-[10px] font-black tracking-widest rounded-lg border border-green-500/20 uppercase">殭屍射擊</span>
+                                <span
+                                    class="px-3 py-1 bg-blue-500/10 text-blue-400 text-[10px] font-black tracking-widest rounded-lg border border-blue-500/20 uppercase">L4D
+                                    既視感</span>
+                            </div>
+                        </div>
+                        <div class="p-8 flex flex-col flex-grow">
+                            <h3 class="text-2xl font-black text-white mb-4 uppercase">After the Fall</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
+                                VR 版 L4D2，最多四人連線！在冰封的洛杉磯中獵殺殭屍，打寶取得槍枝強化配件。
+                            </p>
+                            <div class="flex gap-4">
+                                <a href="https://www.meta.com/zh-tw/experiences/after-the-fall/2160364850746031/"
+                                    target="_blank"
+                                    class="w-full py-4 bg-green-500 text-black text-center font-black rounded-2xl shadow-lg hover:bg-green-400 transition-colors text-xs uppercase">前往商店</a>
+                                <a href="https://www.youtube.com/watch?v=fztabgMFhe0" target="_blank"
+                                    class="w-full py-4 bg-red-500/10 text-red-400 border border-red-500/50 text-center font-black rounded-2xl hover:bg-red-500 hover:text-white transition-all text-xs uppercase flex items-center justify-center gap-2">
+                                    <i data-lucide="youtube" class="w-4 h-4"></i>
+                                    <span>觀看介紹</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ancient Dungeon -->
+                    <div
+                        class="group glass rounded-[3rem] overflow-hidden flex flex-col hover:border-amber-500/50 transition-all card-glow">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="assets/images/6b3074b48e564dfb2ca7999d4835b7e0.jpg"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                alt="Ancient Dungeon">
+                            <div class="absolute inset-x-6 bottom-6 flex flex-wrap gap-2">
+                                <span
+                                    class="px-3 py-1 bg-green-500/10 text-green-400 text-[10px] font-black tracking-widest rounded-lg border border-green-500/20 uppercase">像素風格</span>
+                                <span
+                                    class="px-3 py-1 bg-blue-500/10 text-blue-400 text-[10px] font-black tracking-widest rounded-lg border border-blue-500/20 uppercase">地牢探險</span>
+                            </div>
+                        </div>
+                        <div class="p-8 flex flex-col flex-grow">
+                            <h3 class="text-2xl font-black text-white mb-4 uppercase">Ancient Dungeon</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
+                                極度好評的像素風地牢探險遊戲。隨機生成的關卡、豐富的道具，現在更支援多人連線！
+                            </p>
+                            <div class="flex flex-col gap-3">
+                                <div class="flex gap-4">
+                                    <a href="https://www.meta.com/zh-tw/experiences/ancient-dungeon/5138511912885491/"
+                                        target="_blank"
+                                        class="w-full py-4 bg-green-500 text-black text-center font-black rounded-2xl shadow-lg hover:bg-green-400 transition-colors text-xs uppercase">前往商店</a>
+
+                                </div>
+                                <a href="https://forum.gamer.com.tw/C.php?bsn=60606&snA=4269" target="_blank"
+                                    class="w-full py-3 bg-amber-500/10 text-amber-400 border border-amber-500/30 text-center font-bold rounded-xl hover:bg-amber-500 hover:text-black transition-all text-xs uppercase">
+                                    巴哈討論 (作者: oonakooo)
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tactical Assault VR -->
+                    <div
+                        class="group glass rounded-[3rem] overflow-hidden flex flex-col hover:border-amber-500/50 transition-all card-glow">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="assets/images/d2082385442746f3df6d7cbdf8142524.jpg"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                alt="Tactical Assault VR">
+                            <div class="absolute inset-x-6 bottom-6 flex flex-wrap gap-2">
+                                <span
+                                    class="px-3 py-1 bg-green-500/10 text-green-400 text-[10px] font-black tracking-widest rounded-lg border border-green-500/20 uppercase">戰術射擊</span>
+                                <span
+                                    class="px-3 py-1 bg-blue-500/10 text-blue-400 text-[10px] font-black tracking-widest rounded-lg border border-blue-500/20 uppercase">硬核擬真</span>
+                            </div>
+                        </div>
+                        <div class="p-8 flex flex-col flex-grow">
+                            <h3 class="text-2xl font-black text-white mb-4 uppercase">Tactical Assault VR</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
+                                硬核擬真的戰術射擊遊戲。注重團隊配合與戰術執行，與隊友一同完成高難度特種任務。
+                            </p>
+                            <div class="flex flex-col gap-3">
+                                <div class="flex gap-4">
+                                    <a href="https://www.meta.com/zh-tw/experiences/tactical-assault-vr/5190911237633299/"
+                                        target="_blank"
+                                        class="w-full py-4 bg-green-500 text-black text-center font-black rounded-2xl shadow-lg hover:bg-green-400 transition-colors text-xs uppercase">前往商店</a>
+                                    <a href="https://www.youtube.com/watch?v=eFdJ4UCJU-A" target="_blank"
+                                        class="w-full py-4 bg-red-500/10 text-red-400 border border-red-500/50 text-center font-black rounded-2xl hover:bg-red-500 hover:text-white transition-all text-xs uppercase flex items-center justify-center gap-2">
+                                        <i data-lucide="youtube" class="w-4 h-4"></i>
+                                        <span>觀看介紹</span>
+                                    </a>
+                                </div>
+                                <a href="https://forum.gamer.com.tw/C.php?bsn=60606&snA=4589" target="_blank"
+                                    class="w-full py-3 bg-amber-500/10 text-amber-400 border border-amber-500/30 text-center font-bold rounded-xl hover:bg-amber-500 hover:text-black transition-all text-xs uppercase">
+                                    巴哈討論 (作者: oonakooo)
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Category: Rhythm & Music -->
+            <section id="rhythm" class="mb-32 px-4">
+                <div class="flex items-center space-x-6 mb-16 group">
+                    <div class="h-14 w-3 bg-pink-500 rounded-full shadow-[0_0_20px_#ec4899]"></div>
+                    <h2
+                        class="text-4xl md:text-6xl font-black text-white italic tracking-tighter neon-text-pink uppercase transition-all group-hover:pl-4">
+                        音樂節奏 <span
+                            class="text-sm font-mono not-italic text-pink-500/50 block mt-2 tracking-[0.5em]">RHYTHM &
+                            MUSIC</span>
+                    </h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                    <!-- Beat Saber -->
+                    <div
+                        class="group glass rounded-[3rem] overflow-hidden flex flex-col hover:border-pink-500/50 transition-all card-glow">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="https://img.4gamers.com.tw/ckfinder/images/Katy/new%20games/20190522-beat%20saber-01.jpg?versionId=zwvO30XUOxSyF6FXuP6nHF_qvMNLQWbp"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                alt="Beat Saber">
+                            <div class="absolute inset-x-6 bottom-6 flex flex-wrap gap-2">
+                                <span
+                                    class="px-3 py-1 bg-green-500/10 text-green-400 text-[10px] font-black tracking-widest rounded-lg border border-green-500/20 uppercase">入坑首選</span>
+                            </div>
+                        </div>
+                        <div class="p-8 flex flex-col flex-grow">
+                            <h3 class="text-2xl font-black text-white mb-4 uppercase">Beat Saber</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
+                                VR 界的長青樹！手握雷射劍擊碎飛來的方塊。簡單易上手，不管是健身還是刷排行榜，這都是必備神作。
+                            </p>
+                            <div class="flex gap-4">
+                                <a href="https://www.meta.com/zh-tw/experiences/beat-saber/2448060205267927/"
+                                    target="_blank"
+                                    class="w-full py-4 bg-green-500 text-black text-center font-black rounded-2xl shadow-lg hover:bg-green-400 transition-colors text-xs uppercase">前往商店</a>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Synth Riders -->
+                    <div
+                        class="group glass rounded-[3rem] overflow-hidden flex flex-col hover:border-pink-500/50 transition-all card-glow">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="assets/images/abcfbe7614af672ff2af477be8408ea1.png"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                alt="Synth Riders">
+                            <div class="absolute inset-x-6 bottom-6 flex flex-wrap gap-2">
+                                <span
+                                    class="px-3 py-1 bg-blue-500/10 text-blue-400 text-[10px] font-black tracking-widest rounded-lg border border-blue-500/20 uppercase">兔小姐推薦</span>
+                            </div>
+                        </div>
+                        <div class="p-8 flex flex-col flex-grow">
+                            <h3 class="text-2xl font-black text-white mb-4 uppercase">Synth Riders</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
+                                隨節奏駕馭綢帶。比起擊砍，這更像是一場優雅的舞蹈。收錄 Skrillex、Muse 等大師曲目，享受極致流動感。
+                            </p>
+                            <div class="flex gap-4">
+                                <a href="https://www.meta.com/zh-tw/experiences/synth-riders/2442671549117604/"
+                                    target="_blank"
+                                    class="w-full py-4 bg-green-500 text-black text-center font-black rounded-2xl shadow-lg hover:bg-green-400 transition-colors text-xs uppercase">前往商店</a>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Audio Trip -->
+                    <div
+                        class="group glass rounded-[3rem] overflow-hidden flex flex-col hover:border-pink-500/50 transition-all card-glow">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="assets/images/1575cb0ccc319ddd53e0f8802cfdcf13.png"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                alt="Audio Trip">
+                        </div>
+                        <div class="p-8 flex flex-col flex-grow">
+                            <h3 class="text-2xl font-black text-white mb-4 uppercase">Audio Trip</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
+                                極佳的身體律動。精準對位與閃避障礙。收錄經典流行音樂，讓你在音樂中盡情揮汗。
+                            </p>
+                            <div class="flex gap-4">
+                                <a href="https://www.meta.com/zh-tw/experiences/audio-trip/2484044451715693/"
+                                    target="_blank"
+                                    class="w-full py-4 bg-green-500 text-black text-center font-black rounded-2xl shadow-lg hover:bg-green-400 transition-colors text-xs uppercase">前往商店</a>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Samba de Amigo -->
+                    <div
+                        class="group glass rounded-[3rem] overflow-hidden flex flex-col hover:border-pink-500/50 transition-all card-glow">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="https://www.thehubnews.net/wp-content/uploads/2023-09-04_104213.jpg"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                alt="Samba de Amigo">
+                            <div class="absolute inset-x-6 bottom-6 flex flex-wrap gap-2">
+                                <span class="red-tag">派對必備</span>
+                            </div>
+                        </div>
+                        <div class="p-8 flex flex-col flex-grow">
+                            <h3 class="text-2xl font-black text-white mb-4 uppercase">Samba de Amigo</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
+                                拿起沙鈴一起搖擺！除了經典節奏，更支援混合實境 (MR) 模式，在你的房間裡與猴子一起派對。
+                            </p>
+                            <div class="flex gap-4">
+                                <a href="https://www.meta.com/zh-tw/experiences/samba-de-amigo-virtual-party/5736173679792982/"
+                                    target="_blank"
+                                    class="w-full py-4 bg-green-500 text-black text-center font-black rounded-2xl shadow-lg hover:bg-green-400 transition-colors text-xs uppercase">前往商店</a>
+                                <a href="https://www.youtube.com/watch?v=kR05a0iIch8" target="_blank"
+                                    class="w-full py-4 bg-red-500/10 text-red-400 border border-red-500/50 text-center font-black rounded-2xl hover:bg-red-500 hover:text-white transition-all text-xs uppercase flex items-center justify-center gap-2">
+                                    <i data-lucide="youtube" class="w-4 h-4"></i>
+                                    <span>觀看介紹</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pistol Whip -->
+                    <div
+                        class="group glass rounded-[3rem] overflow-hidden flex flex-col hover:border-pink-500/50 transition-all card-glow">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="assets/images/ff20b236fb57595de33885e352b814e5.jpg"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                alt="Pistol Whip">
+                            <div class="absolute inset-x-6 bottom-6 flex flex-wrap gap-2">
+                                <span
+                                    class="px-3 py-1 bg-green-500/10 text-green-400 text-[10px] font-black tracking-widest rounded-lg border border-green-500/20 uppercase">節奏射擊</span>
+                            </div>
+                        </div>
+                        <div class="p-8 flex flex-col flex-grow">
+                            <h3 class="text-2xl font-black text-white mb-4 uppercase">Pistol Whip</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
+                                化身動作片主角！隨音樂節奏開火與躲避。結合射擊與音樂的完美體驗，運動強度極高。
+                            </p>
+                            <div class="flex gap-4">
+                                <a href="https://www.meta.com/zh-tw/experiences/pistol-whip/2104963472963790/"
+                                    target="_blank"
+                                    class="w-full py-4 bg-green-500 text-black text-center font-black rounded-2xl shadow-lg hover:bg-green-400 transition-colors text-xs uppercase">前往商店</a>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ragnarock -->
+                    <div
+                        class="group glass rounded-[3rem] overflow-hidden flex flex-col hover:border-pink-500/50 transition-all card-glow">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="assets/images/703702a9ae787a9b41b65ecfd842e597.jpg"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                alt="Ragnarock">
+                            <div class="absolute inset-x-6 bottom-6 flex flex-wrap gap-2">
+                                <span
+                                    class="px-3 py-1 bg-green-500/10 text-green-400 text-[10px] font-black tracking-widest rounded-lg border border-green-500/20 uppercase">維京鼓手</span>
+                            </div>
+                        </div>
+                        <div class="p-8 flex flex-col flex-grow">
+                            <h3 class="text-2xl font-black text-white mb-4 uppercase">Ragnarock</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
+                                成為維京海盜的鼓手！隨重金屬音樂擊響戰鼓，帶領龍船衝向終點。多人連線競賽熱血沸騰。
+                            </p>
+                            <div class="flex gap-4">
+                                <a href="https://www.meta.com/zh-tw/experiences/ragnarock/3734848253283999/"
+                                    target="_blank"
+                                    class="w-full py-4 bg-green-500 text-black text-center font-black rounded-2xl shadow-lg hover:bg-green-400 transition-colors text-xs uppercase">前往商店</a>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Smash Drums -->
+                    <div
+                        class="group glass rounded-[3rem] overflow-hidden flex flex-col hover:border-pink-500/50 transition-all card-glow">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="https://image.api.playstation.com/vulcan/ap/rnd/202504/0214/459ff7bdfd1a57c64571baef5a2b743f44b22021524135bb.jpg"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                alt="Smash Drums">
+                        </div>
+                        <div class="p-8 flex flex-col flex-grow">
+                            <h3 class="text-2xl font-black text-white mb-4 uppercase">Smash Drums</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
+                                純粹的搖滾鼓手體驗。在不同場景中瘋狂敲擊。具有極致的物理反饋與爽快的破碎效果。
+                            </p>
+                            <div class="flex gap-4">
+                                <a href="https://www.meta.com/zh-tw/experiences/smash-drums/3630025217090938/"
+                                    target="_blank"
+                                    class="w-full py-4 bg-green-500 text-black text-center font-black rounded-2xl shadow-lg hover:bg-green-400 transition-colors text-xs uppercase">前往商店</a>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Unplugged: Air Guitar -->
+                    <div
+                        class="group glass rounded-[3rem] overflow-hidden flex flex-col hover:border-pink-500/50 transition-all card-glow">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="assets/images/e0ade2924a390326f1327fc1859f8abe.jpg"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                alt="Unplugged">
+                            <div class="absolute inset-x-6 bottom-6 flex flex-wrap gap-2">
+                                <span
+                                    class="px-3 py-1 bg-blue-500/10 text-blue-400 text-[10px] font-black tracking-widest rounded-lg border border-blue-500/20 uppercase">手部追蹤</span>
+                            </div>
+                        </div>
+                        <div class="p-8 flex flex-col flex-grow">
+                            <h3 class="text-2xl font-black text-white mb-4 uppercase">Unplugged: Air Guitar</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
+                                無需搖桿！全程使用手部追蹤技術。化身搖滾明星，在舞台上表演空氣吉他，體驗最真實的指法回饋。
+                            </p>
+                            <div class="flex gap-4">
+                                <a href="https://www.meta.com/zh-tw/experiences/unplugged-air-guitar/4714094898617205/"
+                                    target="_blank"
+                                    class="w-full py-4 bg-green-500 text-black text-center font-black rounded-2xl shadow-lg hover:bg-green-400 transition-colors text-xs uppercase">前往商店</a>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Virtuoso -->
+                    <div
+                        class="group glass rounded-[3rem] overflow-hidden flex flex-col hover:border-pink-500/50 transition-all card-glow">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="assets/images/a5d45f6eb9b40a6b729eb841168b2e13.jpg"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                alt="Virtuoso">
+                            <div class="absolute inset-x-6 bottom-6 flex flex-wrap gap-2">
+                                <span
+                                    class="px-3 py-1 bg-green-500/10 text-green-400 text-[10px] font-black tracking-widest rounded-lg border border-green-500/20 uppercase">創作神作</span>
+                            </div>
+                        </div>
+                        <div class="p-8 flex flex-col flex-grow">
+                            <h3 class="text-2xl font-black text-white mb-4 uppercase">Virtuoso</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
+                                這不僅是遊戲，更是一個音樂創作室。使用虛擬樂器進行循環與混音。即使不會樂理也能創作出動聽音樂。
+                            </p>
+                            <div class="flex gap-4">
+                                <a href="https://www.meta.com/zh-tw/experiences/virtuoso/4705981139481778/"
+                                    target="_blank"
+                                    class="w-full py-4 bg-green-500 text-black text-center font-black rounded-2xl shadow-lg hover:bg-green-400 transition-colors text-xs uppercase">前往商店</a>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- LES MILLS XR DANCE -->
+                    <div
+                        class="group glass rounded-[3rem] overflow-hidden flex flex-col hover:border-pink-500/50 transition-all card-glow">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="https://www.baozouvr.com/wp-content/uploads/2024/01/1706089312-73dc89a478f3e16.png"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                alt="LES MILLS XR DANCE">
+                            <div class="absolute inset-x-6 bottom-6 flex flex-wrap gap-2">
+                                <span
+                                    class="px-3 py-1 bg-green-500/10 text-green-400 text-[10px] font-black tracking-widest rounded-lg border border-green-500/20 uppercase">健身舞蹈</span>
+                            </div>
+                        </div>
+                        <div class="p-8 flex flex-col flex-grow">
+                            <h3 class="text-2xl font-black text-white mb-4 uppercase">LES MILLS XR DANCE</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
+                                踏入虛擬舞池，體驗最頂尖的健身舞蹈！專業編舞與流行節奏，讓你在燃脂的同時享受派對氛圍。
+                            </p>
+                            <div class="flex gap-4">
+                                <a href="https://www.meta.com/zh-tw/experiences/les-mills-xr-dance/6212626242137578/"
+                                    target="_blank"
+                                    class="w-full py-4 bg-green-500 text-black text-center font-black rounded-2xl shadow-lg hover:bg-green-400 transition-colors text-xs uppercase">前往商店</a>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Paradiddle -->
+                    <div
+                        class="group glass rounded-[3rem] overflow-hidden flex flex-col hover:border-pink-500/50 transition-all card-glow">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="assets/images/529f20251b04f5376ce9b53a8f0b007e.jpg"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                alt="Paradiddle">
+                            <div class="absolute inset-x-6 bottom-6 flex flex-wrap gap-2">
+                                <span
+                                    class="px-3 py-1 bg-green-500/10 text-green-400 text-[10px] font-black tracking-widest rounded-lg border border-green-500/20 uppercase">擬真爵士鼓</span>
+                            </div>
+                        </div>
+                        <div class="p-8 flex flex-col flex-grow">
+                            <h3 class="text-2xl font-black text-white mb-4 uppercase">Paradiddle</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
+                                最擬真、強大且可完全自訂的虛擬架子鼓！甚至能連接實體踏板與 MIDI 設備，是鼓手的終極練習場。
+                            </p>
+                            <div class="flex gap-4">
+                                <a href="https://www.meta.com/zh-tw/experiences/paradiddle/5736173679792982/"
+                                    target="_blank"
+                                    class="w-full py-4 bg-green-500 text-black text-center font-black rounded-2xl shadow-lg hover:bg-green-400 transition-colors text-xs uppercase">前往商店</a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Category: Action & Combat -->
+            <section id="action" class="mb-32 px-4">
+                <div class="flex items-center space-x-6 mb-16 group">
+                    <div class="h-14 w-3 bg-green-500 rounded-full shadow-[0_0_20px_#00ff00]"></div>
+                    <h2
+                        class="text-4xl md:text-6xl font-black text-white italic tracking-tighter neon-text-green uppercase transition-all group-hover:pl-4">
+                        熱血戰鬥 <span
+                            class="text-sm font-mono not-italic text-green-500/50 block mt-2 tracking-[0.5em]">ACTION &
+                            COMBAT</span>
+                    </h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+
+
+                    <!-- THE LIGHT BRIGADE -->
+                    <div
+                        class="group glass rounded-[3rem] overflow-hidden flex flex-col hover:border-green-500/50 transition-all card-glow">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="assets/images/68cc92eb21e25726ec3b4c6a93bd0ffa.png"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                alt="The Light Brigade">
+                            <div class="absolute inset-x-6 bottom-6 flex flex-wrap gap-2">
+                                <span
+                                    class="px-3 py-1 bg-green-500/10 text-green-400 text-[10px] font-black tracking-widest rounded-lg border border-green-500/20 uppercase">ROGUE
+                                    LIKE</span>
+                                <span
+                                    class="px-3 py-1 bg-blue-500/10 text-blue-400 text-[10px] font-black tracking-widest rounded-lg border border-blue-500/20 uppercase">MR模式</span>
+                            </div>
+                        </div>
+                        <div class="p-8 flex flex-col flex-grow">
+                            <h3 class="text-2xl font-black text-white mb-4 uppercase">光之旅團</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
+                                極度推薦的單人肉鴿射擊。二戰槍枝結合魔法氣息。瞬移不暈，MR 模式帶你體驗不同的光影戰場。
+                            </p>
+                            <div class="flex flex-col gap-3">
+                                <div class="flex gap-4">
+                                    <a href="https://www.meta.com/zh-tw/experiences/the-light-brigade/2681027292004911/"
+                                        target="_blank"
+                                        class="w-full py-4 bg-green-500 text-black text-center font-black rounded-2xl shadow-lg hover:bg-green-400 transition-colors text-xs uppercase">前往商店</a>
+                                    <a href="https://www.youtube.com/watch?v=zbOZtWD8BzQ" target="_blank"
+                                        class="w-full py-4 bg-red-500/10 text-red-400 border border-red-500/50 text-center font-black rounded-2xl hover:bg-red-500 hover:text-white transition-all text-xs uppercase flex items-center justify-center gap-2">
+                                        <i data-lucide="youtube" class="w-4 h-4"></i>
+                                        <span>觀看介紹</span>
+                                    </a>
+                                </div>
+                                <a href="https://forum.gamer.com.tw/C.php?bsn=60606&snA=3330" target="_blank"
+                                    class="w-full py-3 bg-amber-500/10 text-amber-400 border border-amber-500/30 text-center font-bold rounded-xl hover:bg-amber-500 hover:text-black transition-all text-xs uppercase">
+                                    巴哈討論 (作者: oonakooo)
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Until You Fall -->
+                    <div
+                        class="group glass rounded-[3rem] overflow-hidden flex flex-col hover:border-green-500/50 transition-all card-glow">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="assets/images/92a20017f159d30a6210589aa6926dde.png"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                alt="Until You Fall">
+                            <div class="absolute inset-x-6 bottom-6 flex flex-wrap gap-2">
+                                <span
+                                    class="px-3 py-1 bg-green-500/10 text-green-400 text-[10px] font-black tracking-widest rounded-lg border border-green-500/20 uppercase">原地砍殺</span>
+                                <span
+                                    class="px-3 py-1 bg-red-500/10 text-red-400 text-[10px] font-black tracking-widest rounded-lg border border-red-500/20 uppercase">家具殺手</span>
+                            </div>
+                        </div>
+                        <div class="p-8 flex flex-col flex-grow">
+                            <h3 class="text-2xl font-black text-white mb-4 uppercase">Until You Fall</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
+                                Rogue-like 持續戰鬥升級。武器雙持，格擋殺敵。運動兼具，小心別把家裡的燈打壞了！
+                            </p>
+                            <div class="flex gap-4">
+                                <a href="https://www.meta.com/zh-tw/experiences/until-you-fall/2567459230020142/"
+                                    target="_blank"
+                                    class="w-full py-4 bg-green-500 text-black text-center font-black rounded-2xl shadow-lg hover:bg-green-400 transition-colors text-xs uppercase">前往商店</a>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 劍途 (Sword Path) -->
+                    <div
+                        class="group glass rounded-[3rem] overflow-hidden flex flex-col hover:border-green-500/50 transition-all card-glow">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="assets/images/0804a41075bdb5b2721d2e5c2888944a.png"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                alt="Sword of Path">
+                            <div class="absolute inset-x-6 bottom-6 flex flex-wrap gap-2">
+                                <span
+                                    class="px-3 py-1 bg-green-500/10 text-green-400 text-[10px] font-black tracking-widest rounded-lg border border-green-500/20 uppercase">武俠風格</span>
+                                <span
+                                    class="px-3 py-1 bg-blue-500/10 text-blue-400 text-[10px] font-black tracking-widest rounded-lg border border-blue-500/20 uppercase">心中有劍</span>
+                            </div>
+                        </div>
+                        <div class="p-8 flex flex-col flex-grow">
+                            <h3 class="text-2xl font-black text-white mb-4 uppercase">劍途 VR</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
+                                心中有劍，劍意隨行馳騁江湖。豪情共鳴，在虛擬世界中體驗武俠般的收割快感。
+                            </p>
+                            <div class="flex gap-4">
+                                <a href="https://www.meta.com/zh-tw/experiences/sword-path/5736173679792982/"
+                                    target="_blank"
+                                    class="w-full py-4 bg-green-500 text-black text-center font-black rounded-2xl shadow-lg hover:bg-green-400 transition-colors text-xs uppercase">前往商店</a>
+                                <a href="https://www.youtube.com/watch?v=kJegfTY5MKE" target="_blank"
+                                    class="w-full py-4 bg-red-500/10 text-red-400 border border-red-500/50 text-center font-black rounded-2xl hover:bg-red-500 hover:text-white transition-all text-xs uppercase flex items-center justify-center gap-2">
+                                    <i data-lucide="youtube" class="w-4 h-4"></i>
+                                    <span>觀看介紹</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- In Death: Unchained -->
+                    <div
+                        class="group glass rounded-[3rem] overflow-hidden flex flex-col hover:border-green-500/50 transition-all card-glow">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="https://truth.bahamut.com.tw/s01/202204/fa252d0d5bfa7b352c6ecd15c25342a1.JPG"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                alt="In Death: Unchained">
+                            <div class="absolute inset-x-6 bottom-6 flex flex-wrap gap-2">
+                                <span
+                                    class="px-3 py-1 bg-green-500/10 text-green-400 text-[10px] font-black tracking-widest rounded-lg border border-green-500/20 uppercase">弓箭射擊</span>
+                                <span
+                                    class="px-3 py-1 bg-blue-500/10 text-blue-400 text-[10px] font-black tracking-widest rounded-lg border border-blue-500/20 uppercase">中世紀</span>
+                            </div>
+                        </div>
+                        <div class="p-8 flex flex-col flex-grow">
+                            <h3 class="text-2xl font-black text-white mb-4 uppercase">In Death: Unchained</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
+                                中世紀風格的精緻華麗大作。手持弓箭在宏偉的城堡與天堂中戰鬥，畫面極度壯闊。
+                            </p>
+                            <div class="flex flex-col gap-3">
+                                <div class="flex gap-4">
+                                    <a href="https://www.meta.com/zh-tw/experiences/in-death-unchained/2334376869949242/"
+                                        target="_blank"
+                                        class="w-full py-4 bg-green-500 text-black text-center font-black rounded-2xl shadow-lg hover:bg-green-400 transition-colors text-xs uppercase">前往商店</a>
+                                    <a href="https://www.youtube.com/results?search_query=In+Death+Unchained+VR"
+                                        target="_blank"
+                                        class="w-full py-4 bg-red-500/10 text-red-400 border border-red-500/50 text-center font-black rounded-2xl hover:bg-red-500 hover:text-white transition-all text-xs uppercase flex items-center justify-center gap-2">
+                                        <i data-lucide="youtube" class="w-4 h-4"></i>
+                                        <span>搜尋影片</span>
+                                    </a>
+                                </div>
+                                <a href="https://forum.gamer.com.tw/C.php?bsn=60606&snA=2971" target="_blank"
+                                    class="w-full py-3 bg-amber-500/10 text-amber-400 border border-amber-500/30 text-center font-bold rounded-xl hover:bg-amber-500 hover:text-black transition-all text-xs uppercase">
+                                    巴哈討論 (作者: oonakooo)
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Zombieland -->
+                    <div
+                        class="group glass rounded-[3rem] overflow-hidden flex flex-col hover:border-green-500/50 transition-all card-glow">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="assets/images/378191b855fec328fa9106877ff03c79.jpg"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                alt="Zombieland">
+                            <div class="absolute inset-x-6 bottom-6 flex flex-wrap gap-2">
+                                <span
+                                    class="px-3 py-1 bg-green-500/10 text-green-400 text-[10px] font-black tracking-widest rounded-lg border border-green-500/20 uppercase">殭屍射擊</span>
+                                <span
+                                    class="px-3 py-1 bg-blue-500/10 text-blue-400 text-[10px] font-black tracking-widest rounded-lg border border-blue-500/20 uppercase">就地射擊不暈</span>
+                            </div>
+                        </div>
+                        <div class="p-8 flex flex-col flex-grow">
+                            <h3 class="text-2xl font-black text-white mb-4 uppercase">Zombieland: Headshot Fever</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
+                                暴頭觸發子彈時間，快感極佳。關卡式街機射擊，適合想體驗殭屍射擊但怕暈的人。
+                            </p>
+                            <div class="flex gap-4">
+                                <a href="https://www.meta.com/zh-tw/experiences/zombieland-headshot-fever/2792447070854484/"
+                                    target="_blank"
+                                    class="w-full py-4 bg-green-500 text-black text-center font-black rounded-2xl shadow-lg hover:bg-green-400 transition-colors text-xs uppercase">前往商店</a>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Crisis Brigade 2 -->
+                    <div
+                        class="group glass rounded-[3rem] overflow-hidden flex flex-col hover:border-green-500/50 transition-all card-glow">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="assets/images/78afd6089f47b18df6e259eafe5b0966.jpg"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                alt="Crisis Brigade 2">
+                            <div class="absolute inset-x-6 bottom-6 flex flex-wrap gap-2">
+                                <span
+                                    class="px-3 py-1 bg-green-500/10 text-green-400 text-[10px] font-black tracking-widest rounded-lg border border-green-500/20 uppercase">警匪射擊</span>
+                                <span
+                                    class="px-3 py-1 bg-blue-500/10 text-blue-400 text-[10px] font-black tracking-widest rounded-lg border border-blue-500/20 uppercase">雙人連線</span>
+                            </div>
+                        </div>
+                        <div class="p-8 flex flex-col flex-grow">
+                            <h3 class="text-2xl font-black text-white mb-4 uppercase">Crisis Brigade 2 reloaded</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
+                                原地射擊不暈，關卡式街機射擊。可購買新槍枝、盾牌等，與好友一起化身特警攻堅。
+                            </p>
+                            <div class="flex gap-4">
+                                <a href="https://www.meta.com/zh-tw/experiences/crisis-brigade-2-reloaded/5081572398619813/"
+                                    target="_blank"
+                                    class="w-full py-4 bg-green-500 text-black text-center font-black rounded-2xl shadow-lg hover:bg-green-400 transition-colors text-xs uppercase">前往商店</a>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CORRIDOR -->
+                    <div
+                        class="group glass rounded-[3rem] overflow-hidden flex flex-col hover:border-green-500/50 transition-all card-glow">
+                        <div class="relative h-64 overflow-hidden">
+                            <!-- Placeholder Image -->
+                            <img src="https://truth.bahamut.com.tw/s01/202503/forum/60606/64f688b5c297866a598b20188ad393ab.JPG"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                alt="CORRIDOR">
+                            <div class="absolute inset-x-6 bottom-6 flex flex-wrap gap-2">
+                                <span
+                                    class="px-3 py-1 bg-green-500/10 text-green-400 text-[10px] font-black tracking-widest rounded-lg border border-green-500/20 uppercase">寫實射擊</span>
+                                <span
+                                    class="px-3 py-1 bg-blue-500/10 text-blue-400 text-[10px] font-black tracking-widest rounded-lg border border-blue-500/20 uppercase">手槍專精</span>
+                            </div>
+                        </div>
+                        <div class="p-8 flex flex-col flex-grow">
+                            <h3 class="text-2xl font-black text-white mb-4 uppercase">CORRIDOR</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
+                                第一人稱射擊，以手槍為主。在迴廊中進行激烈的槍戰，考驗反應與精準度。
+                            </p>
+                            <div class="flex flex-col gap-3">
+                                <div class="flex gap-4">
+                                    <a href="https://www.meta.com/zh-tw/experiences/corridor/123456789/" target="_blank"
+                                        class="w-full py-4 bg-green-500 text-black text-center font-black rounded-2xl shadow-lg hover:bg-green-400 transition-colors text-xs uppercase">前往商店</a>
+
+                                </div>
+                                <a href="https://forum.gamer.com.tw/C.php?bsn=60606&snA=4518" target="_blank"
+                                    class="w-full py-3 bg-amber-500/10 text-amber-400 border border-amber-500/30 text-center font-bold rounded-xl hover:bg-amber-500 hover:text-black transition-all text-xs uppercase">
+                                    巴哈討論 (作者: oonakooo)
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SUPERHOT VR -->
+                    <div
+                        class="group glass rounded-[3rem] overflow-hidden flex flex-col hover:border-green-500/50 transition-all card-glow">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="assets/images/6de68ab86c827e88034fe259bd64c9da.jpg"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                alt="SUPERHOT">
+                            <div class="absolute inset-x-6 bottom-6 flex flex-wrap gap-2">
+                                <span
+                                    class="px-3 py-1 bg-green-500/10 text-green-400 text-[10px] font-black tracking-widest rounded-lg border border-green-500/20 uppercase">子彈時間</span>
+                                <span
+                                    class="px-3 py-1 bg-red-500/10 text-red-400 text-[10px] font-black tracking-widest rounded-lg border border-red-500/20 uppercase">家具殺手</span>
+                            </div>
+                        </div>
+                        <div class="p-8 flex flex-col flex-grow">
+                            <h3 class="text-2xl font-black text-white mb-4 uppercase">SUPERHOT VR</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
+                                經典中的經典！時間隨你而動。原地射擊不暈，爽感極佳，但大範圍動作也是著名的家具殺手。
+                            </p>
+                            <div class="flex gap-4">
+                                <a href="https://www.meta.com/zh-tw/experiences/superhot-vr/1921533091289407/"
+                                    target="_blank"
+                                    class="w-full py-4 bg-green-500 text-black text-center font-black rounded-2xl shadow-lg hover:bg-green-400 transition-colors text-xs uppercase">前往商店</a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- Category: Fitness & Sports -->
+            <section id="fitness" class="mb-32 px-4">
+                <div class="flex items-center space-x-6 mb-16 group">
+                    <div class="h-14 w-3 bg-blue-500 rounded-full shadow-[0_0_20px_#3b82f6]"></div>
+                    <h2
+                        class="text-4xl md:text-6xl font-black text-white italic tracking-tighter uppercase transition-all group-hover:pl-4 font-mono">
+                        運動健身 <span
+                            class="text-sm font-mono not-italic text-blue-500/50 block mt-2 tracking-[0.5em]">FITNESS
+                            &
+                            SPORTS</span>
+                    </h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                    <!-- Bodycombat -->
+                    <div
+                        class="group glass rounded-[3rem] overflow-hidden flex flex-col hover:border-blue-500/50 transition-all card-glow">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="assets/images/f01071222da5aec722bb7be1b5798779.jpg"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                alt="Bodycombat">
+                            <div class="absolute inset-x-6 bottom-6 flex flex-wrap gap-2">
+                                <span
+                                    class="px-3 py-1 bg-blue-500/10 text-blue-400 text-[10px] font-black tracking-widest rounded-lg border border-blue-500/20 uppercase">最強運動</span>
+                                <span
+                                    class="px-3 py-1 bg-green-500/10 text-green-400 text-[10px] font-black tracking-widest rounded-lg border border-green-500/20 uppercase">買斷制</span>
+                            </div>
+                        </div>
+                        <div class="p-8 flex flex-col flex-grow">
+                            <h3 class="text-2xl font-black text-white mb-4 uppercase">LES MILLS BODYCOMBAT</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
+                                健身節奏拳擊之王。專業教練帶領，汗水絕不白流！運動首推神作。
+                            </p>
+                            <div class="flex flex-col gap-3">
+                                <div class="flex gap-4">
+                                    <a href="https://www.meta.com/zh-tw/experiences/les-mills-bodycombat/4015163475201433/"
+                                        target="_blank"
+                                        class="w-full py-4 bg-green-500 text-black text-center font-black rounded-2xl shadow-lg hover:bg-green-400 transition-colors text-xs uppercase">前往商店</a>
+
+                                </div>
+                                <a href="https://forum.gamer.com.tw/C.php?bsn=60606&snA=3305" target="_blank"
+                                    class="w-full py-3 bg-amber-500/10 text-amber-400 border border-amber-500/30 text-center font-bold rounded-xl hover:bg-amber-500 hover:text-black transition-all text-xs uppercase">
+                                    巴哈討論 (作者: oonakooo)
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- All In One Sports -->
+                    <div
+                        class="group glass rounded-[3rem] overflow-hidden flex flex-col hover:border-blue-500/50 transition-all card-glow">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="assets/images/30940960e1dd3d553364ed51fda4059a.png"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                alt="All in One Sports">
+                            <div class="absolute inset-x-6 bottom-6 flex flex-wrap gap-2">
+                                <span
+                                    class="px-3 py-1 bg-green-500/10 text-green-400 text-[10px] font-black tracking-widest rounded-lg border border-green-500/20 uppercase">13種運動</span>
+                                <span
+                                    class="px-3 py-1 bg-blue-500/10 text-blue-400 text-[10px] font-black tracking-widest rounded-lg border border-blue-500/20 uppercase">CP值之王</span>
+                            </div>
+                        </div>
+                        <div class="p-8 flex flex-col flex-grow">
+                            <h3 class="text-2xl font-black text-white mb-4 uppercase">All In One Sports VR</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
+                                真的太推了！棒球、羽球、射箭通通有。一票玩到底，家庭聚會首選。
+                            </p>
+                            <div class="flex gap-4">
+                                <a href="https://www.meta.com/zh-tw/experiences/all-in-one-sports-vr/3840611616056575/"
+                                    target="_blank"
+                                    class="w-full py-4 bg-green-500 text-black text-center font-black rounded-2xl shadow-lg hover:bg-green-400 transition-colors text-xs uppercase">前往商店</a>
+                                <a href="https://www.youtube.com/watch?v=7OPwVzbi9rM" target="_blank"
+                                    class="w-full py-4 bg-red-500/10 text-red-400 border border-red-500/50 text-center font-black rounded-2xl hover:bg-red-500 hover:text-white transition-all text-xs uppercase flex items-center justify-center gap-2">
+                                    <i data-lucide="youtube" class="w-4 h-4"></i>
+                                    <span>觀看介紹</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Racket Nx -->
+                    <div
+                        class="group glass rounded-[3rem] overflow-hidden flex flex-col hover:border-blue-500/50 transition-all card-glow">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="assets/images/02cf320bb1c9ff8ccfca3502c58de90b.webp"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                alt="Racket Nx">
+                            <div class="absolute inset-x-6 bottom-6 flex flex-wrap gap-2">
+                                <span
+                                    class="px-3 py-1 bg-green-500/10 text-green-400 text-[10px] font-black tracking-widest rounded-lg border border-green-500/20 uppercase">360度壁球</span>
+                                <span
+                                    class="px-3 py-1 bg-red-500/10 text-red-400 text-[10px] font-black tracking-widest rounded-lg border border-red-500/20 uppercase">家具殺手</span>
+                            </div>
+                        </div>
+                        <div class="p-8 flex flex-col flex-grow">
+                            <h3 class="text-2xl font-black text-white mb-4 uppercase">Racket: Nx</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
+                                爽快的打擊感，配合 360 度空間音脈。極佳沉浸體驗，但大幅動作要小心家具。
+                            </p>
+                            <div class="flex gap-4">
+                                <a href="https://www.meta.com/zh-tw/experiences/racket-nx/2255408847836468/"
+                                    target="_blank"
+                                    class="w-full py-4 bg-green-500 text-black text-center font-black rounded-2xl shadow-lg hover:bg-green-400 transition-colors text-xs uppercase">前往商店</a>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Walkabout Mini Golf -->
+                    <div
+                        class="group glass rounded-[3rem] overflow-hidden flex flex-col hover:border-blue-500/50 transition-all card-glow">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="assets/images/9c8538da6444551bd996c6789865bd1c.png"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                alt="Walkabout Mini Golf">
+                            <div class="absolute inset-x-6 bottom-6 flex flex-wrap gap-2">
+                                <span
+                                    class="px-3 py-1 bg-green-500/10 text-green-400 text-[10px] font-black tracking-widest rounded-lg border border-green-500/20 uppercase">迷你高爾夫</span>
+                                <span
+                                    class="px-3 py-1 bg-blue-500/10 text-blue-400 text-[10px] font-black tracking-widest rounded-lg border border-blue-500/20 uppercase">邊聊邊打</span>
+                            </div>
+                        </div>
+                        <div class="p-8 flex flex-col flex-grow">
+                            <h3 class="text-2xl font-black text-white mb-4 uppercase">Walkabout Mini Golf</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
+                                超多樣式的球桿與球。風景壯闊美麗。找個朋友一起挑戰桿數，享受最輕鬆的社交時光。
+                            </p>
+                            <div class="flex gap-4">
+                                <a href="https://www.meta.com/zh-tw/experiences/walkabout-mini-golf/2462678267173943/"
+                                    target="_blank"
+                                    class="w-full py-4 bg-green-500 text-black text-center font-black rounded-2xl shadow-lg hover:bg-green-400 transition-colors text-xs uppercase">前往商店</a>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ArrowHead -->
+                    <div
+                        class="group glass rounded-[3rem] overflow-hidden flex flex-col hover:border-green-500/50 transition-all card-glow">
+                        <div class="relative h-64 overflow-hidden">
+                            <!-- Placeholder Image -->
+                            <img src="https://www.678vr.com/wp-content/uploads/2022/01/1643446683-8009bbb3ca44671.jpg"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                alt="ArrowHead">
+                            <div class="absolute inset-x-6 bottom-6 flex flex-wrap gap-2">
+                                <span
+                                    class="px-3 py-1 bg-green-500/10 text-green-400 text-[10px] font-black tracking-widest rounded-lg border border-green-500/20 uppercase">弓箭運動</span>
+                            </div>
+                        </div>
+                        <div class="p-8 flex flex-col flex-grow">
+                            <h3 class="text-2xl font-black text-white mb-4 uppercase">ArrowHead</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
+                                結合弓箭與運動的遊戲。在這裡你可以享受射箭的樂趣，同時達到運動的效果。
+                            </p>
+                            <div class="flex flex-col gap-3">
+                                <div class="flex gap-4">
+                                    <a href="https://www.meta.com/zh-tw/experiences/arrowhead/123456789/"
+                                        target="_blank"
+                                        class="w-full py-4 bg-green-500 text-black text-center font-black rounded-2xl shadow-lg hover:bg-green-400 transition-colors text-xs uppercase">前往商店</a>
+
+                                </div>
+                                <a href="https://forum.gamer.com.tw/C.php?bsn=60606&snA=2998" target="_blank"
+                                    class="w-full py-3 bg-amber-500/10 text-amber-400 border border-amber-500/30 text-center font-bold rounded-xl hover:bg-amber-500 hover:text-black transition-all text-xs uppercase">
+                                    巴哈討論 (作者: oonakooo)
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Clay Hunt VR -->
+                    <div
+                        class="group glass rounded-[3rem] overflow-hidden flex flex-col hover:border-green-500/50 transition-all card-glow">
+                        <div class="relative h-64 overflow-hidden">
+                            <!-- Placeholder Image -->
+                            <img src="assets/images/clayhunt.png"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                alt="Clay Hunt VR">
+                            <div class="absolute inset-x-6 bottom-6 flex flex-wrap gap-2">
+                                <span
+                                    class="px-3 py-1 bg-green-500/10 text-green-400 text-[10px] font-black tracking-widest rounded-lg border border-green-500/20 uppercase">飛靶射擊</span>
+                                <span
+                                    class="px-3 py-1 bg-blue-500/10 text-blue-400 text-[10px] font-black tracking-widest rounded-lg border border-blue-500/20 uppercase">擬真運動</span>
+                            </div>
+                        </div>
+                        <div class="p-8 flex flex-col flex-grow">
+                            <h3 class="text-2xl font-black text-white mb-4 uppercase">Clay Hunt VR</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
+                                擬真的飛靶運動射擊！體驗真實的物理彈道與射擊手感，是喜愛射擊運動玩家的首選。
+                            </p>
+                            <div class="flex flex-col gap-3">
+                                <div class="flex gap-4">
+                                    <a href="https://www.meta.com/zh-tw/experiences/clay-hunt-vr/123456789/"
+                                        target="_blank"
+                                        class="w-full py-4 bg-green-500 text-black text-center font-black rounded-2xl shadow-lg hover:bg-green-400 transition-colors text-xs uppercase">前往商店</a>
+
+                                </div>
+                                <a href="https://forum.gamer.com.tw/C.php?bsn=60606&snA=4537" target="_blank"
+                                    class="w-full py-3 bg-amber-500/10 text-amber-400 border border-amber-500/30 text-center font-bold rounded-xl hover:bg-amber-500 hover:text-black transition-all text-xs uppercase">
+                                    巴哈討論 (作者: oonakooo)
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Category: Casual & Explore -->
+            <section id="casual" class="mb-32 px-4">
+                <div class="flex items-center space-x-6 mb-16 group">
+                    <div class="h-14 w-3 bg-purple-500 rounded-full shadow-[0_0_20px_#a855f7]"></div>
+                    <h2
+                        class="text-4xl md:text-6xl font-black text-white italic tracking-tighter uppercase transition-all group-hover:pl-4 font-mono">
+                        療癒休閒 <span
+                            class="text-sm font-mono not-italic text-purple-500/50 block mt-2 tracking-[0.5em]">CASUAL
+                            &
+                            EXPLORE</span>
+                    </h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                    <!-- Cook-Out -->
+                    <div
+                        class="group glass rounded-[3rem] overflow-hidden flex flex-col hover:border-purple-500/50 transition-all card-glow">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="assets/images/cfa7cce84093e1a94420ef1afb412812.jpeg"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                alt="Cook-Out">
+                            <div class="absolute inset-x-6 bottom-6 flex flex-wrap gap-2">
+                                <span
+                                    class="px-3 py-1 bg-green-500/10 text-green-400 text-[10px] font-black tracking-widest rounded-lg border border-green-500/20 uppercase">VR過頭</span>
+                                <span
+                                    class="px-3 py-1 bg-blue-500/10 text-blue-400 text-[10px] font-black tracking-widest rounded-lg border border-blue-500/20 uppercase">多人連線</span>
+                            </div>
+                        </div>
+                        <div class="p-8 flex flex-col flex-grow">
+                            <h3 class="text-2xl font-black text-white mb-4 uppercase">Cook-Out</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
+                                擠醬料、切菜都要親力親為。與朋友分工（或是吵架），體驗極度混亂與極度歡樂的烹飪時光。
+                            </p>
+                            <div class="flex gap-4">
+                                <a href="https://www.meta.com/zh-tw/experiences/cook-out/2004166236352892/"
+                                    target="_blank"
+                                    class="w-full py-4 bg-green-500 text-black text-center font-black rounded-2xl shadow-lg hover:bg-green-400 transition-colors text-xs uppercase">前往商店</a>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Real VR Fishing -->
+                    <div
+                        class="group glass rounded-[3rem] overflow-hidden flex flex-col hover:border-purple-500/50 transition-all card-glow">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="assets/images/3af531798e455847f9db7ace03102ecb.webp"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                alt="Real VR Fishing">
+                            <div class="absolute inset-x-6 bottom-6 flex flex-wrap gap-2">
+                                <span
+                                    class="px-3 py-1 bg-green-500/10 text-green-400 text-[10px] font-black tracking-widest rounded-lg border border-green-500/20 uppercase">真實場景</span>
+                                <span
+                                    class="px-3 py-1 bg-blue-500/10 text-blue-400 text-[10px] font-black tracking-widest rounded-lg border border-blue-500/20 uppercase">放鬆首選</span>
+                            </div>
+                        </div>
+                        <div class="p-8 flex flex-col flex-grow">
+                            <h3 class="text-2xl font-black text-white mb-4 uppercase">Real VR Fishing</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
+                                最真實的釣魚模擬器。地圖如畫般美麗，還能開 YouTube 播音樂，享受一個人的寧靜或者是雙人釣魚的樂趣。
+                            </p>
+                            <div class="flex gap-4">
+                                <a href="https://www.meta.com/zh-tw/experiences/real-vr-fishing/2582932495064035/"
+                                    target="_blank"
+                                    class="w-full py-4 bg-green-500 text-black text-center font-black rounded-2xl shadow-lg hover:bg-green-400 transition-colors text-xs uppercase">前往商店</a>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Garden of the Sea -->
+                    <div
+                        class="group glass rounded-[3rem] overflow-hidden flex flex-col hover:border-purple-500/50 transition-all card-glow">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="assets/images/569342e6bc0be935088669729a4659d4.png"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                alt="Garden of the Sea">
+                            <div class="absolute inset-x-6 bottom-6 flex flex-wrap gap-2">
+                                <span
+                                    class="px-3 py-1 bg-green-500/10 text-green-400 text-[10px] font-black tracking-widest rounded-lg border border-green-500/20 uppercase">農場經營</span>
+                                <span
+                                    class="px-3 py-1 bg-blue-500/10 text-blue-400 text-[10px] font-black tracking-widest rounded-lg border border-blue-500/20 uppercase">療癒生物</span>
+                            </div>
+                        </div>
+                        <div class="p-8 flex flex-col flex-grow">
+                            <h3 class="text-2xl font-black text-white mb-4 uppercase">Garden of the Sea</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
+                                在神秘小島上經營你的花園。培育植物、與療癒生物互動。駕船探索未知海域，尋找珍貴物資。
+                            </p>
+                            <div class="flex gap-4">
+                                <a href="https://www.meta.com/zh-tw/experiences/garden-of-the-sea/3684804191535594/"
+                                    target="_blank"
+                                    class="w-full py-4 bg-green-500 text-black text-center font-black rounded-2xl shadow-lg hover:bg-green-400 transition-colors text-xs uppercase">前往商店</a>
+                                <a href="https://www.youtube.com/results?search_query=鴨先生與兔小姐+Garden+of+the+Sea"
+                                    target="_blank"
+                                    class="w-full py-4 bg-red-500/10 text-red-400 border border-red-500/50 text-center font-black rounded-2xl hover:bg-red-500 hover:text-white transition-all text-xs uppercase flex items-center justify-center gap-2">
+                                    <i data-lucide="youtube" class="w-4 h-4"></i>
+                                    <span>觀看介紹</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Spacefolk City -->
+                    <div
+                        class="group glass rounded-[3rem] overflow-hidden flex flex-col hover:border-purple-500/50 transition-all card-glow">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="assets/images/6135635156fe6e5a8d7347e2dd0d0597.png"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                alt="Spacefolk City">
+                            <div class="absolute inset-x-6 bottom-6 flex flex-wrap gap-2">
+                                <span
+                                    class="px-3 py-1 bg-green-500/10 text-green-400 text-[10px] font-black tracking-widest rounded-lg border border-green-500/20 uppercase">模擬經營</span>
+                                <span
+                                    class="px-3 py-1 bg-blue-500/10 text-blue-400 text-[10px] font-black tracking-widest rounded-lg border border-blue-500/20 uppercase">俏皮畫風</span>
+                            </div>
+                        </div>
+                        <div class="p-8 flex flex-col flex-grow">
+                            <h3 class="text-2xl font-black text-white mb-4 uppercase">Spacefolk City</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
+                                外星人版模擬市民。在宇宙舞台中經營你的聚落。充滿趣味的 VR 互動與古靈精怪的居民。
+                            </p>
+                            <div class="flex gap-4">
+                                <a href="https://www.meta.com/zh-tw/experiences/spacefolk-city/4037563126301389/"
+                                    target="_blank"
+                                    class="w-full py-4 bg-green-500 text-black text-center font-black rounded-2xl shadow-lg hover:bg-green-400 transition-colors text-xs uppercase">前往商店</a>
+                                <a href="https://www.youtube.com/results?search_query=鴨先生與兔小姐+Spacefolk+City"
+                                    target="_blank"
+                                    class="w-full py-4 bg-red-500/10 text-red-400 border border-red-500/50 text-center font-black rounded-2xl hover:bg-red-500 hover:text-white transition-all text-xs uppercase flex items-center justify-center gap-2">
+                                    <i data-lucide="youtube" class="w-4 h-4"></i>
+                                    <span>觀看介紹</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Puzzling Places -->
+                    <div
+                        class="group glass rounded-[3rem] overflow-hidden flex flex-col hover:border-purple-500/50 transition-all card-glow">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="assets/images/4bb7a6c48517fac69a59a5a234dce7a5.jpg"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                alt="Puzzling Places">
+                            <div class="absolute inset-x-6 bottom-6 flex flex-wrap gap-2">
+                                <span
+                                    class="px-3 py-1 bg-green-500/10 text-green-400 text-[10px] font-black tracking-widest rounded-lg border border-green-500/20 uppercase">3D拼圖</span>
+                                <span
+                                    class="px-3 py-1 bg-blue-500/10 text-blue-400 text-[10px] font-black tracking-widest rounded-lg border border-blue-500/20 uppercase">MR模式</span>
+                            </div>
+                        </div>
+                        <div class="p-8 flex flex-col flex-grow">
+                            <h3 class="text-2xl font-black text-white mb-4 uppercase">Puzzling Places</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
+                                極度擬真的立體拼圖。支援多人合作，且 MR 模式效果極佳。在你的客廳中拼起整個世界。
+                            </p>
+                            <div class="flex gap-4">
+                                <a href="https://www.meta.com/zh-tw/experiences/puzzling-places/3931148300302917/"
+                                    target="_blank"
+                                    class="w-full py-4 bg-green-500 text-black text-center font-black rounded-2xl shadow-lg hover:bg-green-400 transition-colors text-xs uppercase">前往商店</a>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Wander -->
+                    <div
+                        class="group glass rounded-[3rem] overflow-hidden flex flex-col hover:border-purple-500/50 transition-all card-glow">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="assets/images/8d927e117e307228819c2a936d10f945.png"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                alt="Wander">
+                            <div class="absolute inset-x-6 bottom-6 flex flex-wrap gap-2">
+                                <span
+                                    class="px-3 py-1 bg-green-500/10 text-green-400 text-[10px] font-black tracking-widest rounded-lg border border-green-500/20 uppercase">足不出戶</span>
+                                <span
+                                    class="px-3 py-1 bg-blue-500/10 text-blue-400 text-[10px] font-black tracking-widest rounded-lg border border-blue-500/20 uppercase">環遊世界</span>
+                            </div>
+                        </div>
+                        <div class="p-8 flex flex-col flex-grow">
+                            <h3 class="text-2xl font-black text-white mb-4 uppercase">Wander</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
+                                來一段說走就走的旅行！足不出戶看遍世界美景。結合 Google 街景，沉浸感滿分。
+                            </p>
+                            <div class="flex gap-4">
+                                <a href="https://www.meta.com/zh-tw/experiences/wander/1865816513434315/"
+                                    target="_blank"
+                                    class="w-full py-4 bg-green-500 text-black text-center font-black rounded-2xl shadow-lg hover:bg-green-400 transition-colors text-xs uppercase">前往商店</a>
+                                <a href="https://www.youtube.com/results?search_query=鴨先生與兔小姐+Wander" target="_blank"
+                                    class="w-full py-4 bg-red-500/10 text-red-400 border border-red-500/50 text-center font-black rounded-2xl hover:bg-red-500 hover:text-white transition-all text-xs uppercase flex items-center justify-center gap-2">
+                                    <i data-lucide="youtube" class="w-4 h-4"></i>
+                                    <span>觀看介紹</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: Pro Tips & Discounts -->
+            <section id="pro-tips" class="mb-32">
+                <div
+                    class="glass p-12 rounded-[3.5rem] border border-green-500/20 relative overflow-hidden bg-gradient-to-br from-green-500/5 to-transparent">
+                    <div class="absolute top-0 right-0 p-12 opacity-5 pointer-events-none">
+                        <i data-lucide="award" class="w-64 h-64 text-green-400"></i>
+                    </div>
+
+                    <div class="relative z-10 flex flex-col lg:flex-row lg:items-center gap-12">
+                        <div class="lg:w-1/3">
+                            <h2
+                                class="text-4xl font-black text-white mb-6 uppercase tracking-tight italic leading-tight">
+                                買遊戲省錢 <br><span class="text-green-400">大師課</span></h2>
+                            <p class="text-slate-400 leading-relaxed mb-8">
+                                遊戲想買但嫌貴？別急著刷下去。我們幫你整理了 META 平台的特價攻略與折扣碼集合，聰明消費才能玩更多！
+                            </p>
+                        </div>
+
+                        <div class="lg:w-2/3 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <a href="https://www.youtube.com/watch?v=LTQFMSECeaI" target="_blank"
+                                class="glass p-6 rounded-2xl border border-white/5 hover:border-green-400/30 transition-all group flex items-start space-x-4">
+                                <div
+                                    class="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                                    <i data-lucide="percent" class="w-6 h-6 text-green-400"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-white font-bold mb-2">特價網站 & 折扣碼</h4>
+                                    <p class="text-xs text-slate-500 font-medium tracking-wide">折扣碼集合大放送。</p>
+                                </div>
+                            </a>
+
+                            <a href="https://www.youtube.com/watch?v=xplFZRZFMsM" target="_blank"
+                                class="glass p-6 rounded-2xl border border-white/5 hover:border-green-400/30 transition-all group flex items-start space-x-4">
+                                <div
+                                    class="w-10 h-10 bg-red-500/20 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                                    <i data-lucide="tag" class="w-6 h-6 text-red-400"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-white font-bold mb-2">特價推薦清單</h4>
+                                    <p class="text-xs text-slate-500 font-medium tracking-wide">季特賣必入手神作。</p>
+                                </div>
+                            </a>
+
+                            <a href="https://www.youtube.com/watch?v=eFdJ4UCJU-A" target="_blank"
+                                class="glass p-6 rounded-2xl border border-white/5 hover:border-green-400/30 transition-all group flex items-start space-x-4">
+                                <div
+                                    class="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                                    <i data-lucide="target" class="w-6 h-6 text-blue-400"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-white font-bold mb-2">戰術射擊專題</h4>
+                                    <p class="text-xs text-slate-500 font-medium tracking-wide">沉浸式 CQB 巔峰體驗。</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" onclick="scrollToTop()"
+        class="fixed bottom-8 right-8 bg-green-500 text-black p-4 rounded-full shadow-[0_0_20px_rgba(34,197,94,0.6)] hover:bg-green-400 hover:scale-110 transition-all z-50 opacity-0 translate-y-10 pointer-events-none">
+        <i data-lucide="arrow-up" class="w-8 h-8"></i>
+    </button>
+
+    <footer class="py-24 px-6 border-t border-white/5 text-center relative z-10">
+        <p class="text-sm text-slate-500 tracking-widest font-bold">© 2023 鴨先生與兔小姐 — <span
+                class="text-slate-300 font-black font-mono">虛擬次元的絕對攻略領航員</span></p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

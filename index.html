@@ -1,152 +1,50 @@
 <!DOCTYPE html>
 <html lang="zh-TW" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>鴨先生與兔小姐的 VR 攻略站</title>
-
-    <!-- 社群分享預覽設定 -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://duck-and-rabbit-vr.station">
-    <meta property="og:title" content="鴨先生與兔小姐的 VR 攻略站">
-    <meta property="og:description" content="Meta Quest 專業購機指南、配件開箱與極致沉浸遊戲評測。陪伴玩家玩得聰明、玩得開心！">
-    <meta property="og:image" content="https://images.unsplash.com/photo-1622979135225-d2ba2697133e?auto=format&fit=crop&q=80&w=1200&h=630">
-
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@700&family=Noto+Sans+TC:wght@400;700;900&display=swap');
-        
-        :root {
-            --neon-green: #00ff00;
-            --deep-blue: #05051a;
-        }
-
-        body { 
-            font-family: 'Inter', 'Noto Sans TC', sans-serif; 
-            background-color: var(--deep-blue);
-            color: white;
-        }
-
-        /* 全域玻璃質感升級 */
-        .glass { 
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01));
-            backdrop-filter: blur(20px); 
-            border: 1px solid rgba(0, 255, 0, 0.2); 
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
-        }
-
-        .neon-border-green { 
-            border: 2px solid rgba(0, 255, 0, 0.4); 
-            box-shadow: 0 0 30px rgba(0, 255, 0, 0.1), inset 0 0 15px rgba(0, 255, 0, 0.02); 
-        }
-        
-        .neon-text-green { color: var(--neon-green); text-shadow: 0 0 12px rgba(0, 255, 0, 0.6); }
-
-        /* 數位雨 Canvas 樣式 */
-        #matrix-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            opacity: 0.25;
-            pointer-events: none;
-        }
-
-        .sync-pulse {
-            animation: pulseSync 0.45s ease-in-out infinite alternate;
-        }
-
-        @keyframes pulseSync {
-            from { opacity: 0.5; transform: scale(0.98); }
-            to { opacity: 1; transform: scale(1.02); }
-        }
-
-        .dropdown-content {
-            display: none;
-            opacity: 0;
-            transform: translateY(-10px);
-            transition: all 0.3s ease;
-        }
-        .dropdown-content.show {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .explore-link {
-            font-size: 9px;
-            letter-spacing: 0.3em;
-            font-weight: 900;
-            text-transform: uppercase;
-        }
-
-        .feature-card {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-            cursor: pointer;
-        }
-        .feature-card:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(0, 255, 0, 0.5);
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-        }
-
-        .title-render-fix {
-            padding-left: 0.1em;
-            padding-right: 0.2em;
-            display: inline-block;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body class="selection:bg-green-500/30 selection:text-green-400 overflow-x-hidden">
 
     <canvas id="matrix-canvas"></canvas>
 
-    <!-- 導覽列 -->
+    <!-- Nav Support -->
     <nav id="navbar" class="fixed w-full z-[100] transition-all duration-500 py-8">
         <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
-            <!-- 品牌標誌 -->
-            <div class="flex items-center space-x-4 group cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
-                <div class="bg-gradient-to-br from-green-400 to-green-700 p-2.5 rounded-xl group-hover:rotate-12 transition-all shadow-[0_0_20px_rgba(34,211,238,0.4)]">
+            <div class="flex items-center space-x-4 group cursor-pointer"
+                onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                <div
+                    class="bg-gradient-to-br from-green-400 to-green-700 p-2.5 rounded-xl group-hover:rotate-12 transition-all shadow-[0_0_20px_rgba(34,211,238,0.4)]">
                     <i data-lucide="gamepad-2" class="text-white w-8 h-8"></i>
                 </div>
                 <div class="flex flex-col leading-none">
-                    <span class="text-2xl font-black tracking-tighter text-white uppercase font-mono">Duck & Rabbit</span>
-                    <span class="text-[12px] font-bold tracking-[0.4em] text-green-400 uppercase">VR Guide Station</span>
+                    <span class="text-2xl font-black tracking-tighter text-white uppercase font-mono">Duck &
+                        Rabbit</span>
+                    <span class="text-[12px] font-bold tracking-[0.4em] text-green-400 uppercase">VR Guide
+                        Station</span>
                 </div>
             </div>
-            
+
             <div class="hidden lg:flex items-center space-x-10">
-                <a href="https://mrduck.my.canva.site/drvr" target="_blank" class="text-sm font-black tracking-[0.2em] text-green-400 hover:text-white transition-colors uppercase flex items-center">
-                    <i data-lucide="gift" class="w-4 h-4 mr-2"></i>
-                    <span>推薦金領取</span>
+                <a href="welcome.html"
+                    class="text-sm font-black tracking-[0.2em] text-yellow-400 hover:text-yellow-300 transition-colors uppercase flex items-center">
+                    <i data-lucide="gift" class="w-4 h-4 mr-2"></i>購機前攻略 (領$60)
                 </a>
-                <a href="#guide" class="text-sm font-black tracking-[0.2em] text-slate-100 hover:text-green-400 transition-colors uppercase">VR 攻略全書</a>
-                <button onclick="window.open('https://mrduck.my.canva.site/drvr', '_blank')" class="bg-green-500 hover:bg-green-400 text-black px-8 py-3 rounded-full text-sm font-black transition-all shadow-lg shadow-green-500/30">立即購機攻略</button>
-                
-                <!-- 漢堡選單 (快速導航) -->
-                <div class="relative group">
-                    <button id="dropdownBtn" class="p-2 text-slate-100 hover:text-green-400 border border-white/10 rounded-xl glass">
-                        <i data-lucide="menu" class="w-6 h-6"></i>
-                    </button>
-                    <div id="dropdownMenu" class="dropdown-content absolute top-full mt-4 right-0 w-64 glass border border-green-500/30 rounded-2xl overflow-hidden shadow-2xl">
-                        <div class="px-6 py-3 bg-green-500/10 text-[10px] font-bold text-green-400 tracking-widest border-b border-white/5 uppercase font-mono">Quick Navigation</div>
-                        <a href="https://mrduck.my.canva.site/drvr" target="_blank" class="block px-6 py-4 text-xs font-bold hover:bg-green-500/20 hover:text-green-400 border-b border-white/5">新手入坑必看</a>
-                        <a href="https://mrduck.my.canva.site/drvr" target="_blank" class="block px-6 py-4 text-xs font-bold hover:bg-green-500/20 hover:text-green-400 border-b border-white/5">推薦金領取教學</a>
-                        <a href="#" class="block px-6 py-4 text-xs font-bold hover:bg-green-500/20 hover:text-green-400 border-b border-white/5 font-mono tracking-tighter text-[10px]">DRVR 武裝模組重構中</a>
-                        <a href="#" class="block px-6 py-4 text-xs font-bold hover:bg-green-500/20 hover:text-green-400">聯繫鴨兔領航員</a>
-                    </div>
-                </div>
+                <a href="games.html"
+                    class="text-sm font-black tracking-[0.2em] text-slate-100 hover:text-green-400 transition-colors uppercase">熱門遊戲推薦</a>
+                <a href="subscription.html"
+                    class="text-sm font-black tracking-[0.2em] text-slate-100 hover:text-green-400 transition-colors uppercase">訂閱攻略</a>
+                <a href="community.html"
+                    class="text-sm font-black tracking-[0.2em] text-slate-100 hover:text-green-400 transition-colors uppercase">網路資源</a>
             </div>
-            
+
             <button class="lg:hidden text-white p-2" onclick="toggleMobileMenu()">
                 <i data-lucide="menu" id="menuIcon" class="w-8 h-8"></i>
             </button>
@@ -154,269 +52,192 @@
     </nav>
 
     <!-- Mobile Menu -->
-    <div id="mobileMenu" class="fixed inset-0 z-[200] bg-blue-950/95 backdrop-blur-2xl hidden flex-col p-8 transition-all duration-300 opacity-0">
+    <div id="mobileMenu"
+        class="fixed inset-0 z-[200] bg-blue-950/95 backdrop-blur-2xl hidden flex-col p-8 transition-all duration-300 opacity-0">
         <div class="flex justify-between items-center mb-12">
             <span class="font-black text-2xl tracking-tighter text-green-400 font-mono">SYSTEM_MENU</span>
             <button onclick="toggleMobileMenu()"><i data-lucide="x" class="w-10 h-10 text-white"></i></button>
         </div>
         <div class="flex flex-col space-y-10">
-            <a href="#guide" onclick="toggleMobileMenu()" class="text-3xl font-black text-white">VR 攻略全書</a>
-            <a href="https://mrduck.my.canva.site/drvr" target="_blank" class="text-3xl font-black text-green-400">推薦金領取</a>
-            <a href="https://mrduck.my.canva.site/drvr" target="_blank" class="text-3xl font-black text-green-400">新手教學</a>
-            <a href="#" class="text-3xl font-black text-green-400 font-mono text-2xl uppercase">DRVR Reset</a>
+            <a href="welcome.html" onclick="toggleMobileMenu()"
+                class="text-3xl font-black text-yellow-400 hover:text-yellow-300">購機前攻略 (領$60)</a>
+            <a href="games.html" onclick="toggleMobileMenu()" class="text-3xl font-black text-white">熱門遊戲推薦</a>
+            <a href="subscription.html" onclick="toggleMobileMenu()" class="text-3xl font-black text-white">訂閱攻略</a>
+            <a href="community.html" onclick="toggleMobileMenu()" class="text-3xl font-black text-white">網路資源</a>
         </div>
     </div>
 
-    <!-- 主頁面 Home Page -->
-    <main id="home-page" class="relative z-10">
-        <!-- Hero Section -->
-        <header class="relative pt-64 pb-32 px-6 text-center">
-            <div class="max-w-5xl mx-auto">
-                <div class="inline-flex items-center space-x-3 bg-green-500/20 border-2 border-green-500/40 px-6 py-3 rounded-full mb-10 backdrop-blur-md">
-                    <i data-lucide="gift" class="w-5 h-5 text-green-400"></i>
-                    <span class="text-sm font-black tracking-[0.2em] text-green-100 uppercase">新玩家 30 美金推薦金領取</span>
+    <!-- Hero Section -->
+    <section class="relative pt-24 pb-4 px-6 overflow-hidden">
+        <div class="relative z-10 max-w-4xl mx-auto text-center">
+            <div
+                class="inline-flex items-center space-x-3 bg-white/5 border border-white/10 px-4 py-2 rounded-full mb-6 backdrop-blur-md">
+                <span class="relative flex h-2 w-2">
+                    <span
+                        class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                </span>
+                <span class="text-xs font-black tracking-[0.2em] text-white/80 uppercase">VIRTUAL ACCESS GRANTED</span>
+            </div>
+
+            <h1 class="text-5xl md:text-7xl font-black text-white mb-6 tracking-tighter leading-none">
+                鴨先生與兔小姐的 <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-green-600">VR
+                    世界</span>
+            </h1>
+
+            <p class="text-lg text-slate-400 mb-0 max-w-xl mx-auto leading-relaxed font-medium">
+                歡迎光臨鴨先生與兔小姐的 VR 秘密基地。<br>這裡有最專業的推坑、最詳細的攻略，帶你直達虛擬世界最深處。
+            </p>
+        </div>
+    </section>
+
+    <!-- Features Grid -->
+    <section id="features" class="relative z-10 pt-12 pb-32 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div
+                class="flex flex-col md:flex-row md:items-end justify-between mb-20 space-y-8 md:space-y-0 text-center md:text-left">
+                <div>
+                    <h2
+                        class="text-5xl md:text-7xl font-black text-white italic tracking-tighter neon-text-green uppercase">
+                        VR 世界 <br><span
+                            class="text-green-500/50 not-italic text-3xl font-bold tracking-widest block mt-4">從這裡開始精彩</span>
+                    </h2>
                 </div>
-                <h1 class="text-6xl md:text-9xl font-black mb-10 text-white leading-[1.2] drop-shadow-2xl">
-                    <span class="title-render-fix">鴨先生與兔小姐</span><br>
-                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-green-300 to-green-600 italic title-render-fix">VR 攻略站</span>
-                </h1>
-                <p class="text-xl md:text-2xl text-slate-200 max-w-3xl mx-auto font-medium leading-relaxed mb-12">
-                    我們致力於讓每位玩家都能玩得聰明又開心。從 Meta Quest 入門到極致沉浸，這裡有最完整、最溫暖的指引。
+                <p class="text-slate-500 max-w-xs font-bold uppercase tracking-widest text-sm leading-relaxed">
+                    從硬體配件到內容訂閱，我們為你打點好了一切。
                 </p>
             </div>
-        </header>
 
-        <!-- 任務簡報區 -->
-        <section class="px-6 pb-32">
-            <div class="max-w-4xl mx-auto briefing-box glass p-12 neon-border-green rounded-[4rem] relative overflow-hidden">
-                <div class="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 blur-3xl rounded-full"></div>
-                <h2 class="text-lg font-black text-green-400 mb-6 flex items-center tracking-widest font-mono uppercase">
-                    <span class="mr-3 text-2xl">■</span> Quest 我們是誰
-                </h2>
-                <div class="space-y-6 text-lg md:text-xl text-gray-200 leading-relaxed font-normal relative z-10">
-                    <p>我們是對 VR 充滿熱愛的鴨兔搭檔。你能在這裡找到：最新主機開箱、配件選購建議、熱門遊戲實況、評測與玩法解析。</p>
-                    <p class="text-green-300/80 font-bold">我們提供手把手購機教學與報關攻略，確保您的情報永遠不漏接。</p>
-                </div>
-                <div class="flex justify-between items-end border-t border-green-500/20 pt-10 mt-6">
-                    <div class="space-y-2">
-                        <span class="text-xs text-green-800 font-mono font-bold block uppercase tracking-widest">System Ready</span>
-                        <span class="text-sm text-slate-400 font-mono uppercase font-bold tracking-tighter">Mission: Making VR accessible for everyone.</span>
-                    </div>
-                    <div class="text-right">
-                        <span id="sync-value" class="sync-pulse text-lg text-green-400 font-mono font-black">數據同步中... 88%</span>
-                    </div>
-                </div>
+            <div id="features-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Cards will be injected by JS -->
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- 內容區 -->
-        <section id="guide" class="py-32 px-6">
-            <div class="max-w-7xl mx-auto">
-                <div class="text-center mb-20">
-                     <h2 class="text-5xl font-black mb-6 text-white uppercase tracking-tight neon-text-green">次元解密：VR 攻略全書</h2>
-                     <div class="h-1.5 w-32 bg-green-500 mx-auto rounded-full mb-6 shadow-[0_0_15px_#00ff00]"></div>
-                </div>
-                <div id="feature-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-14">
-                    <!-- 卡片將由 JS 注入 -->
-                </div>
-            </div>
-        </section>
-    </main>
+    <footer class="relative z-10 py-24 px-6 border-t border-white/5">
+        <div class="max-w-7xl mx-auto text-center">
+            <div class="mb-10 flex justify-center space-x-6">
+                <!-- Facebook -->
+                <a href="https://www.facebook.com/profile.php?id=61557386747389" target="_blank"
+                    class="text-slate-500 hover:text-blue-500 transition-colors">
+                    <i data-lucide="facebook" class="w-6 h-6"></i>
+                </a>
+                <!-- YouTube -->
+                <a href="https://www.youtube.com/@a0916991876" target="_blank"
+                    class="text-slate-500 hover:text-red-500 transition-colors">
+                    <i data-lucide="youtube" class="w-6 h-6"></i>
+                </a>
 
-    <!-- Footer -->
-    <footer class="py-24 px-6 border-t border-white/5 relative z-20 text-center">
-        <div class="max-w-7xl mx-auto">
-            <div class="flex flex-col items-center gap-10">
-                <div class="flex items-center space-x-4 opacity-90 group">
-                    <i data-lucide="gamepad-2" class="text-green-400 w-8 h-8 group-hover:rotate-12 transition-transform duration-500"></i>
-                    <span class="text-xl font-black tracking-[0.3em] uppercase neon-text-green">Duck & Rabbit VR</span>
-                </div>
-                <div class="flex items-center space-x-12 text-slate-400">
-                    <i data-lucide="youtube" class="w-8 h-8 hover:text-red-500 cursor-pointer transition-all hover:scale-125"></i>
-                    <i data-lucide="facebook" class="w-8 h-8 hover:text-blue-500 cursor-pointer transition-all hover:scale-125"></i>
-                    <div class="line-icon-custom hover:text-green-500 border border-slate-500 rounded-full w-8 h-8 flex items-center justify-center text-[7px] font-black cursor-pointer transition-all hover:scale-125">LINE</div>
-                    <i data-lucide="shopping-cart" class="w-8 h-8 hover:text-cyan-400 cursor-pointer transition-all hover:scale-125"></i>
-                </div>
-                <div class="space-y-4">
-                    <p class="text-xs text-green-900 font-mono tracking-[0.5em] uppercase font-bold">Stay Immersive. Play Smarter.</p>
-                    <p class="text-sm text-slate-500 tracking-widest font-bold">© 2023 鴨先生與兔小姐 — <span class="text-slate-300 font-black font-mono">虛擬次元的絕對攻略領航員</span></p>
-                </div>
+                <!-- Email -->
+                <a href="mailto:duck0800080123@Gmail.com" class="text-slate-500 hover:text-green-400 transition-colors">
+                    <i data-lucide="mail" class="w-6 h-6"></i>
+                </a>
             </div>
+            <p class="text-sm text-slate-500 tracking-widest font-bold">© 2023 鴨先生與兔小姐 — <span
+                    class="text-slate-300 font-black font-mono">虛擬次元的絕對攻略領航員</span></p>
         </div>
     </footer>
 
-    <script>
-        lucide.createIcons();
+    <!-- Back to Top Button -->
+    <button id="backToTop" onclick="scrollToTop()"
+        class="fixed bottom-8 right-8 bg-green-500 text-black p-4 rounded-full shadow-[0_0_20px_rgba(34,197,94,0.6)] hover:bg-green-400 hover:scale-110 transition-all z-50 opacity-0 translate-y-10 pointer-events-none">
+        <i data-lucide="arrow-up" class="w-8 h-8"></i>
+    </button>
 
-        // 卡片數據定義
+    <script src="script.js"></script>
+    <script>
         const features = [
             {
-                url: "https://mrduck.my.canva.site/drvr", // 點擊直接跳轉外部連結
-                title: "節奏開啟，沉浸從這裡開始",
-                subtitle: "收錄十多款人氣音樂遊戲",
-                content: "兔小姐大力推薦，帶你進入節奏世界！探索最動感的虛擬旋律。",
-                tag: "音遊推薦",
-                image: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&q=80&w=800",
-                icon: "music",
-                color: "from-green-600 to-green-900"
+                url: "https://www.youtube.com/@a0916991876",
+                title: "鴨先生與兔小姐",
+                subtitle: "YouTube 官方頻道",
+                content: "收錄最新的 VR 遊戲評測、硬體開箱與教學。想看動態影像攻略？訂閱我們就對了！",
+                tag: "官方頻道",
+                image: "assets/images/duck_rabbit_wide.png",
+                icon: "youtube",
+                color: "from-red-600 to-red-900"
             },
             {
+                url: "welcome.html#promo-60",
+                title: "領好領滿 $60 美金",
+                subtitle: "完美疊加術攻略",
+                content: "隱藏優惠 + 好友推薦 = 雙重回饋。跟著攻略做，現賺 NT$1,900！錯過不再。",
+                tag: "限時優惠",
+                image: "assets/images/promo_cover.jpg",
+                icon: "sparkles",
+                color: "from-rose-600 to-purple-900"
+            },
+
+            {
+                url: "games.html",
                 title: "熱門遊戲推薦",
-                subtitle: "VR 世界必備神作",
+                subtitle: "我推薦的遊戲大集結",
                 content: "熱門遊戲大集合，VR 世界怎能少了它們！嚴選社群最推清單。",
-                tag: "遊戲攻略",
-                image: "https://images.unsplash.com/photo-1593508512255-86ab42a8e620?auto=format&fit=crop&q=80&w=800",
+                tag: "熱門排行",
+                image: "assets/images/vr_games_collection.png",
                 icon: "gamepad-2",
-                color: "from-green-700 to-slate-900"
+                color: "from-blue-600 to-blue-900"
             },
             {
-                title: "選對配件，體驗更輕鬆",
-                subtitle: "最舒適、安全的好夥伴",
-                content: "鴨先生與兔小姐陪你挑選配件，讓您的遊玩體驗更上一層樓。",
-                tag: "配件推薦",
-                image: "https://images.unsplash.com/photo-1622979135225-d2ba2697133e?auto=format&fit=crop&q=80&w=800",
-                icon: "wrench",
-                color: "from-green-800 to-black"
-            },
-            {
-                title: "DRVR 武裝模組重構中",
-                subtitle: "個人專屬商城升級預備",
-                content: "我們正在為您準備更極致的配戴方案，確保長效沉浸不分心決策。敬請期待。",
-                tag: "商城重構中",
-                image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=800",
-                icon: "loader",
-                color: "from-slate-700 to-slate-950"
-            },
-            {
+                url: "subscription.html",
                 title: "Meta Horizon +",
                 subtitle: "無限暢玩訂閱制",
                 content: "從免費訂閱開始，暢遊 20 多款精選遊戲。超值內容不漏接。",
                 tag: "訂閱推薦",
-                image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=800",
+                image: "https://static.xx.fbcdn.net/rsrc.php/v4/yb/r/z7edGJNrFTu.png",
                 icon: "infinity",
                 color: "from-green-900 to-black"
             },
             {
-                title: "VR 資源一網打盡",
-                subtitle: "玩家社群資源站",
-                content: "LINE、臉書、巴哈姆特一鍵加入！獲取最即時的 VR 情報。",
-                tag: "社群資源",
-                image: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=800",
+                url: "accessories.html",
+                title: "必買 VR 配件",
+                subtitle: "舒適度與沉浸感的關鍵",
+                content: "工欲善其事，必先利其器！鴨先生推薦的必備裝備，讓續航力翻倍。",
+                tag: "配件指南",
+                image: "https://tshop.r10s.com/e14/81a/a10b/8ec1/c06b/c753/3b86/112aef85ec0242ac110002.jpg?_ex=486x486",
+                icon: "settings",
+                color: "from-slate-700 to-slate-900"
+            },
+            {
+                url: "community.html",
+                title: "社群資源",
+                subtitle: "加入討論與尋找戰友",
+                content: "一個人玩太孤單？這裡有 LINE 群組、巴哈討輪區與特價資訊。加入我們，一起探索 VR 世界。",
+                tag: "友善連結",
+                image: "assets/images/da963a2810a11d0d4e2db4867558e304.jpg",
                 icon: "users",
-                color: "from-slate-800 to-black"
+                color: "from-emerald-600 to-emerald-900"
             }
         ];
 
-        // 渲染卡片
-        const grid = document.getElementById('feature-grid');
-        features.forEach(item => {
-            const card = document.createElement('div');
-            card.className = "group feature-card rounded-[2.5rem] overflow-hidden flex flex-col h-full relative z-10";
-            
-            // 點擊處理邏輯：如果有 url 則另開分頁跳轉
-            card.onclick = () => {
-                if (item.url) {
-                    window.open(item.url, '_blank');
-                }
-            };
-
-            card.innerHTML = `
-                <div class="relative h-64 overflow-hidden">
-                    <img src="${item.image}" alt="" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 brightness-125 saturate-125 group-hover:brightness-150 opacity-70 group-hover:opacity-100" onerror="this.src='https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&q=80&w=800'">
-                    <div class="absolute inset-0 bg-gradient-to-t from-[#05051a] via-[#05051a]/40 to-transparent opacity-90"></div>
-                    <div class="absolute top-6 left-6 w-12 h-12 rounded-2xl bg-gradient-to-br ${item.color} flex items-center justify-center text-white shadow-xl border border-white/10">
-                        <i data-lucide="${item.icon}" class="w-6 h-6"></i>
-                    </div>
-                </div>
-                <div class="p-10 flex flex-col flex-grow relative text-left text-shadow">
-                    <div class="inline-block px-4 py-1.5 bg-green-500/10 text-green-400 text-[10px] font-black tracking-widest rounded-lg mb-6 uppercase border border-green-500/20 w-fit">${item.tag}</div>
-                    <h3 class="text-2xl font-black mb-3 text-white group-hover:text-green-300 transition-colors">${item.title}</h3>
-                    <p class="text-[10px] font-bold text-green-600/60 mb-5 tracking-widest uppercase font-mono">${item.subtitle}</p>
-                    <p class="text-slate-400 text-lg leading-relaxed mb-12 flex-grow font-light">${item.content}</p>
-                    <div class="mt-auto flex justify-end">
-                        <div class="explore-link text-green-400 flex items-center group/btn font-black">
-                            ${item.url ? 'OPEN LINK' : 'ENTER DIMENSION'}
-                            <i data-lucide="chevron-right" class="w-3 h-3 ml-2 group-hover/btn:translate-x-1 transition-transform"></i>
+        const container = document.getElementById('features-container');
+        features.forEach(f => {
+            const card = `
+                <div class="group relative glass rounded-[2.5rem] p-4 h-[550px] overflow-hidden cursor-pointer hover:border-green-500/50 transition-all duration-500 card-glow" onclick="location.href='${f.url}'">
+                    <div class="relative h-full overflow-hidden rounded-[2rem]">
+                        <img src="${f.image}" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 opacity-40 group-hover:opacity-60" alt="${f.title}">
+                        <div class="absolute inset-0 bg-gradient-to-t ${f.color} opacity-40 group-hover:opacity-20 transition-opacity"></div>
+                        <div class="absolute inset-0 p-10 flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between mb-6">
+                                    <div class="flex items-center space-x-3 bg-white/10 px-4 py-2 rounded-full backdrop-blur-md border border-white/5">
+                                        <i data-lucide="${f.icon}" class="w-4 h-4 text-green-400"></i>
+                                        <span class="text-[10px] font-black tracking-widest text-white uppercase">${f.tag}</span>
+                                    </div>
+                                    <i data-lucide="arrow-up-right" class="w-6 h-6 text-white/40 group-hover:text-green-400 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all"></i>
+                                </div>
+                                <h3 class="text-3xl font-black text-white tracking-tight mb-2 group-hover:neon-text-green transition-all uppercase leading-tight">${f.title}</h3>
+                                <p class="text-green-400/80 font-bold text-xs tracking-[0.2em] mb-6 uppercase">${f.subtitle}</p>
+                            </div>
+                            <p class="text-slate-300 text-sm leading-relaxed mb-6 font-medium">${f.content}</p>
                         </div>
                     </div>
                 </div>
             `;
-            grid.appendChild(card);
+            container.innerHTML += card;
         });
         lucide.createIcons();
-
-        // 數位雨背景
-        const canvas = document.getElementById('matrix-canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        const characters = "0101010101010101";
-        const fontSize = 16;
-        const columns = canvas.width / fontSize;
-        const drops = Array(Math.floor(columns)).fill(1);
-        function drawMatrix() {
-            ctx.fillStyle = "rgba(5, 5, 26, 0.15)";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.font = fontSize + "px 'JetBrains Mono'";
-            for (let i = 0; i < drops.length; i++) {
-                const text = characters.charAt(Math.floor(Math.random() * characters.length));
-                ctx.fillStyle = "#00ff00";
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.985) drops[i] = 0;
-                drops[i]++;
-            }
-        }
-        setInterval(drawMatrix, 50);
-
-        // 數據同步計數器
-        function initSyncCounter() {
-            const syncElement = document.getElementById('sync-value');
-            let percentage = 88;
-            setInterval(() => {
-                percentage = Math.floor(Math.random() * 5) + 95;
-                if (percentage > 99) percentage = 99;
-                syncElement.innerText = `數據同步中... ${percentage}%`;
-            }, 3000); 
-        }
-        initSyncCounter();
-
-        // 下拉選單邏輯
-        const dropdownBtn = document.getElementById('dropdownBtn');
-        const dropdownMenu = document.getElementById('dropdownMenu');
-        dropdownBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            dropdownMenu.classList.toggle('show');
-        });
-        document.addEventListener('click', () => dropdownMenu.classList.remove('show'));
-
-        // 導覽列滾動效果
-        window.addEventListener('scroll', () => {
-            const nav = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                nav.classList.replace('py-8', 'py-4');
-                nav.classList.add('bg-blue-950/90', 'backdrop-blur-2xl', 'border-b', 'border-green-500/20');
-            } else {
-                nav.classList.replace('py-4', 'py-8');
-                nav.classList.remove('bg-blue-950/90', 'backdrop-blur-2xl', 'border-b', 'border-green-500/20');
-            }
-        });
-
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobileMenu');
-            const isHidden = menu.classList.contains('hidden');
-            if (isHidden) {
-                menu.classList.remove('hidden');
-                setTimeout(() => menu.classList.replace('opacity-0', 'opacity-100'), 10);
-            } else {
-                menu.classList.replace('opacity-100', 'opacity-0');
-                setTimeout(() => menu.classList.add('hidden'), 300);
-            }
-        }
-
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
     </script>
 </body>
+
 </html>

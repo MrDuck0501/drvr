@@ -1,412 +1,465 @@
 <!DOCTYPE html>
 <html lang="zh-TW" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quest 音樂類型遊戲推薦 - 專業攻略站</title>
-
+    <title>音樂遊戲推薦 - 鴨先生與兔小姐的 VR 攻略站</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@700&family=Noto+Sans+TC:wght@400;700;900&display=swap');
-        
-        :root {
-            --neon-green: #00ff00;
-            --deep-blue: #05051a;
-        }
-
-        body { 
-            font-family: 'Inter', 'Noto Sans TC', sans-serif; 
-            background-color: var(--deep-blue);
-            color: white;
-            overflow-x: hidden;
-            margin: 0;
-            padding: 0;
-        }
-
-        /* 數位雨背景 */
-        #matrix-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            opacity: 0.15;
-            pointer-events: none;
-        }
-
-        /* 玻璃質感 */
-        .glass { 
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(20px); 
-            border: 1px solid rgba(255, 255, 255, 0.1); 
-        }
-
-        .glass-hover:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(0, 255, 0, 0.3);
-            transform: translateY(-5px);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .neon-text-green { color: var(--neon-green); text-shadow: 0 0 12px rgba(0, 255, 0, 0.6); }
-
-        /* 固定圖片空間樣式 (16:9) */
-        .fixed-img-container {
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            background: rgba(0, 255, 0, 0.05);
-            border: 1px solid rgba(0, 255, 0, 0.2);
-            border-radius: 1rem;
-            overflow: hidden;
-            position: relative;
-        }
-        .fixed-img-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .img-placeholder {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(45deg, rgba(0,255,0,0.05), rgba(0,0,0,0));
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            color: rgba(0, 255, 0, 0.3);
-            letter-spacing: 0.2em;
-            text-align: center;
-            padding: 1rem;
-            text-transform: uppercase;
-        }
-
-        /* 下拉選單 */
-        .dropdown-content {
-            display: none;
-            opacity: 0;
-            transform: translateY(-10px);
-            transition: all 0.3s ease;
-        }
-        .dropdown-content.show {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .category-header {
-            border-left: 4px solid var(--neon-green);
-            padding-left: 1.5rem;
-            margin: 4rem 0 2rem 0;
-        }
-
-        .nav-link {
-            font-size: 0.875rem;
-            font-weight: 900;
-            letter-spacing: 0.1em;
-            transition: all 0.3s;
-        }
-        .nav-link:hover {
-            color: var(--neon-green);
-            text-shadow: 0 0 8px rgba(0, 255, 0, 0.5);
-        }
-
-        /* LINE 圖示自定義樣式 */
-        .line-icon-custom {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 32px;
-            height: 32px;
-            border: 2px solid currentColor;
-            border-radius: 50%;
-            font-size: 8px;
-            font-weight: 900;
-            line-height: 1;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body class="selection:bg-green-500/30 selection:text-green-400">
+
+<body class="selection:bg-green-500/30 selection:text-green-400 overflow-x-hidden">
 
     <canvas id="matrix-canvas"></canvas>
 
-    <!-- 1. 導覽列 -->
-    <nav id="navbar" class="fixed w-full z-[100] transition-all duration-500 py-8 px-6 lg:px-12">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <!-- Logo -->
-            <div class="flex items-center space-x-4 group cursor-pointer" onclick="window.scrollTo({top:0, behavior:'smooth'})">
-                <div class="bg-gradient-to-br from-green-400 to-green-700 p-2 rounded-xl group-hover:rotate-12 transition-all shadow-[0_0_15px_rgba(0,255,0,0.3)]">
+    <!-- Nav Support -->
+    <nav id="navbar" class="fixed w-full z-[100] transition-all duration-500 py-8">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            <div class="flex items-center space-x-4 group cursor-pointer" onclick="location.href='index.html'">
+                <div
+                    class="bg-gradient-to-br from-green-400 to-green-700 p-2.5 rounded-xl group-hover:rotate-12 transition-all shadow-[0_0_20px_rgba(34,211,238,0.4)]">
                     <i data-lucide="gamepad-2" class="text-white w-8 h-8"></i>
                 </div>
                 <div class="flex flex-col leading-none">
-                    <span class="text-xl font-black tracking-tighter text-white uppercase font-mono">DUCK & RABBIT</span>
-                    <span class="text-[10px] font-bold tracking-[0.2em] text-green-400 uppercase">VR Guide Station</span>
+                    <span class="text-2xl font-black tracking-tighter text-white uppercase font-mono">Duck &
+                        Rabbit</span>
+                    <span class="text-[12px] font-bold tracking-[0.4em] text-green-400 uppercase">VR Guide
+                        Station</span>
                 </div>
             </div>
-            
-            <!-- 指定功能列連結 -->
-            <div class="hidden md:flex items-center space-x-8 lg:space-x-12">
-                <a href="#" class="nav-link text-white/80">推薦金領取</a>
-                <a href="#" class="nav-link text-white/80">VR 攻略全書</a>
-                <a href="#" class="nav-link text-white/80">立即購機攻略</a>
+
+            <div class="mb-10 flex justify-center space-x-6">
+                <!-- Facebook -->
+                <a href="https://www.facebook.com/profile.php?id=61557386747389" target="_blank"
+                    class="text-slate-500 hover:text-blue-500 transition-colors">
+                    <i data-lucide="facebook" class="w-6 h-6"></i>
+                </a>
+                <!-- YouTube -->
+                <a href="https://www.youtube.com/@a0916991876" target="_blank"
+                    class="text-slate-500 hover:text-red-500 transition-colors">
+                    <i data-lucide="youtube" class="w-6 h-6"></i>
+                </a>
+
+                <!-- Email -->
+                <a href="mailto:duck0800080123@Gmail.com" class="text-slate-500 hover:text-green-400 transition-colors">
+                    <i data-lucide="mail" class="w-6 h-6"></i>
+                </a>
             </div>
-            
-            <div class="flex items-center space-x-4">
-                <!-- 選單按鈕 -->
-                <div class="relative">
-                    <button id="dropdownBtn" class="p-3 text-slate-100 hover:text-green-400 border border-white/10 rounded-2xl glass transition-all active:scale-95">
-                        <i data-lucide="menu" class="w-6 h-6"></i>
-                    </button>
-                    <div id="dropdownMenu" class="dropdown-content absolute top-full mt-4 right-0 w-64 glass border border-green-500/30 rounded-2xl overflow-hidden shadow-2xl text-left">
-                        <div class="px-6 py-4 bg-green-500/10 text-[10px] font-bold text-green-400 tracking-widest border-b border-white/5 uppercase font-mono text-center">System Menu</div>
-                        <div class="md:hidden">
-                            <a href="#" class="block px-6 py-4 text-xs font-bold hover:bg-green-500/20 hover:text-green-400 border-b border-white/5 transition-colors">推薦金領取</a>
-                            <a href="#" class="block px-6 py-4 text-xs font-bold hover:bg-green-500/20 hover:text-green-400 border-b border-white/5 transition-colors">VR 攻略全書</a>
-                            <a href="#" class="block px-6 py-4 text-xs font-bold hover:bg-green-500/20 hover:text-green-400 border-b border-white/5 transition-colors">立即購機攻略</a>
-                        </div>
-                        <!-- 系統首頁連結更新 -->
-                        <a href="https://mrduck0501.github.io/drvr/" class="block px-6 py-4 text-xs font-bold hover:bg-green-500/20 hover:text-green-400 border-b border-white/5 transition-colors">系統首頁</a>
-                        <a href="#" class="block px-6 py-4 text-xs font-bold hover:bg-green-500/20 hover:text-green-400 transition-colors">聯繫領航員</a>
-                    </div>
-                </div>
+            <div class="hidden lg:flex items-center space-x-10">
+                <a href="index.html"
+                    class="text-sm font-black tracking-[0.2em] text-slate-300 hover:text-cyan-400 transition-colors uppercase">返回主頁</a>
+                <a href="welcome.html"
+                    class="text-sm font-black tracking-[0.2em] text-yellow-400 hover:text-yellow-300 transition-colors uppercase flex items-center">
+                    <i data-lucide="gift" class="w-4 h-4 mr-2"></i>購機前攻略 (領$60)
+                </a>
+                <a href="music.html"
+                    class="text-sm font-black tracking-[0.2em] text-green-400 transition-colors uppercase">音樂遊戲</a>
+                <a href="games.html"
+                    class="text-sm font-black tracking-[0.2em] text-slate-100 hover:text-green-400 transition-colors uppercase">熱門推薦</a>
+                <a href="subscription.html"
+                    class="text-sm font-black tracking-[0.2em] text-slate-100 hover:text-green-400 transition-colors uppercase">訂閱攻略</a>
+                <a href="community.html"
+                    class="text-sm font-black tracking-[0.2em] text-slate-100 hover:text-green-400 transition-colors uppercase">網路資源</a>
             </div>
+
+            <button class="lg:hidden text-white p-2" onclick="toggleMobileMenu()">
+                <i data-lucide="menu" id="menuIcon" class="w-8 h-8"></i>
+            </button>
         </div>
     </nav>
 
-    <!-- 主內容區 -->
-    <main class="relative z-10 pt-40 pb-32 px-6">
+    <!-- Mobile Menu -->
+    <div id="mobileMenu"
+        class="fixed inset-0 z-[200] bg-blue-950/95 backdrop-blur-2xl hidden flex-col p-8 transition-all duration-300 opacity-0">
+        <div class="flex justify-between items-center mb-12">
+            <span class="font-black text-2xl tracking-tighter text-green-400 font-mono">SYSTEM_MENU</span>
+            <button onclick="toggleMobileMenu()"><i data-lucide="x" class="w-10 h-10 text-white"></i></button>
+        </div>
+        <div class="flex flex-col space-y-10">
+            <a href="index.html" onclick="toggleMobileMenu()"
+                class="text-3xl font-black text-white hover:text-cyan-400">返回主頁</a>
+            <a href="welcome.html" onclick="toggleMobileMenu()"
+                class="text-3xl font-black text-yellow-400 hover:text-yellow-300">購機前攻略 (領$60)</a>
+            <a href="music.html" onclick="toggleMobileMenu()" class="text-3xl font-black text-green-400">音樂遊戲</a>
+            <a href="games.html" onclick="toggleMobileMenu()" class="text-3xl font-black text-white">熱門推薦</a>
+            <a href="community.html" onclick="toggleMobileMenu()" class="text-3xl font-black text-white">網路資源</a>
+            <a href="subscription.html" onclick="toggleMobileMenu()" class="text-3xl font-black text-white">訂閱攻略</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="relative z-10 pt-48 pb-32 px-6">
         <div class="max-w-7xl mx-auto">
-            
-            <section id="music-games">
-                <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-                    <div class="space-y-4">
-                        <div class="inline-flex items-center space-x-2 bg-green-500/10 border border-green-500/30 px-3 py-1 rounded text-[10px] font-bold text-green-400 uppercase tracking-widest">
-                            <i data-lucide="music" class="w-3 h-3"></i>
-                            <span>Special Feature</span>
+            <!-- Header -->
+            <div class="mb-24 text-center">
+                <div
+                    class="inline-flex items-center space-x-3 bg-green-500/20 border-2 border-green-500/40 px-6 py-3 rounded-full mb-10 backdrop-blur-md">
+                    <i data-lucide="music" class="w-5 h-5 text-green-400"></i>
+                    <span class="text-sm font-black tracking-[0.2em] text-green-100 uppercase">Music Games
+                        Catalog</span>
+                </div>
+                <h1 class="text-6xl md:text-8xl font-black text-white mb-8 tracking-tighter leading-none">
+                    旋律跳動 <br><span class="text-green-400">虛擬舞池</span>
+                </h1>
+                <p class="text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed">
+                    兔小姐嚴選！從經典擊砍到優雅律動，收錄十多款最具沈浸感的音樂遊戲，帶你進入節奏世界的最深處。
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <!-- Beat Saber -->
+                <div
+                    class="group glass rounded-[3rem] p-4 flex flex-col hover:border-green-500/50 transition-all card-glow">
+                    <div class="relative h-64 overflow-hidden rounded-[2.5rem] mb-8">
+                        <img src="assets/images/2a0ecbb149ad9e993df78ef7f92876d2.jpg"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                            alt="Beat Saber">
+                        <div class="absolute inset-0 bg-gradient-to-t from-blue-950/80 to-transparent"></div>
+                        <div class="absolute bottom-6 left-6 flex space-x-2">
+                            <span
+                                class="px-3 py-1 bg-blue-500/20 text-blue-400 text-[10px] font-black tracking-widest rounded-lg border border-blue-500/20 uppercase">入坑首選</span>
                         </div>
-                        <h1 class="text-4xl md:text-7xl font-black text-white uppercase tracking-tighter">
-                            Quest 音樂類型遊戲 <span class="text-green-400 italic font-serif text-shadow">推薦</span>
-                        </h1>
-                        <p class="text-xl text-slate-400 leading-relaxed max-w-2xl border-l-4 border-green-500 pl-6">
-                            多款音樂遊戲推薦大彙整，喜歡音樂遊戲的你絕對不能錯過！
+                    </div>
+                    <div class="px-4 flex-grow flex flex-col">
+                        <h3 class="text-2xl font-black text-white mb-4 uppercase tracking-tight">Beat Saber</h3>
+                        <p class="text-slate-400 leading-relaxed mb-6 text-sm flex-grow">
+                            VR 界的長青樹！手握雷射劍擊碎飛來的方塊。簡單易上手，不管是健身還是刷排行榜，這都是必備神作。
                         </p>
-                    </div>
-                </div>
-
-                <!-- 分類：舞蹈類 -->
-                <div class="category-header">
-                    <h3 class="text-3xl font-black tracking-widest text-white uppercase font-mono">Module_01: 舞蹈類</h3>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mb-24">
-                    <!-- 幻音騎士 -->
-                    <div class="game-item-card glass glass-hover p-8 rounded-[2rem] flex flex-col">
-                        <div class="fixed-img-container mb-8 shadow-2xl">
-                            <div class="img-placeholder">SYNTH RIDERS<br>GAME PREVIEW</div>
-                            <img src="https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&fit=crop&q=80&w=800" alt="幻音騎士" onerror="this.style.display='none'">
-                        </div>
-                        <h4 class="text-2xl font-black mb-4 text-green-400">幻音騎士 (Synth Riders)</h4>
-                        <div class="text-slate-300 text-sm leading-relaxed mb-8 space-y-4">
-                            <p>在霓虹閃爍的賽道中揮動肢體，捕捉色彩斑斕的節奏寶石。這款作品收錄了 Zedd、Lady Gaga 等頂尖藝術家的曲目，帶來極致的視覺與體感融合。雖然不支援多人連線，但其流暢的打擊感與舞蹈體驗絕對是同類型中的佼佼者。</p>
-                        </div>
-                        <a href="https://www.meta.com/zh-tw/experiences/synth-riders/2436558143118760/" target="_blank" class="mt-auto w-full py-4 bg-white/5 border border-white/10 rounded-2xl text-center text-xs font-black tracking-widest hover:bg-green-500 hover:text-black transition-all uppercase">商店頁面</a>
-                    </div>
-
-                    <!-- 動感音旅 -->
-                    <div class="game-item-card glass glass-hover p-8 rounded-[2rem] flex flex-col">
-                        <div class="fixed-img-container mb-8 shadow-2xl">
-                            <div class="img-placeholder">AUDIO TRIP<br>GAME PREVIEW</div>
-                            <img src="https://images.unsplash.com/photo-1514525253344-7624fe96db58?auto=format&fit=crop&q=80&w=800" alt="動感音旅" onerror="this.style.display='none'">
-                        </div>
-                        <h4 class="text-2xl font-black mb-4 text-cyan-400">動感音旅 (Audio Trip)</h4>
-                        <div class="text-slate-300 text-sm leading-relaxed mb-8 space-y-4">
-                            <p>化身為音樂的指揮家，用雙手的節奏球在虛擬空間中揮灑汗水。遊戲充滿賽博龐克感的視覺設計，更支援多人連線模式，讓你能與好友一起在未來的音樂浪潮中恣意共舞。</p>
-                        </div>
-                        <a href="https://www.meta.com/zh-tw/experiences/2436558143118760/" target="_blank" class="mt-auto w-full py-4 bg-white/5 border border-white/10 rounded-2xl text-center text-xs font-black tracking-widest hover:bg-cyan-500 hover:text-black transition-all uppercase">商店頁面</a>
-                    </div>
-
-                    <!-- LES MILLS XR DANCE -->
-                    <div class="game-item-card glass glass-hover p-8 rounded-[2rem] flex flex-col">
-                        <div class="fixed-img-container mb-8 shadow-2xl">
-                            <div class="img-placeholder">LES MILLS XR<br>GAME PREVIEW</div>
-                            <img src="https://images.unsplash.com/photo-1547153760-18fc86324498?auto=format&fit=crop&q=80&w=800" alt="LES MILLS" onerror="this.style.display='none'">
-                        </div>
-                        <h4 class="text-2xl font-black mb-4 text-pink-400">LES MILLS XR DANCE</h4>
-                        <div class="text-slate-300 text-sm leading-relaxed mb-8 space-y-4">
-                            <p>這不僅是舞蹈，更是一場高強度的體能挑戰。將 LES MILLS 專業的健身課程導入 VR，結合沉浸式教練指導與全球流行舞曲，讓你在享受舞蹈樂趣的同時，也能達到驚人的燃脂效果。</p>
-                        </div>
-                        <a href="https://www.meta.com/zh-tw/experiences/les-mills-xr-dance-fitness-rhythm/6212696172191478/" target="_blank" class="mt-auto w-full py-4 bg-white/5 border border-white/10 rounded-2xl text-center text-xs font-black tracking-widest hover:bg-pink-500 hover:text-white transition-all uppercase">商店頁面</a>
-                    </div>
-
-                    <!-- Samba de Amigo -->
-                    <div class="game-item-card glass glass-hover p-8 rounded-[2rem] flex flex-col">
-                        <div class="fixed-img-container mb-8 shadow-2xl">
-                            <div class="img-placeholder">SAMBA DE AMIGO<br>GAME PREVIEW</div>
-                            <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=800" alt="Samba de Amigo" onerror="this.style.display='none'">
-                        </div>
-                        <h4 class="text-2xl font-black mb-4 text-orange-400">Samba de Amigo : 虛擬搖搖派對</h4>
-                        <div class="text-slate-300 text-sm leading-relaxed mb-8 space-y-4">
-                            <p>經典沙鈴派對歡樂回歸！手把化身沙鈴，跟隨節奏球盡情搖擺。遊戲特別加入了 MR 模式，模糊虛實邊界，不論大小朋友都能在繽紛的拉丁與流行樂中感受到最純粹的派對快樂。</p>
-                        </div>
-                        <a href="https://www.meta.com/zh-tw/experiences/samba-de-amigo-virtual-party/5736173679792982/" target="_blank" class="mt-auto w-full py-4 bg-white/5 border border-white/10 rounded-2xl text-center text-xs font-black tracking-widest hover:bg-orange-500 hover:text-black transition-all uppercase">商店頁面</a>
-                    </div>
-                </div>
-
-                <!-- 分類：鼓類 -->
-                <div class="category-header">
-                    <h3 class="text-3xl font-black tracking-widest text-white uppercase font-mono">Module_02: 鼓類</h3>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mb-24">
-                    <!-- Ragnarock -->
-                    <div class="game-item-card glass glass-hover p-8 rounded-[2rem] flex flex-col">
-                        <div class="fixed-img-container mb-8 shadow-2xl">
-                            <div class="img-placeholder">RAGNAROCK<br>GAME PREVIEW</div>
-                            <img src="https://images.unsplash.com/photo-1519892300165-cb5542fb47c7?auto=format&fit=crop&q=80&w=800" alt="Ragnarock" onerror="this.style.display='none'">
-                        </div>
-                        <h4 class="text-2xl font-black mb-4 text-red-500">Ragnarock</h4>
-                        <div class="text-slate-300 text-sm leading-relaxed mb-8 space-y-4">
-                            <p>帶領維京戰船出征！揮舞雙槌隨史詩般的金屬與搖滾樂擊碎符文。遊戲鼓組排布類似太鼓達人，打擊感紮實有力，玩起來彷彿化身為戰場中央的鼓手，極具熱血氛圍。</p>
-                        </div>
-                        <a href="https://www.meta.com/zh-tw/experiences/ragnarock/3749621795127676/" target="_blank" class="mt-auto w-full py-4 bg-white/5 border border-white/10 rounded-2xl text-center text-xs font-black tracking-widest hover:bg-red-600 hover:text-white transition-all uppercase">商店頁面</a>
-                    </div>
-
-                    <!-- Smash Drums -->
-                    <div class="game-item-card glass glass-hover p-8 rounded-[2rem] flex flex-col">
-                        <div class="fixed-img-container mb-8 shadow-2xl">
-                            <div class="img-placeholder">SMASH DRUMS<br>GAME PREVIEW</div>
-                            <img src="https://images.unsplash.com/photo-1524230659192-35f3d704ec13?auto=format&fit=crop&q=80&w=800" alt="Smash Drums" onerror="this.style.display='none'">
-                        </div>
-                        <h4 class="text-2xl font-black mb-4 text-blue-400">Smash Drums</h4>
-                        <div class="text-slate-300 text-sm leading-relaxed mb-8 space-y-4">
-                            <p>體驗街機般的爵士鼓打擊快感。以豐富的搖滾曲風為核心，其直覺的打擊機制非常適合初學者，是進入 VR 鼓藝世界的絕佳入門選擇。</p>
-                        </div>
-                        <a href="https://www.meta.com/zh-tw/experiences/3630025217090808/" target="_blank" class="mt-auto w-full py-4 bg-white/5 border border-white/10 rounded-2xl text-center text-xs font-black tracking-widest hover:bg-blue-500 hover:text-black transition-all uppercase">商店頁面</a>
-                    </div>
-
-                    <!-- Paradiddle -->
-                    <div class="game-item-card glass glass-hover p-8 rounded-[2rem] flex flex-col md:col-span-2">
-                        <div class="flex flex-col lg:flex-row gap-10">
-                            <div class="lg:w-1/2">
-                                <div class="fixed-img-container shadow-2xl">
-                                    <div class="img-placeholder">PARADIDDLE<br>GAME PREVIEW</div>
-                                    <img src="https://images.unsplash.com/photo-1543443258-92b04ad5ecf5?auto=format&fit=crop&q=80&w=800" alt="Paradiddle" onerror="this.style.display='none'">
-                                </div>
-                            </div>
-                            <div class="lg:w-1/2 flex flex-col">
-                                <h4 class="text-2xl font-black mb-4 text-purple-400">Paradiddle</h4>
-                                <div class="text-slate-300 text-sm leading-relaxed mb-8 space-y-4">
-                                    <p>被譽為 VR 爵士鼓遊戲中最具寫實深度的進階之作。不僅具備逼真的錄音回放功能，還能自由配置專屬鼓組，根據真實力道產生動態反饋。無論是自主練習還是即興創作，都能讓你成就真正的鼓手之夢。</p>
-                                </div>
-                                <a href="https://www.meta.com/zh-tw/experiences/paradiddle/5719805344724551/" target="_blank" class="mt-auto inline-block py-4 bg-purple-600/20 border border-purple-500/50 rounded-2xl text-center text-xs font-black tracking-widest hover:bg-purple-600 hover:text-white transition-all uppercase font-mono">商店頁面</a>
-                            </div>
+                        <div class="flex gap-4">
+                            <a href="https://www.meta.com/zh-tw/experiences/beat-saber/2448060205267927/"
+                                target="_blank"
+                                class="w-full py-4 bg-green-500 text-black text-center font-black rounded-2xl shadow-lg hover:bg-green-400 transition-colors uppercase text-xs italic">前往商店</a>
+                            <a href="https://www.youtube.com/results?search_query=鴨先生與兔小姐+Beat+Saber" target="_blank"
+                                class="w-full py-4 bg-red-500/10 text-red-400 border border-red-500/50 text-center font-black rounded-2xl hover:bg-red-500 hover:text-white transition-all text-xs uppercase flex items-center justify-center gap-2">
+                                <i data-lucide="youtube" class="w-4 h-4"></i>
+                                <span>觀看介紹</span>
+                            </a>
                         </div>
                     </div>
                 </div>
 
-                <!-- 分類：其他音樂類 -->
-                <div class="category-header">
-                    <h3 class="text-3xl font-black tracking-widest text-white uppercase font-mono">Module_03: 其他音樂類</h3>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mb-24">
-                    <!-- Pistol Whip -->
-                    <div class="game-item-card glass glass-hover p-8 rounded-[2rem] flex flex-col md:col-span-2 lg:col-span-1">
-                        <div class="fixed-img-container mb-8 shadow-2xl">
-                            <div class="img-placeholder">PISTOL WHIP<br>GAME PREVIEW</div>
-                            <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=800" alt="Pistol Whip" onerror="this.style.display='none'">
+                <!-- Synth Riders -->
+                <div
+                    class="group glass rounded-[3rem] p-4 flex flex-col hover:border-green-500/50 transition-all card-glow">
+                    <div class="relative h-64 overflow-hidden rounded-[2.5rem] mb-8">
+                        <img src="assets/images/abcfbe7614af672ff2af477be8408ea1.png"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                            alt="Synth Riders">
+                        <div class="absolute inset-0 bg-gradient-to-t from-blue-950/80 to-transparent"></div>
+                        <div class="absolute bottom-6 left-6 flex space-x-2">
+                            <span
+                                class="px-3 py-1 bg-green-500/20 text-green-400 text-[10px] font-black tracking-widest rounded-lg border border-green-500/20 uppercase">兔小姐推薦</span>
                         </div>
-                        <h4 class="text-2xl font-black mb-4 text-yellow-400">Pistol Whip</h4>
-                        <div class="text-slate-300 text-sm leading-relaxed mb-8 space-y-4">
-                            <p>動作片與音遊的完美交響。這是一場結合節奏、槍戰與物理閃避的挑戰。當你的攻擊精準落在節奏拍點上時，爽快感與得分將成倍增長，更支援自定義模組，讓你打造專屬的節奏戰場。</p>
+                    </div>
+                    <div class="px-4 flex-grow flex flex-col">
+                        <h3 class="text-2xl font-black text-white mb-4 uppercase tracking-tight">Synth Riders</h3>
+                        <p class="text-slate-400 leading-relaxed mb-6 text-sm flex-grow">
+                            隨節奏駕馭綢帶。比起擊砍，這更像是一場優雅的舞蹈。收錄 Skrillex、Muse 等大師曲目，享受極致流動感。
+                        </p>
+                        <div class="flex gap-4">
+                            <a href="https://www.meta.com/zh-tw/experiences/synth-riders/2442671549117604/"
+                                target="_blank"
+                                class="w-full py-4 bg-green-500 text-black text-center font-black rounded-2xl shadow-lg hover:bg-green-400 transition-colors uppercase text-xs italic">前往商店</a>
+                            <a href="https://www.youtube.com/results?search_query=鴨先生與兔小姐+Synth+Riders" target="_blank"
+                                class="w-full py-4 bg-red-500/10 text-red-400 border border-red-500/50 text-center font-black rounded-2xl hover:bg-red-500 hover:text-white transition-all text-xs uppercase flex items-center justify-center gap-2">
+                                <i data-lucide="youtube" class="w-4 h-4"></i>
+                                <span>觀看介紹</span>
+                            </a>
                         </div>
-                        <a href="https://www.meta.com/zh-tw/experiences/pistol-whip/2104963472963790/" target="_blank" class="mt-auto w-full py-4 bg-white/5 border border-white/10 rounded-2xl text-center text-xs font-black tracking-widest hover:bg-yellow-500 hover:text-black transition-all uppercase">商店頁面</a>
                     </div>
                 </div>
-            </section>
 
+                <!-- Audio Trip -->
+                <div
+                    class="group glass rounded-[3rem] p-4 flex flex-col hover:border-green-500/50 transition-all card-glow">
+                    <div class="relative h-64 overflow-hidden rounded-[2.5rem] mb-8">
+                        <img src="assets/images/1575cb0ccc319ddd53e0f8802cfdcf13.png"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                            alt="Audio Trip">
+                        <div class="absolute inset-0 bg-gradient-to-t from-blue-950/80 to-transparent"></div>
+                    </div>
+                    <div class="px-4 flex-grow flex flex-col">
+                        <h3 class="text-2xl font-black text-white mb-4 uppercase tracking-tight">Audio Trip</h3>
+                        <p class="text-slate-400 leading-relaxed mb-6 text-sm flex-grow">
+                            極佳的身體律動。精準對位與閃避障礙。收錄經典流行音樂，讓你在音樂中盡情揮汗。
+                        </p>
+                        <div class="flex gap-4">
+                            <a href="https://www.meta.com/zh-tw/experiences/audio-trip/2484044451715693/"
+                                target="_blank"
+                                class="w-full py-4 bg-green-500 text-black text-center font-black rounded-2xl shadow-lg hover:bg-green-400 transition-colors uppercase text-xs italic">前往商店</a>
+                            <a href="https://www.youtube.com/results?search_query=鴨先生與兔小姐+Audio+Trip" target="_blank"
+                                class="w-full py-4 bg-red-500/10 text-red-400 border border-red-500/50 text-center font-black rounded-2xl hover:bg-red-500 hover:text-white transition-all text-xs uppercase flex items-center justify-center gap-2">
+                                <i data-lucide="youtube" class="w-4 h-4"></i>
+                                <span>觀看介紹</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Samba de Amigo -->
+                <div
+                    class="group glass rounded-[3rem] p-4 flex flex-col hover:border-green-500/50 transition-all card-glow">
+                    <div class="relative h-64 overflow-hidden rounded-[2.5rem] mb-8">
+                        <img src="assets/images/21050f847778ed871d0f09c3ce071484.jpg"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                            alt="Samba de Amigo">
+                        <div class="absolute inset-0 bg-gradient-to-t from-blue-950/80 to-transparent"></div>
+                        <div class="absolute bottom-6 left-6 flex space-x-2">
+                            <span
+                                class="px-3 py-1 bg-red-500/20 text-red-400 text-[10px] font-black tracking-widest rounded-lg border border-red-500/20 uppercase">派對必備</span>
+                        </div>
+                    </div>
+                    <div class="px-4 flex-grow flex flex-col">
+                        <h3 class="text-2xl font-black text-white mb-4 uppercase tracking-tight">Samba de Amigo</h3>
+                        <p class="text-slate-400 leading-relaxed mb-6 text-sm flex-grow">
+                            拿起沙鈴一起搖擺！除了經典節奏，更支援混合實境 (MR) 模式，在你的房間裡與猴子一起派對。
+                        </p>
+                        <div class="flex gap-4">
+                            <a href="https://www.meta.com/zh-tw/experiences/samba-de-amigo-virtual-party/5736173679792982/"
+                                target="_blank"
+                                class="w-full py-4 bg-green-500 text-black text-center font-black rounded-2xl shadow-lg hover:bg-green-400 transition-colors text-xs uppercase">前往商店</a>
+                            <a href="https://www.youtube.com/results?search_query=鴨先生與兔小姐+Samba+de+Amigo"
+                                target="_blank"
+                                class="w-full py-4 bg-red-500/10 text-red-400 border border-red-500/50 text-center font-black rounded-2xl hover:bg-red-500 hover:text-white transition-all text-xs uppercase flex items-center justify-center gap-2">
+                                <i data-lucide="youtube" class="w-4 h-4"></i>
+                                <span>觀看介紹</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pistol Whip -->
+                <div
+                    class="group glass rounded-[3rem] p-4 flex flex-col hover:border-green-500/50 transition-all card-glow">
+                    <div class="relative h-64 overflow-hidden rounded-[2.5rem] mb-8">
+                        <img src="assets/images/ff20b236fb57595de33885e352b814e5.jpg"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                            alt="Pistol Whip">
+                        <div class="absolute inset-0 bg-gradient-to-t from-blue-950/80 to-transparent"></div>
+                        <div class="absolute bottom-6 left-6 flex space-x-2">
+                            <span
+                                class="px-3 py-1 bg-orange-500/20 text-orange-400 text-[10px] font-black tracking-widest rounded-lg border border-orange-500/20 uppercase">節奏射擊</span>
+                        </div>
+                    </div>
+                    <div class="px-4 flex-grow flex flex-col">
+                        <h3 class="text-2xl font-black text-white mb-4 uppercase tracking-tight">Pistol Whip</h3>
+                        <p class="text-slate-400 leading-relaxed mb-6 text-sm flex-grow">
+                            化身動作片主角！隨音樂節奏開火與躲避。結合射擊與音樂的完美體驗，運動強度極高。
+                        </p>
+                        <div class="flex gap-4">
+                            <a href="https://www.meta.com/zh-tw/experiences/pistol-whip/2104963472963790/"
+                                target="_blank"
+                                class="w-full py-4 bg-green-500 text-black text-center font-black rounded-2xl shadow-lg hover:bg-green-400 transition-colors uppercase text-xs italic">前往商店</a>
+                            <a href="https://www.youtube.com/results?search_query=鴨先生與兔小姐+Pistol+Whip" target="_blank"
+                                class="w-full py-4 bg-red-500/10 text-red-400 border border-red-500/50 text-center font-black rounded-2xl hover:bg-red-500 hover:text-white transition-all text-xs uppercase flex items-center justify-center gap-2">
+                                <i data-lucide="youtube" class="w-4 h-4"></i>
+                                <span>觀看介紹</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ragnarock -->
+                <div
+                    class="group glass rounded-[3rem] p-4 flex flex-col hover:border-green-500/50 transition-all card-glow">
+                    <div class="relative h-64 overflow-hidden rounded-[2.5rem] mb-8">
+                        <img src="assets/images/703702a9ae787a9b41b65ecfd842e597.jpg"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                            alt="Ragnarock">
+                        <div class="absolute inset-0 bg-gradient-to-t from-blue-950/80 to-transparent"></div>
+                        <div class="absolute bottom-6 left-6 flex space-x-2">
+                            <span
+                                class="px-3 py-1 bg-yellow-500/20 text-yellow-400 text-[10px] font-black tracking-widest rounded-lg border border-yellow-500/20 uppercase">維京鼓手</span>
+                        </div>
+                    </div>
+                    <div class="px-4 flex-grow flex flex-col">
+                        <h3 class="text-2xl font-black text-white mb-4 uppercase tracking-tight">Ragnarock</h3>
+                        <p class="text-slate-400 leading-relaxed mb-6 text-sm flex-grow">
+                            成為維京海盜的鼓手！隨重金屬音樂擊響戰鼓，帶領龍船衝向終點。多人連線競賽熱血沸騰。
+                        </p>
+                        <div class="flex gap-4">
+                            <a href="https://www.meta.com/zh-tw/experiences/ragnarock/3734848253283999/" target="_blank"
+                                class="w-full py-4 bg-green-500 text-black text-center font-black rounded-2xl shadow-lg hover:bg-green-400 transition-colors uppercase text-xs italic">前往商店</a>
+                            <a href="https://www.youtube.com/results?search_query=鴨先生與兔小姐+Ragnarock" target="_blank"
+                                class="w-full py-4 bg-red-500/10 text-red-400 border border-red-500/50 text-center font-black rounded-2xl hover:bg-red-500 hover:text-white transition-all text-xs uppercase flex items-center justify-center gap-2">
+                                <i data-lucide="youtube" class="w-4 h-4"></i>
+                                <span>觀看介紹</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Smash Drums -->
+                <div
+                    class="group glass rounded-[3rem] p-4 flex flex-col hover:border-green-500/50 transition-all card-glow">
+                    <div class="relative h-64 overflow-hidden rounded-[2.5rem] mb-8">
+                        <img src="assets/images/8d8324def0acd6ab4f72b43fe7e4487c.jpg"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                            alt="Smash Drums">
+                        <div class="absolute inset-0 bg-gradient-to-t from-blue-950/80 to-transparent"></div>
+                    </div>
+                    <div class="px-4 flex-grow flex flex-col">
+                        <h3 class="text-2xl font-black text-white mb-4 uppercase tracking-tight">Smash Drums</h3>
+                        <p class="text-slate-400 leading-relaxed mb-6 text-sm flex-grow">
+                            純粹的搖滾鼓手體驗。在不同場景中瘋狂敲擊。具有極致的物理反饋與爽快的破碎效果。
+                        </p>
+                        <div class="flex gap-4">
+                            <a href="https://www.meta.com/zh-tw/experiences/smash-drums/3630025217090938/"
+                                target="_blank"
+                                class="w-full py-4 bg-green-500 text-black text-center font-black rounded-2xl shadow-lg hover:bg-green-400 transition-colors uppercase text-xs italic">前往商店</a>
+                            <a href="https://www.youtube.com/results?search_query=鴨先生與兔小姐+Smash+Drums" target="_blank"
+                                class="w-full py-4 bg-red-500/10 text-red-400 border border-red-500/50 text-center font-black rounded-2xl hover:bg-red-500 hover:text-white transition-all text-xs uppercase flex items-center justify-center gap-2">
+                                <i data-lucide="youtube" class="w-4 h-4"></i>
+                                <span>觀看介紹</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Unplugged: Air Guitar -->
+                <div
+                    class="group glass rounded-[3rem] p-4 flex flex-col hover:border-green-500/50 transition-all card-glow">
+                    <div class="relative h-64 overflow-hidden rounded-[2.5rem] mb-8">
+                        <img src="assets/images/e0ade2924a390326f1327fc1859f8abe.jpg"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                            alt="Unplugged">
+                        <div class="absolute inset-0 bg-gradient-to-t from-blue-950/80 to-transparent"></div>
+                        <div class="absolute bottom-6 left-6 flex space-x-2">
+                            <span
+                                class="px-3 py-1 bg-cyan-500/20 text-cyan-400 text-[10px] font-black tracking-widest rounded-lg border border-cyan-500/20 uppercase">手部追蹤</span>
+                        </div>
+                    </div>
+                    <div class="px-4 flex-grow flex flex-col">
+                        <h3 class="text-2xl font-black text-white mb-4 uppercase tracking-tight">Unplugged: Air Guitar
+                        </h3>
+                        <p class="text-slate-400 leading-relaxed mb-6 text-sm flex-grow">
+                            無需搖桿！全程使用手部追蹤技術。化身搖滾明星，在舞台上表演空氣吉他，體驗最真實的指法回饋。
+                        </p>
+                        <div class="flex gap-4">
+                            <a href="https://www.meta.com/zh-tw/experiences/unplugged-air-guitar/4714094898617205/"
+                                target="_blank"
+                                class="w-full py-4 bg-green-500 text-black text-center font-black rounded-2xl shadow-lg hover:bg-green-400 transition-colors uppercase text-xs italic">前往商店</a>
+                            <a href="https://www.youtube.com/results?search_query=鴨先生與兔小姐+Unplugged+Air+Guitar"
+                                target="_blank"
+                                class="w-full py-4 bg-red-500/10 text-red-400 border border-red-500/50 text-center font-black rounded-2xl hover:bg-red-500 hover:text-white transition-all text-xs uppercase flex items-center justify-center gap-2">
+                                <i data-lucide="youtube" class="w-4 h-4"></i>
+                                <span>觀看介紹</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Virtuoso -->
+                <div
+                    class="group glass rounded-[3rem] p-4 flex flex-col hover:border-green-500/50 transition-all card-glow">
+                    <div class="relative h-64 overflow-hidden rounded-[2.5rem] mb-8">
+                        <img src="assets/images/a5d45f6eb9b40a6b729eb841168b2e13.jpg"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                            alt="Virtuoso">
+                        <div class="absolute inset-0 bg-gradient-to-t from-blue-950/80 to-transparent"></div>
+                        <div class="absolute bottom-6 left-6 flex space-x-2">
+                            <span
+                                class="px-3 py-1 bg-purple-500/20 text-purple-400 text-[10px] font-black tracking-widest rounded-lg border border-purple-500/20 uppercase">創作神作</span>
+                        </div>
+                    </div>
+                    <div class="px-4 flex-grow flex flex-col">
+                        <h3 class="text-2xl font-black text-white mb-4 uppercase tracking-tight">Virtuoso</h3>
+                        <p class="text-slate-400 leading-relaxed mb-6 text-sm flex-grow">
+                            這不僅是遊戲，更是一個音樂創作室。使用虛擬樂器進行循環與混音。即使不會樂理也能創作出動聽音樂。
+                        </p>
+                        <div class="flex gap-4">
+                            <a href="https://www.meta.com/zh-tw/experiences/virtuoso/4705981139481778/" target="_blank"
+                                class="w-full py-4 bg-green-500 text-black text-center font-black rounded-2xl shadow-lg hover:bg-green-400 transition-colors uppercase text-xs italic">前往商店</a>
+                            <a href="https://www.youtube.com/results?search_query=鴨先生與兔小姐+Virtuoso" target="_blank"
+                                class="w-full py-4 bg-red-500/10 text-red-400 border border-red-500/50 text-center font-black rounded-2xl hover:bg-red-500 hover:text-white transition-all text-xs uppercase flex items-center justify-center gap-2">
+                                <i data-lucide="youtube" class="w-4 h-4"></i>
+                                <span>觀看介紹</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LES MILLS XR DANCE -->
+                <div
+                    class="group glass rounded-[3rem] p-4 flex flex-col hover:border-green-500/50 transition-all card-glow">
+                    <div class="relative h-64 overflow-hidden rounded-[2.5rem] mb-8">
+                        <img src="assets/images/195468a26483c117660524d63d1d8992.jpg"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                            alt="LES MILLS XR DANCE">
+                        <div class="absolute inset-0 bg-gradient-to-t from-blue-950/80 to-transparent"></div>
+                        <div class="absolute bottom-6 left-6 flex space-x-2">
+                            <span
+                                class="px-3 py-1 bg-green-500/20 text-green-400 text-[10px] font-black tracking-widest rounded-lg border border-green-500/20 uppercase">健身舞蹈</span>
+                        </div>
+                    </div>
+                    <div class="px-4 flex-grow flex flex-col">
+                        <h3 class="text-2xl font-black text-white mb-4 uppercase tracking-tight">LES MILLS XR DANCE</h3>
+                        <p class="text-slate-400 leading-relaxed mb-6 text-sm flex-grow">
+                            踏入虛擬舞池，體驗最頂尖的健身舞蹈！專業編舞與流行節奏，讓你在燃脂的同時享受派對氛圍。
+                        </p>
+                        <div class="flex gap-4">
+                            <a href="https://www.meta.com/zh-tw/experiences/les-mills-xr-dance/6212626242137578/"
+                                target="_blank"
+                                class="w-full py-4 bg-green-500 text-black text-center font-black rounded-2xl shadow-lg hover:bg-green-400 transition-colors uppercase text-xs italic">前往商店</a>
+                            <a href="https://www.youtube.com/results?search_query=鴨先生與兔小姐+LES+MILLS+XR+DANCE"
+                                target="_blank"
+                                class="w-full py-4 bg-red-500/10 text-red-400 border border-red-500/50 text-center font-black rounded-2xl hover:bg-red-500 hover:text-white transition-all text-xs uppercase flex items-center justify-center gap-2">
+                                <i data-lucide="youtube" class="w-4 h-4"></i>
+                                <span>觀看介紹</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paradiddle -->
+                <div
+                    class="group glass rounded-[3rem] p-4 flex flex-col hover:border-green-500/50 transition-all card-glow">
+                    <div class="relative h-64 overflow-hidden rounded-[2.5rem] mb-8">
+                        <img src="assets/images/529f20251b04f5376ce9b53a8f0b007e.jpg"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                            alt="Paradiddle">
+                        <div class="absolute inset-0 bg-gradient-to-t from-blue-950/80 to-transparent"></div>
+                        <div class="absolute bottom-6 left-6 flex space-x-2">
+                            <span
+                                class="px-3 py-1 bg-blue-500/20 text-blue-400 text-[10px] font-black tracking-widest rounded-lg border border-blue-500/20 uppercase">擬真爵士鼓</span>
+                        </div>
+                    </div>
+                    <div class="px-4 flex-grow flex flex-col">
+                        <h3 class="text-2xl font-black text-white mb-4 uppercase tracking-tight">Paradiddle</h3>
+                        <p class="text-slate-400 leading-relaxed mb-6 text-sm flex-grow">
+                            最擬真、強大且可完全自訂的虛擬架子鼓！甚至能連接實體踏板與 MIDI 設備，是鼓手的終極練習場。
+                        </p>
+                        <div class="flex gap-4">
+                            <a href="https://www.meta.com/zh-tw/experiences/paradiddle/5736173679792982/"
+                                target="_blank"
+                                class="w-full py-4 bg-green-500 text-black text-center font-black rounded-2xl shadow-lg hover:bg-green-400 transition-colors uppercase text-xs italic">前往商店</a>
+                            <a href="https://www.youtube.com/results?search_query=鴨先生與兔小姐+Paradiddle" target="_blank"
+                                class="w-full py-4 bg-red-500/10 text-red-400 border border-red-500/50 text-center font-black rounded-2xl hover:bg-red-500 hover:text-white transition-all text-xs uppercase flex items-center justify-center gap-2">
+                                <i data-lucide="youtube" class="w-4 h-4"></i>
+                                <span>觀看介紹</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 
-    <!-- 頁尾 -->
-    <footer class="py-24 px-6 border-t border-white/5 relative z-10 text-center">
-        <div class="max-w-7xl mx-auto flex flex-col items-center gap-10">
-            <!-- 品牌圖示 -->
-            <div class="flex items-center space-x-4 opacity-90 group">
-                <i data-lucide="gamepad-2" class="text-green-400 w-8 h-8 group-hover:rotate-12 transition-transform duration-500"></i>
-                <span class="text-xl font-black tracking-[0.3em] uppercase neon-text-green">Duck & Rabbit VR</span>
-            </div>
-            
-            <!-- 社交圖示連結 -->
-            <div class="flex items-center space-x-12 text-slate-400">
-                <i data-lucide="youtube" class="w-8 h-8 hover:text-red-500 cursor-pointer transition-all hover:scale-125"></i>
-                <i data-lucide="facebook" class="w-8 h-8 hover:text-blue-500 cursor-pointer transition-all hover:scale-125"></i>
-                <div class="line-icon-custom hover:text-green-500 border border-slate-500 rounded-full w-8 h-8 flex items-center justify-center text-[7px] font-black cursor-pointer transition-all hover:scale-125">LINE</div>
-                <i data-lucide="shopping-cart" class="w-8 h-8 hover:text-cyan-400 cursor-pointer transition-all hover:scale-125"></i>
-            </div>
-
-            <!-- 標語與版權 -->
-            <div class="space-y-4">
-                <p class="text-xs text-green-900 font-mono tracking-[0.5em] uppercase font-bold text-shadow">Stay Immersive. Play Smarter.</p>
-                <p class="text-sm text-slate-500 tracking-widest font-bold">© 2023 鴨先生與兔小姐 — <span class="text-slate-300 font-black font-mono">虛擬次元的絕對攻略領航員</span></p>
-            </div>
-        </div>
+    <footer class="py-24 px-6 border-t border-white/5 text-center relative z-10">
+        <p class="text-sm text-slate-500 tracking-widest font-bold">© 2023 鴨先生與兔小姐 — <span
+                class="text-slate-300 font-black font-mono">虛擬次元的絕對攻略領航員</span></p>
     </footer>
 
-    <script>
-        lucide.createIcons();
+    <!-- Back to Top Button -->
+    <button id="backToTop" onclick="scrollToTop()"
+        class="fixed bottom-8 right-8 bg-green-500 text-black p-4 rounded-full shadow-[0_0_20px_rgba(34,197,94,0.6)] hover:bg-green-400 hover:scale-110 transition-all z-50 opacity-0 translate-y-10 pointer-events-none">
+        <i data-lucide="arrow-up" class="w-8 h-8"></i>
+    </button>
 
-        // 數位矩陣背景
-        const canvas = document.getElementById('matrix-canvas');
-        const ctx = canvas.getContext('2d');
-        function resize() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        resize();
-        window.addEventListener('resize', resize);
-
-        const characters = "0101";
-        const fontSize = 16;
-        const columns = canvas.width / fontSize;
-        const drops = Array(Math.floor(columns)).fill(1);
-
-        function drawMatrix() {
-            ctx.fillStyle = "rgba(5, 5, 26, 0.15)";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.font = fontSize + "px 'JetBrains Mono'";
-            for (let i = 0; i < drops.length; i++) {
-                const text = characters.charAt(Math.floor(Math.random() * characters.length));
-                ctx.fillStyle = "#00ff00";
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.985) drops[i] = 0;
-                drops[i]++;
-            }
-        }
-        setInterval(drawMatrix, 50);
-
-        // 選單按鈕邏輯
-        const dropdownBtn = document.getElementById('dropdownBtn');
-        const dropdownMenu = document.getElementById('dropdownMenu');
-        dropdownBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            dropdownMenu.classList.toggle('show');
-        });
-        document.addEventListener('click', () => dropdownMenu.classList.remove('show'));
-
-        // 導覽列滾動
-        window.addEventListener('scroll', () => {
-            const nav = document.getElementById('navbar');
-            if (window.scrollY > 20) {
-                nav.classList.add('bg-blue-950/80', 'backdrop-blur-2xl', 'border-b', 'border-green-500/20', 'py-4');
-                nav.classList.remove('py-8');
-            } else {
-                nav.classList.remove('bg-blue-950/80', 'backdrop-blur-2xl', 'border-b', 'border-green-500/20', 'py-4');
-                nav.classList.add('py-8');
-            }
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
+
 </html>
