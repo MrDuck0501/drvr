@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAVR - 任務情報中心 | Tactical Assault VR</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* TAVR Blue/FBI Theme */
+        .neon-text-blue {
+            text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.8),
+                0 0 5px rgba(56, 189, 248, 0.3);
+        }
+
+        .hud-border {
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.1) inset;
+        }
+
+        .tactical-grid {
+            background-image: linear-gradient(rgba(56, 189, 248, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(56, 189, 248, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        body {
+            background-color: #0f172a;
+            background-image: linear-gradient(rgba(15, 23, 42, 0.92), rgba(15, 23, 42, 0.95)), url('TAVR/blue_urban_camo_texture_1768128137686.png');
+            background-size: 400px;
+            background-attachment: fixed;
+        }
+    </style>
+</head>
+
+<body class="bg-[#0f172a] text-slate-200 selection:bg-sky-500/30 selection:text-sky-400 overflow-x-hidden font-sans">
+
+    <!-- Nav -->
+    <nav id="navbar" <!-- Nav -->
+        <nav id="navbar"
+            class="fixed w-full z-[100] transition-all duration-500 py-4 backdrop-blur-md bg-[#0f172a]/90 border-b border-sky-500/20">
+            <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+                <!-- Logo -->
+                <a href="tavr.html" class="flex items-center space-x-3 group cursor-pointer">
+                    <div
+                        class="bg-gradient-to-br from-blue-600 to-slate-800 p-2 rounded-lg group-hover:rotate-12 transition-all shadow-[0_0_15px_rgba(56,189,248,0.4)]">
+                        <i data-lucide="crosshair" class="text-white w-6 h-6"></i>
+                    </div>
+                    <div class="flex flex-col leading-none">
+                        <span class="text-xl font-black tracking-tighter text-white uppercase font-mono">TAVR</span>
+                        <span class="text-[10px] font-bold tracking-[0.4em] text-sky-400 uppercase">Tactical Assault
+                            VR</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden lg:flex items-center space-x-8">
+                    <a href="tavr.html"
+                        class="text-xs font-bold tracking-[0.2em] text-slate-400 hover:text-sky-400 transition-colors uppercase">回首頁</a>
+
+                    <!-- Dropdown -->
+                    <div class="relative group">
+                        <button
+                            class="flex items-center space-x-2 text-xs font-bold tracking-[0.2em] text-slate-400 hover:text-sky-400 transition-colors uppercase py-2">
+                            <span>戰術情資</span>
+                            <i data-lucide="chevron-down"
+                                class="w-4 h-4 transition-transform group-hover:rotate-180"></i>
+                        </button>
+                        <!-- Dropdown Content -->
+                        <div
+                            class="absolute top-full right-0 w-64 bg-[#0f172a]/95 backdrop-blur-xl border border-sky-500/20 rounded-md shadow-[0_0_30px_rgba(0,0,0,0.5)] pt-2 pb-2 hidden group-hover:block transition-all opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 z-50">
+                            <div class="absolute -top-2 left-0 w-full h-2 bg-transparent"></div> <!-- Bridge -->
+
+                            <div class="px-4 py-2 border-b border-white/5 mb-2">
+                                <span class="text-[10px] text-sky-500 font-mono font-bold tracking-widest">NAVIGATION //
+                                    導航</span>
+                            </div>
+
+                            <a href="index.html"
+                                class="block px-6 py-3 text-sm text-slate-300 hover:text-white hover:bg-sky-500/10 transition-colors border-l-2 border-transparent hover:border-sky-400">
+                                VR資訊站
+                            </a>
+                            <a href="tavr_features.html"
+                                class="block px-6 py-3 text-sm text-slate-300 hover:text-white hover:bg-sky-500/10 transition-colors border-l-2 border-transparent hover:border-sky-400">
+                                遊戲特色
+                            </a>
+                            <a href="tavr_arsenal.html"
+                                class="block px-6 py-3 text-sm text-slate-300 hover:text-white hover:bg-sky-500/10 transition-colors border-l-2 border-transparent hover:border-sky-400">
+                                軍械庫
+                            </a>
+                            <a href="tavr_resources.html"
+                                class="block px-6 py-3 text-sm text-slate-300 hover:text-white hover:bg-sky-500/10 transition-colors border-l-2 border-transparent hover:border-sky-400">
+                                新手與遊戲介紹
+                            </a>
+                            <a href="tavr.html#review"
+                                class="block px-6 py-3 text-sm text-slate-300 hover:text-white hover:bg-sky-500/10 transition-colors border-l-2 border-transparent hover:border-sky-400">
+                                深度評測
+                            </a>
+                            <a href="tavr_missions.html"
+                                class="block px-6 py-3 text-sm text-slate-300 hover:text-white hover:bg-sky-500/10 transition-colors border-l-2 border-transparent hover:border-sky-400">
+                                任務情報
+                            </a>
+                            <a href="https://line.me/ti/g2/oY0nGtpcU-Bm_2r72PEXypJFGLjYRaVa0HAEQw?utm_source=invitation&utm_medium=link_copy&utm_campaign=default"
+                                target="_blank"
+                                class="block px-6 py-3 text-sm text-green-400 hover:text-white hover:bg-green-600/10 transition-colors border-l-2 border-transparent hover:border-green-500">
+                                加入社群
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center space-x-3 ml-4 border-l border-white/10 pl-6">
+                        <a href="https://store.steampowered.com/app/2314160/Tactical_Assault_VR/" target="_blank"
+                            class="px-4 py-2 bg-[#2a475e] hover:bg-[#66c0f4] text-white hover:text-[#171a21] text-xs font-black tracking-[0.1em] rounded-sm transition-all border border-[#66c0f4]/30 uppercase clip-path-slant flex items-center">
+                            <i data-lucide="gamepad-2" class="w-3 h-3 mr-2"></i> Steam
+                        </a>
+                        <a href="https://www.meta.com/zh-tw/experiences/tactical-assault-vr/5190911237633299/"
+                            target="_blank"
+                            class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white text-xs font-black tracking-[0.1em] rounded-sm transition-all shadow-[0_0_15px_rgba(59,130,246,0.4)] uppercase clip-path-slant flex items-center">
+                            <img src="TAVR/uploaded_image_1768128306650.png" class="w-4 h-auto mr-2" alt="Meta"> Meta
+                        </a>
+                    </div>
+                </div>
+
+                <button class="lg:hidden text-white p-2" onclick="toggleMobileMenu()">
+                    <i data-lucide="menu" class="w-8 h-8"></i>
+                </button>
+            </div>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobileMenu"
+            class="fixed inset-0 z-[200] bg-blue-950/95 backdrop-blur-2xl hidden flex-col p-8 transition-all duration-300 opacity-0">
+            <div class="flex justify-between items-center mb-12">
+                <span class="font-black text-2xl tracking-tighter text-sky-400 font-mono">TAVR_MENU</span>
+                <button onclick="toggleMobileMenu()"><i data-lucide="x" class="w-10 h-10 text-white"></i></button>
+            </div>
+            <div class="flex flex-col space-y-10">
+                <a href="tavr.html" onclick="toggleMobileMenu()" class="text-3xl font-black text-white">回首頁</a>
+                <a href="index.html" onclick="toggleMobileMenu()"
+                    class="text-3xl font-black text-white hover:text-sky-400">VR資訊站</a>
+                <a href="tavr_features.html" onclick="toggleMobileMenu()"
+                    class="text-3xl font-black text-white hover:text-sky-400">遊戲特色</a>
+                <a href="tavr_arsenal.html" onclick="toggleMobileMenu()"
+                    class="text-3xl font-black text-white hover:text-sky-400">軍械庫</a>
+                <a href="tavr_resources.html" onclick="toggleMobileMenu()"
+                    class="text-3xl font-black text-white hover:text-sky-400">新手與遊戲介紹</a>
+                <a href="https://store.steampowered.com/app/2314160/Tactical_Assault_VR/" target="_blank"
+                    onclick="toggleMobileMenu()" class="text-3xl font-black text-[#66c0f4] hover:text-white">Steam
+                    商店頁面</a>
+                <a href="https://www.meta.com/zh-tw/experiences/tactical-assault-vr/5190911237633299/" target="_blank"
+                    onclick="toggleMobileMenu()" class="text-3xl font-black text-blue-500 hover:text-blue-400">Meta
+                    商店頁面</a>
+            </div>
+        </div>
+
+        <script>
+            function toggleMobileMenu() {
+                const menu = document.getElementById('mobileMenu');
+                if (menu.classList.contains('hidden')) {
+                    menu.classList.remove('hidden');
+                    menu.classList.add('flex');
+                    setTimeout(() => {
+                        menu.classList.remove('opacity-0');
+                        menu.classList.add('opacity-100');
+                    }, 10);
+                } else {
+                    menu.classList.remove('opacity-100');
+                    menu.classList.add('opacity-0');
+                    setTimeout(() => {
+                        menu.classList.remove('flex');
+                        menu.classList.add('hidden');
+                    }, 300);
+                }
+            }
+        </script>
+
+        <!-- Header -->
+        <header class="relative pt-32 pb-16 px-6 overflow-hidden">
+            <div class="max-w-7xl mx-auto text-center relative z-10">
+                <h1 class="text-5xl md:text-7xl font-black text-white uppercase tracking-tighter mb-4 neon-text-blue">
+                    Mission <span
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-blue-600">Intel</span>
+                </h1>
+                <p class="text-slate-400 text-lg tracking-widest uppercase mb-12">任務情報檔案庫</p>
+
+                <div
+                    class="w-full max-w-4xl mx-auto border-2 border-sky-500/30 rounded-lg overflow-hidden relative group">
+                    <img src="TAVR/tavr_tactical_map_blue_1768128603745.png"
+                        class="w-full h-auto opacity-80 group-hover:opacity-100 transition-opacity duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#0f172a] via-transparent to-transparent"></div>
+                    <div class="absolute bottom-4 left-4 text-left">
+                        <div class="text-xs text-sky-400 font-mono">SECTOR 7-G</div>
+                        <div class="text-2xl font-black text-white uppercase">Tactical Map Overview</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Missions Grid -->
+        <section class="relative z-10 py-12 px-6">
+            <div class="max-w-5xl mx-auto space-y-12">
+
+                <!-- Mission 1 -->
+                <div
+                    class="bg-[#0a0a2e]/80 border border-sky-500/20 p-8 rounded-2xl backdrop-blur-sm hover:border-sky-500/50 transition-all group">
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <div class="md:w-1/3">
+                            <div
+                                class="bg-black/50 aspect-video rounded-lg flex items-center justify-center border border-white/10 relative overflow-hidden group-hover:border-sky-400/50 transition-colors">
+                                <img src="TAVR/uploaded_image_1768129818899.png"
+                                    class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all">
+                                <div
+                                    class="absolute top-2 right-2 text-xs font-black text-sky-500 border border-sky-500 px-2 py-0.5 rounded-sm bg-black/60 backdrop-blur-sm">
+                                    OP-01</div>
+                            </div>
+                        </div>
+                        <div class="md:w-2/3">
+                            <h2
+                                class="text-3xl font-black text-white uppercase mb-2 group-hover:text-sky-400 transition-colors">
+                                Incoming Storm <span class="text-2xl text-slate-300">風暴來襲</span></h2>
+                            <h3 class="text-sky-500 font-bold mb-4 uppercase tracking-widest text-sm">Golis 鎮防禦據點突襲</h3>
+
+                            <div class="space-y-4 text-slate-300">
+                                <div class="bg-black/40 p-4 rounded-lg border-l-2 border-sky-500 mb-6">
+                                    <p class="leading-relaxed mb-4 text-white"><strong class="text-sky-400">MISSION
+                                            BRIEFING：</strong></p>
+                                    <p class="leading-relaxed mb-4">我們已監控 Golis
+                                        鎮防禦據點一個月。主要目標是<strong>獲取人類情報（HUMINT）</strong>。請在街道末端的目標建築內搜尋硬碟、文件或 USB。</p>
+                                    <p class="leading-relaxed mb-4">
+                                        敵軍為地方民兵，裝備雜亂但會利用地形。該鎮近期遭洪水，建築有結構損壞，行動時注意腳步。19:00 藉風暴掩護空投潛入。
+                                    </p>
+                                    <p class="leading-relaxed mb-2 text-yellow-500 font-bold">最後補充：</p>
+                                    <p class="leading-relaxed mb-4 border-l-4 border-red-500 pl-4 bg-red-500/10 py-2">
+                                        <strong class="text-red-400">交戰規則 (ROE)：</strong>不得射擊投降敵人，亦不預期會遭遇平民 (因風暴躲避)。
+                                    </p>
+                                    <p class="leading-relaxed">完成後至撤離點釋放信號，準備應對撤離時的敵軍突襲。</p>
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                                    <div class="bg-black/20 p-3 rounded border-l-2 border-sky-500">
+                                        <div class="text-xs text-slate-500 uppercase">主要任務目標</div>
+                                        <ul class="list-disc list-inside text-sm font-bold text-white mt-1">
+                                            <li>潛入並回收敵方建築內的硬碟</li>
+                                            <li>抵達指定的撤離點 (Extraction Point)</li>
+                                        </ul>
+                                    </div>
+                                    <div class="bg-black/20 p-3 rounded border-l-2 border-red-500">
+                                        <div class="text-xs text-slate-500 uppercase">關卡提示</div>
+                                        <div class="text-sm font-bold text-white mt-1">最基本的熱身關</div>
+                                        <p class="text-xs text-slate-400 mt-1">順著路線走到最底的房子 2F 房間找硬碟，拿到後小心撤離至出發點附近。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mission 2 -->
+                <div
+                    class="bg-[#0a0a2e]/80 border border-sky-500/20 p-8 rounded-2xl backdrop-blur-sm hover:border-sky-500/50 transition-all group">
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <div class="md:w-1/3">
+                            <div
+                                class="bg-black/50 aspect-video rounded-lg flex items-center justify-center border border-white/10 relative overflow-hidden group-hover:border-sky-400/50 transition-colors">
+                                <img src="TAVR/uploaded_image_1768129887407.png"
+                                    class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all">
+                                <div
+                                    class="absolute top-2 right-2 text-xs font-black text-green-500 border border-green-500 px-2 py-0.5 rounded-sm bg-black/60 backdrop-blur-sm">
+                                    Bomb Plant</div>
+                            </div>
+                        </div>
+                        <div class="md:w-2/3">
+                            <h2
+                                class="text-3xl font-black text-white uppercase mb-2 group-hover:text-green-400 transition-colors">
+                                Hidden Forest <span class="text-2xl text-slate-300">森林秘境</span></h2>
+                            <h3 class="text-sky-500 font-bold mb-4 uppercase tracking-widest text-sm">化學武器設施破壞行動</h3>
+
+                            <div class="space-y-4 text-slate-300">
+                                <div class="bg-black/40 p-4 rounded-lg border-l-2 border-green-500 mb-6">
+                                    <p class="leading-relaxed mb-4 text-white"><strong class="text-green-400">MISSION
+                                            BRIEFING：</strong></p>
+                                    <p class="leading-relaxed mb-4">ISI 已定位這座被『精靈之手』掌控的化武設施。內部工人全數已被武裝人員替換。</p>
+                                    <p class="leading-relaxed mb-4">任務：搭乘直升機潛入山谷，於設施指定弱點安置 C4
+                                        炸藥並撤離。化學物質極不穩定，爆炸將極為猛烈，啟動後務必拉開距離。</p>
+                                    <p class="leading-relaxed mb-4">
+                                        敵軍由傭兵與民兵混編，具高度攻擊性。建議利用周邊高地觀察敵情，採取低調滲透。設施內無平民，所有『工人』皆為武裝威脅，請準備交火。</p>
+                                    <p class="leading-relaxed font-bold text-white">祝你們好運。</p>
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                                    <div class="bg-black/20 p-3 rounded border-l-2 border-green-500">
+                                        <div class="text-xs text-slate-500 uppercase">行動目標</div>
+                                        <ul class="list-disc list-inside text-sm font-bold text-white mt-1">
+                                            <li>找到指定的炸藥安置地點並摧毀設施</li>
+                                            <li>完成後安全撤離</li>
+                                        </ul>
+                                    </div>
+                                    <div class="bg-black/20 p-3 rounded border-l-2 border-yellow-500">
+                                        <div class="text-xs text-slate-500 uppercase">戰術建議</div>
+                                        <p class="text-xs text-slate-400 mt-1 leading-relaxed">
+                                            屬於較大的地圖。起步後往鐵皮工廠方向推進，使用左手選單地圖(Map)確認紅色圈圈炸彈區。<br>
+                                            <strong class="text-yellow-400">注意：</strong>炸彈啟動後只有 1
+                                            分鐘倒數，請務必撤離至安全距離外以免陣亡。爆炸後撤離點才會出現（綠色圈圈），需半數隊友進入才算完成。
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mission 3 -->
+                <div
+                    class="bg-[#0a0a2e]/80 border border-sky-500/20 p-8 rounded-2xl backdrop-blur-sm hover:border-sky-500/50 transition-all group">
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <div class="md:w-1/3">
+                            <div
+                                class="bg-black/50 aspect-video rounded-lg flex items-center justify-center border border-white/10 relative overflow-hidden group-hover:border-sky-400/50 transition-colors">
+                                <img src="TAVR/uploaded_image_1768130206356.png"
+                                    class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all">
+                                <div
+                                    class="absolute top-2 right-2 text-xs font-black text-yellow-500 border border-yellow-500 px-2 py-0.5 rounded-sm bg-black/60 backdrop-blur-sm">
+                                    Bomb Defusal</div>
+                            </div>
+                        </div>
+                        <div class="md:w-2/3">
+                            <h2
+                                class="text-3xl font-black text-white uppercase mb-2 group-hover:text-yellow-400 transition-colors">
+                                VOID <span class="text-2xl text-slate-300">虛空</span></h2>
+                            <h3 class="text-sky-500 font-bold mb-4 uppercase tracking-widest text-sm">銀行毒氣炸彈解除行動</h3>
+
+                            <div class="space-y-4 text-slate-300">
+                                <div class="bg-black/40 p-4 rounded-lg border-l-2 border-yellow-500 mb-6">
+                                    <p class="leading-relaxed mb-4 text-white"><strong class="text-yellow-400">MISSION
+                                            BRIEFING：</strong></p>
+                                    <p class="leading-relaxed mb-4">
+                                        『精靈之手』（Jinn）支持者突襲了一間銀行，並置入化學武器。任務目標：<strong>解除化學炸彈</strong>並清掃敵軍。</p>
+                                    <p class="leading-relaxed mb-4">敵方切斷電力，人數約 15+，武裝齊全。建議偽裝搭乘特警卡車進入。民眾已撤離。</p>
+                                    <p class="leading-relaxed mb-2 text-yellow-100/80"><strong>潛入路線：</strong><br>
+                                        1. 後門員工出入口 / 2. 下水道人孔蓋 / 3. 天窗垂降 / 4. 正側門強攻</p>
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                                    <div class="bg-black/20 p-3 rounded border-l-2 border-green-500">
+                                        <div class="text-xs text-slate-500 uppercase">行動目標</div>
+                                        <ul class="list-disc list-inside text-sm font-bold text-white mt-1">
+                                            <li>找出並拆除任何炸彈</li>
+                                            <li>殲滅敵方威脅</li>
+                                            <li>前往撤離點完成任務</li>
+                                        </ul>
+                                    </div>
+                                    <div class="bg-black/20 p-3 rounded border-l-2 border-red-500">
+                                        <div class="text-xs text-slate-500 uppercase">戰術提示</div>
+                                        <p class="text-xs text-slate-400 mt-1">
+                                            炸彈位置隨機 (1F/2F/3F/頂樓/地下金庫)。<br>
+                                            <strong class="text-red-400">注意：</strong> 破門與交火時切勿引爆炸彈。撤離點通常在正門。
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <!-- Bomb Defusal Guide -->
+                                <div class="mt-6 border border-yellow-500/30 rounded-lg p-4 bg-yellow-500/5">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <h4 class="text-yellow-400 font-black uppercase flex items-center">
+                                            <i data-lucide="scissors" class="w-4 h-4 mr-2"></i> 拆彈指南 (Defusal Protocol)
+                                        </h4>
+                                        <a href="https://www.youtube.com/watch?v=bzXS8EBSS7o" target="_blank"
+                                            class="text-xs bg-red-600 hover:bg-red-500 text-white px-2 py-1 rounded flex items-center transition-colors">
+                                            <i data-lucide="play" class="w-3 h-3 mr-1"></i> 教學影片
+                                        </a>
+                                    </div>
+                                    <ol class="list-decimal list-inside text-sm text-slate-300 space-y-2">
+                                        <li><strong class="text-white">取得剪線鉗：</strong>在 SWAT 卡車內或戰前裝備選取。</li>
+                                        <li><strong class="text-white">打開蓋板：</strong>握一下炸彈綠色蓋板以顯示線路。</li>
+                                        <li><strong class="text-white">觀察線路：</strong>線路顏色會變動（有時兩條同時變）。</li>
+                                        <li><strong class="text-white">剪斷變色線：</strong>在它<span
+                                                class="text-yellow-400">再次變色前</span>剪掉最後變色的那條線。正確會聽到高頻嗶聲。</li>
+                                        <li><strong class="text-white">注意：</strong>需剪對 3 次。每剪錯一次時間扣 2 秒。總時限 60 秒。</li>
+                                    </ol>
+                                    <p class="text-xs text-slate-500 mt-2 italic">* 小知識：本遊戲無墜落傷害，可由頂樓打破玻璃跳至地下室體驗垂降感。</p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mission 4 -->
+                <div
+                    class="bg-[#0a0a2e]/80 border border-sky-500/20 p-8 rounded-2xl backdrop-blur-sm hover:border-sky-500/50 transition-all group">
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <div class="md:w-1/3">
+                            <div
+                                class="bg-black/50 aspect-video rounded-lg flex items-center justify-center border border-white/10 relative overflow-hidden group-hover:border-sky-400/50 transition-colors">
+                                <img src="TAVR/uploaded_image_1768129255566.png"
+                                    class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all">
+                                <div
+                                    class="absolute top-2 right-2 text-xs font-black text-red-500 border border-red-500 px-2 py-0.5 rounded-sm bg-black/60 backdrop-blur-sm">
+                                    HVT Assassination</div>
+                            </div>
+                        </div>
+                        <div class="md:w-2/3">
+                            <h2
+                                class="text-3xl font-black text-white uppercase mb-2 group-hover:text-red-400 transition-colors">
+                                SEVER SNAKE <span class="text-2xl text-slate-300">斬蛇行動</span></h2>
+                            <h3 class="text-sky-500 font-bold mb-4 uppercase tracking-widest text-sm">目標確認與狙殺</h3>
+
+                            <div class="space-y-4 text-slate-300">
+                                <div class="bg-black/40 p-4 rounded-lg border-l-2 border-red-500 mb-6">
+                                    <p class="leading-relaxed mb-4 text-white"><strong class="text-red-400">ISA
+                                            INTELLIGENCE
+                                            BRIEF：</strong></p>
+                                    <p class="leading-relaxed mb-4">今天下午 0700 時，Jovan Adamsovic——赫爾墨斯集團(Hermes
+                                        Group)顧問，將在蘇丹廢棄小鎮 Bir Qalil 與『精靈之手』成員會面。他目前正被護送穿越整座小鎮，周邊敵軍 30 人以上。</p>
+                                    <div class="bg-red-900/20 border border-red-500/30 p-2 mb-4 rounded text-sm">
+                                        <strong class="text-red-300">目標特徵 (PID Required)：</strong><br>
+                                        髮色：不詳 / 眼睛：棕色 / 鬍鬚：棕色、滿臉鬍鬚<br>
+                                        <span class="text-xs text-slate-400">*
+                                            注意：目標有兩名替身。必須先壓制/擊殺蒙面光頭護衛，揭開其面罩確認是否為大鬍子目標。</span>
+                                    </div>
+                                    <p class="leading-relaxed mb-4">任務目標是精確擊殺
+                                        Adamsovic。確認身分並處決成功後，撤離點才會開啟。若局勢升高，鎮外大量敵軍可能會介入。</p>
+                                    <p class="leading-relaxed">環境報告：小鎮位於低窪地形，東側開闊。目前天氣炎熱，光線充足。你們將於 0700 插入，最遲 1500 前撤離。
+                                    </p>
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                                    <div class="bg-black/20 p-3 rounded border-l-2 border-green-500">
+                                        <div class="text-xs text-slate-500 uppercase">主要目標</div>
+                                        <ul class="list-disc list-inside text-sm font-bold text-white mt-1">
+                                            <li>找出並擊殺 HVT (需驗屍)</li>
+                                            <li>殲滅所有遭遇的敵人</li>
+                                            <li>前往撤離點</li>
+                                        </ul>
+                                    </div>
+                                    <div class="bg-black/20 p-3 rounded border-l-2 border-red-500">
+                                        <div class="text-xs text-slate-500 uppercase">行動機制 (重要)</div>
+                                        <p class="text-xs text-slate-400 mt-1 leading-relaxed">
+                                            <strong class="text-red-400">驗明正身：</strong>
+                                            擊殺疑似目標後屍體不會消失。必須手動揭開面罩。若是正確目標(大鬍子)，會觸發成功音效並顯示撤離點。誤殺替身無效。
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mission 5 -->
+                <div
+                    class="bg-[#0a0a2e]/80 border border-sky-500/20 p-8 rounded-2xl backdrop-blur-sm hover:border-sky-500/50 transition-all group">
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <div class="md:w-1/3">
+                            <div
+                                class="bg-black/50 aspect-video rounded-lg flex items-center justify-center border border-white/10 relative overflow-hidden group-hover:border-sky-400/50 transition-colors">
+                                <img src="TAVR/uploaded_image_1768129395387.png"
+                                    class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all">
+                                <div
+                                    class="absolute top-2 right-2 text-xs font-black text-purple-500 border border-purple-500 px-2 py-0.5 rounded-sm bg-black/60 backdrop-blur-sm">
+                                    HVT & Data Theft</div>
+                            </div>
+                        </div>
+                        <div class="md:w-2/3">
+                            <h2
+                                class="text-3xl font-black text-white uppercase mb-2 group-hover:text-purple-400 transition-colors">
+                                TRIDENT LIGHTNING <span class="text-2xl text-slate-300">三叉戟閃電</span></h2>
+                            <h3 class="text-sky-500 font-bold mb-4 uppercase tracking-widest text-sm">海灘別墅刺殺與資料竊取</h3>
+
+                            <div class="space-y-4 text-slate-300">
+                                <div class="bg-black/40 p-4 rounded-lg border-l-2 border-purple-500 mb-6">
+                                    <p class="leading-relaxed mb-4 text-white"><strong class="text-purple-400">ISA
+                                            INTELLIGENCE BRIEF：</strong></p>
+                                    <p class="leading-relaxed mb-4">我們將派遣你們小隊前往南海。目標是 Brian Gould——表面是慈善家，實為 Nexa Europa
+                                        (ISI 炸彈製造設施) 的帳戶管理人。即刻對其展開逮捕或肅清。</p>
+                                    <p class="leading-relaxed mb-4">根據 Black Team 情資，Gould
+                                        的宅邸內藏有一台電腦，含大量交易資訊。該電腦需他的<strong class="text-white">個人存取金鑰 (Pass Key)</strong>
+                                        才能啟動，而金鑰他從不離身。</p>
+                                    <p class="leading-relaxed mb-4">
+                                        敵方兵力由『精靈之手』下層成員與精銳的『赫爾墨斯集團』安保組成。你們需穿越大院進入北側主建築。目標位置不明，需現場判斷。</p>
+                                    <p class="leading-relaxed">預計中午 1200 登陸，1230 前完成。所有人，立即整裝。</p>
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                                    <div class="bg-black/20 p-3 rounded border-l-2 border-green-500">
+                                        <div class="text-xs text-slate-500 uppercase">主要目標</div>
+                                        <ul class="list-disc list-inside text-sm font-bold text-white mt-1">
+                                            <li>找出並排除 HVT (Brian Gould)</li>
+                                            <li>奪取金鑰 (Pass Key)</li>
+                                            <li>啟動電腦並上傳資料 (需防守)</li>
+                                            <li>撤離行動區域</li>
+                                        </ul>
+                                    </div>
+                                    <div class="bg-black/20 p-3 rounded border-l-2 border-purple-500">
+                                        <div class="text-xs text-slate-500 uppercase">戰術提示</div>
+                                        <p class="text-xs text-slate-400 mt-1 leading-relaxed">
+                                            <strong class="text-purple-400">資料傳輸防守：</strong>
+                                            上傳資料需要 1 分鐘。期間敵軍會發動反擊試圖破壞電腦，必須死守電腦直到傳輸完成。<br>
+                                            撤離點位於別墅大門口前花園。
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Mission 6 -->
+                <div
+                    class="bg-[#0a0a2e]/80 border border-sky-500/20 p-8 rounded-2xl backdrop-blur-sm hover:border-sky-500/50 transition-all group">
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <div class="md:w-1/3">
+                            <div
+                                class="bg-black/50 aspect-video rounded-lg flex items-center justify-center border border-white/10 relative overflow-hidden group-hover:border-sky-400/50 transition-colors">
+                                <img src="TAVR/uploaded_image_1768129555206.png"
+                                    class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all">
+                                <div
+                                    class="absolute top-2 right-2 text-xs font-black text-orange-500 border border-orange-500 px-2 py-0.5 rounded-sm bg-black/60 backdrop-blur-sm">
+                                    Crash Site & HVT</div>
+                            </div>
+                        </div>
+                        <div class="md:w-2/3">
+                            <h2
+                                class="text-3xl font-black text-white uppercase mb-2 group-hover:text-orange-400 transition-colors">
+                                HAMMER FIRE <span class="text-2xl text-slate-300">戰鎚之火</span></h2>
+                            <h3 class="text-sky-500 font-bold mb-4 uppercase tracking-widest text-sm">墜機現場破壞與首腦斬首</h3>
+
+                            <div class="space-y-4 text-slate-300">
+                                <div class="bg-black/40 p-4 rounded-lg border-l-2 border-orange-500 mb-6">
+                                    <p class="leading-relaxed mb-4 text-white"><strong class="text-orange-400">MAYDAY
+                                            BRIEFING：</strong></p>
+                                    <p class="leading-relaxed mb-4">SCEPTRE 2-3 支援直升機在哈西卜·賓·札拉 (Hasib Bin-Zara)
+                                        的大院墜毀，機上載有機密資料。根據 ISI 情資，無生還友軍。</p>
+                                    <p class="leading-relaxed mb-4">任務更動：你們需將 C4 炸藥安置於直升機殘骸上引爆，以銷毀機密。隨後進入大院，排除目標賓·札拉。
+                                    </p>
+                                    <p class="leading-relaxed mb-4">敵軍為『精靈之手』與『赫爾墨斯集團』傭兵混合編制，將會死守據點。全鎮已被敵軍佔據，接近時務必警覺。
+                                    </p>
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                                    <div class="bg-black/20 p-3 rounded border-l-2 border-green-500">
+                                        <div class="text-xs text-slate-500 uppercase">主要目標</div>
+                                        <ul class="list-disc list-inside text-sm font-bold text-white mt-1">
+                                            <li>摧毀墜毀直升機 (C4)</li>
+                                            <li>排除 HVT (Hasib Bin-Zara)</li>
+                                            <li>撤離行動區域</li>
+                                        </ul>
+                                    </div>
+                                    <div class="bg-black/20 p-3 rounded border-l-2 border-red-500">
+                                        <div class="text-xs text-slate-500 uppercase">致命機制 (重要)</div>
+                                        <p class="text-xs text-slate-400 mt-1 leading-relaxed">
+                                            <strong class="text-red-400">人體炸彈：</strong>
+                                            目標賓·札拉身上綁有炸彈。切勿射擊身體以免直接引爆。擊殺後炸彈會啟動 5-10 秒倒數，必須迅速使用剪線鉗剪斷<strong
+                                                class="text-white">胸口紅線</strong>拆除。
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mission 7 -->
+                <div
+                    class="bg-[#0a0a2e]/80 border border-sky-500/20 p-8 rounded-2xl backdrop-blur-sm hover:border-sky-500/50 transition-all group">
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <div class="md:w-1/3">
+                            <div
+                                class="bg-black/50 aspect-video rounded-lg flex items-center justify-center border border-white/10 relative overflow-hidden group-hover:border-sky-400/50 transition-colors">
+                                <img src="TAVR/uploaded_image_1768129517223.png"
+                                    class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all">
+                                <div
+                                    class="absolute top-2 right-2 text-xs font-black text-green-500 border border-green-500 px-2 py-0.5 rounded-sm bg-black/60 backdrop-blur-sm">
+                                    Hostage Rescue</div>
+                            </div>
+                        </div>
+                        <div class="md:w-2/3">
+                            <h2
+                                class="text-3xl font-black text-white uppercase mb-2 group-hover:text-green-400 transition-colors">
+                                COLLAPSING STAR <span class="text-2xl text-slate-300">崩塌之星</span></h2>
+                            <h3 class="text-sky-500 font-bold mb-4 uppercase tracking-widest text-sm">外交官營救行動</h3>
+
+                            <div class="space-y-4 text-slate-300">
+                                <div class="bg-black/40 p-4 rounded-lg border-l-2 border-green-500 mb-6">
+                                    <p class="leading-relaxed mb-4 text-white"><strong class="text-green-400">RESCUE
+                                            OPERATION：</strong></p>
+                                    <p class="leading-relaxed mb-4">販毒集團細胞「紅骷髏」(Los Cráneos Rojos) 正挾持一名外交官 LASCAM
+                                        於墨西哥一處加油站。我們已獲授權進行營救。</p>
+                                    <p class="leading-relaxed mb-4">情報顯示內部有大量 LCR 成員，火力強且受過訓練。目標地點為小型加油站，敵人準備隨時火拼。</p>
+                                    <p class="leading-relaxed"><strong class="text-red-400">交戰規則 (ROE)：</strong>
+                                        現場唯一平民為人質
+                                        LASCAM。絕對禁止誤傷平民，否則任務失敗。可由是否持槍辨識身分。</p>
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                                    <div class="bg-black/20 p-3 rounded border-l-2 border-green-500">
+                                        <div class="text-xs text-slate-500 uppercase">主要目標</div>
+                                        <ul class="list-disc list-inside text-sm font-bold text-white mt-1">
+                                            <li>滲入加油站並制伏敵對份子</li>
+                                            <li>帶回任何情資</li>
+                                            <li>確保所有平民安全 (誤殺即失敗)</li>
+                                        </ul>
+                                    </div>
+                                    <div class="bg-black/20 p-3 rounded border-l-2 border-yellow-500">
+                                        <div class="text-xs text-slate-500 uppercase">戰術提示</div>
+                                        <p class="text-xs text-slate-400 mt-1 leading-relaxed">
+                                            找出文件後需攜帶至撤離點。只有當攜帶文件的隊員踏入撤離區才算成功。
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mission 8 -->
+                <div
+                    class="bg-[#0a0a2e]/80 border border-sky-500/20 p-8 rounded-2xl backdrop-blur-sm hover:border-sky-500/50 transition-all group">
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <div class="md:w-1/3">
+                            <div
+                                class="bg-black/50 aspect-video rounded-lg flex items-center justify-center border border-white/10 relative overflow-hidden group-hover:border-sky-400/50 transition-colors">
+                                <img src="TAVR/uploaded_image_1768129537003.png"
+                                    class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all">
+                                <div
+                                    class="absolute top-2 right-2 text-xs font-black text-cyan-500 border border-cyan-500 px-2 py-0.5 rounded-sm bg-black/60 backdrop-blur-sm">
+                                    Intel Retrieval</div>
+                            </div>
+                        </div>
+                        <div class="md:w-2/3">
+                            <h2
+                                class="text-3xl font-black text-white uppercase mb-2 group-hover:text-cyan-400 transition-colors">
+                                FLATTENED VEIL <span class="text-2xl text-slate-300">扁平帷幕</span></h2>
+                            <h3 class="text-sky-500 font-bold mb-4 uppercase tracking-widest text-sm">邊境牧場情資搜查</h3>
+
+                            <div class="space-y-4 text-slate-300">
+                                <div class="bg-black/40 p-4 rounded-lg border-l-2 border-cyan-500 mb-6">
+                                    <p class="leading-relaxed mb-4 text-white"><strong class="text-cyan-400">INTEL
+                                            RAID：</strong></p>
+                                    <p class="leading-relaxed mb-4">我們將對「紅骷髏」位於 Querétaro
+                                        的一處偏僻牧場展開突襲。情報指出那裡藏有關於其幕後運作的關鍵資料。
+                                    </p>
+                                    <p class="leading-relaxed mb-4">
+                                        牧場包含穀倉與兩層樓主宅邸。該區由販毒集團精銳掌控，防守嚴密。注意：場域內佈有<strong>絆線陷阱</strong>，移動時務必留意腳下。</p>
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                                    <div class="bg-black/20 p-3 rounded border-l-2 border-green-500">
+                                        <div class="text-xs text-slate-500 uppercase">主要目標</div>
+                                        <ul class="list-disc list-inside text-sm font-bold text-white mt-1">
+                                            <li>滲入牧場建築群</li>
+                                            <li>找出並帶回任何情資 (文件夾)</li>
+                                            <li>撤離</li>
+                                        </ul>
+                                    </div>
+                                    <div class="bg-black/20 p-3 rounded border-l-2 border-red-500">
+                                        <div class="text-xs text-slate-500 uppercase">威脅警告</div>
+                                        <p class="text-xs text-slate-400 mt-1 leading-relaxed">
+                                            <strong class="text-red-400">敵軍增援：</strong>
+                                            一旦拿取文件夾，將立即觸發敵軍支援 (15人以上)，演變為激烈的撤離戰。另外，小心低矮的絆線陷阱。
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mission 9 -->
+                <div
+                    class="bg-[#0a0a2e]/80 border border-sky-500/20 p-8 rounded-2xl backdrop-blur-sm hover:border-sky-500/50 transition-all group">
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <div class="md:w-1/3">
+                            <div
+                                class="bg-black/50 aspect-video rounded-lg flex items-center justify-center border border-white/10 relative overflow-hidden group-hover:border-sky-400/50 transition-colors">
+                                <img src="TAVR/uploaded_image_1768129578456.png"
+                                    class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all">
+                                <div
+                                    class="absolute top-2 right-2 text-xs font-black text-rose-500 border border-rose-500 px-2 py-0.5 rounded-sm bg-black/60 backdrop-blur-sm">
+                                    Twin Assassination</div>
+                            </div>
+                        </div>
+                        <div class="md:w-2/3">
+                            <h2
+                                class="text-3xl font-black text-white uppercase mb-2 group-hover:text-rose-400 transition-colors">
+                                SHATTERED EAGLE <span class="text-2xl text-slate-300">破碎之鷹</span></h2>
+                            <h3 class="text-sky-500 font-bold mb-4 uppercase tracking-widest text-sm">雙胞胎姐妹花殲滅行動</h3>
+
+                            <div class="space-y-4 text-slate-300">
+                                <div class="bg-black/40 p-4 rounded-lg border-l-2 border-rose-500 mb-6">
+                                    <p class="leading-relaxed mb-4 text-white"><strong class="text-rose-400">TARGET
+                                            PACKAGE：</strong></p>
+                                    <p class="leading-relaxed mb-4">目標是「VILLA 姐妹」(Ona 與 Salma)，綽號「戰士」。她們是 LCR
+                                        集團的財務核心。目前位於
+                                        Guerrero 市區的一棟高密度公寓大樓內。</p>
+                                    <p class="leading-relaxed mb-4">目標身穿黑衣。此區域無平民，但樓內塞滿敵軍。這是正面衝突，沒有退路。</p>
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                                    <div class="bg-black/20 p-3 rounded border-l-2 border-green-500">
+                                        <div class="text-xs text-slate-500 uppercase">主要目標</div>
+                                        <ul class="list-disc list-inside text-sm font-bold text-white mt-1">
+                                            <li>找出並消滅兩位「Villa 姐妹」</li>
+                                            <li>找出並帶回任何情資</li>
+                                        </ul>
+                                    </div>
+                                    <div class="bg-black/20 p-3 rounded border-l-2 border-red-500">
+                                        <div class="text-xs text-slate-500 uppercase">戰術警告</div>
+                                        <p class="text-xs text-slate-400 mt-1 leading-relaxed">
+                                            <strong class="text-red-400">蜂擁而至：</strong>
+                                            擊殺第二位姐妹後，將觸發大規模敵軍支援湧入建築。建議預先找好掩體或規劃撤離路線。
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mission 10 -->
+                <div
+                    class="bg-[#0a0a2e]/80 border border-sky-500/20 p-8 rounded-2xl backdrop-blur-sm hover:border-sky-500/50 transition-all group">
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <div class="md:w-1/3">
+                            <div
+                                class="bg-black/50 aspect-video rounded-lg flex items-center justify-center border border-white/10 relative overflow-hidden group-hover:border-sky-400/50 transition-colors">
+                                <img src="TAVR/uploaded_image_1768129764688.png"
+                                    class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all">
+                                <div
+                                    class="absolute top-2 right-2 text-xs font-black text-amber-500 border border-amber-500 px-2 py-0.5 rounded-sm bg-black/60 backdrop-blur-sm">
+                                    Dual HVT & Rescue</div>
+                            </div>
+                        </div>
+                        <div class="md:w-2/3">
+                            <h2
+                                class="text-3xl font-black text-white uppercase mb-2 group-hover:text-amber-400 transition-colors">
+                                CLIPPED WINGS <span class="text-2xl text-slate-300">折翼行動</span></h2>
+                            <h3 class="text-sky-500 font-bold mb-4 uppercase tracking-widest text-sm">貧民窟雙頭目獵殺與平民救援</h3>
+
+                            <div class="space-y-4 text-slate-300">
+                                <div class="bg-black/40 p-4 rounded-lg border-l-2 border-amber-500 mb-6">
+                                    <p class="leading-relaxed mb-4 text-white"><strong class="text-amber-400">OPERATION
+                                            BRIEFING：</strong></p>
+                                    <p class="leading-relaxed mb-4">目標鎖定 LCR 兩名關鍵人物：前遊騎兵叛徒 Jose Palmas 與其副手 Pancho
+                                        Dominguez
+                                        (El Muerto)。</p>
+                                    <p class="leading-relaxed mb-4">兩人藏身於塔巴斯科 (Tabasco) 的貧民窟，地形緊密且佈滿敵軍。平民已躲藏於室內。</p>
+                                    <p class="leading-relaxed"><strong class="text-white">特殊指令：</strong>
+                                        除擊殺兩名頭目外，必須找出並束縛
+                                        (救援) 3 名平民。兩項條件達成後撤離。</p>
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                                    <div class="bg-black/20 p-3 rounded border-l-2 border-green-500">
+                                        <div class="text-xs text-slate-500 uppercase">主要目標</div>
+                                        <ul class="list-disc list-inside text-sm font-bold text-white mt-1">
+                                            <li>殲滅 Jose Palmas & Pancho Dominguez</li>
+                                            <li>救援 3 名平民 (需束縛)</li>
+                                            <li>撤離 (返回出發點)</li>
+                                        </ul>
+                                    </div>
+                                    <div class="bg-black/20 p-3 rounded border-l-2 border-red-500">
+                                        <div class="text-xs text-slate-500 uppercase">戰術警告</div>
+                                        <p class="text-xs text-slate-400 mt-1 leading-relaxed">
+                                            <strong class="text-red-400">最後一波：</strong>
+                                            當雙頭目死亡且 3 名平民皆已救援後，將觸發大量敵軍增援。撤離點固定於<strong
+                                                class="text-white">原出發點</strong>，回程路途將極為艱險。
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+        </section>
+
+        <footer class="text-center py-12 border-t border-sky-500/10 mt-12 bg-[#020210] relative z-10">
+            <a href="tavr.html"
+                class="inline-flex items-center text-slate-500 hover:text-sky-400 font-bold tracking-widest uppercase text-sm transition-colors">
+                <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i> Return to Main Operations
+            </a>
+        </footer>
+
+        <script src="script.js"></script>
+        <script>
+            lucide.createIcons();
+        </script>
+</body>
+
+</html>

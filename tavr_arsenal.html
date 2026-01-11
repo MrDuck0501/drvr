@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAVR - 武器軍械庫 | Tactical Assault VR</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* TAVR Blue/FBI Theme */
+        .neon-text-blue {
+            text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.8),
+                0 0 5px rgba(56, 189, 248, 0.3);
+        }
+
+        .hud-border {
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.1) inset;
+        }
+
+        .tactical-grid {
+            background-image: linear-gradient(rgba(56, 189, 248, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(56, 189, 248, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        body {
+            background-color: #0f172a;
+            background-image: linear-gradient(rgba(15, 23, 42, 0.92), rgba(15, 23, 42, 0.95)), url('TAVR/blue_urban_camo_texture_1768128137686.png');
+            background-size: 400px;
+            background-attachment: fixed;
+        }
+    </style>
+</head>
+
+<body class="bg-[#0f172a] text-slate-200 selection:bg-sky-500/30 selection:text-sky-400 overflow-x-hidden font-sans">
+
+    <!-- Nav -->
+    <nav id="navbar" <!-- Nav -->
+        <nav id="navbar"
+            class="fixed w-full z-[100] transition-all duration-500 py-4 backdrop-blur-md bg-[#0f172a]/90 border-b border-sky-500/20">
+            <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+                <!-- Logo -->
+                <a href="tavr.html" class="flex items-center space-x-3 group cursor-pointer">
+                    <div
+                        class="bg-gradient-to-br from-blue-600 to-slate-800 p-2 rounded-lg group-hover:rotate-12 transition-all shadow-[0_0_15px_rgba(56,189,248,0.4)]">
+                        <i data-lucide="crosshair" class="text-white w-6 h-6"></i>
+                    </div>
+                    <div class="flex flex-col leading-none">
+                        <span class="text-xl font-black tracking-tighter text-white uppercase font-mono">TAVR</span>
+                        <span class="text-[10px] font-bold tracking-[0.4em] text-sky-400 uppercase">Tactical Assault
+                            VR</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden lg:flex items-center space-x-8">
+                    <a href="tavr.html"
+                        class="text-xs font-bold tracking-[0.2em] text-slate-400 hover:text-sky-400 transition-colors uppercase">回首頁</a>
+
+                    <!-- Dropdown -->
+                    <div class="relative group">
+                        <button
+                            class="flex items-center space-x-2 text-xs font-bold tracking-[0.2em] text-slate-400 hover:text-sky-400 transition-colors uppercase py-2">
+                            <span>戰術情資</span>
+                            <i data-lucide="chevron-down"
+                                class="w-4 h-4 transition-transform group-hover:rotate-180"></i>
+                        </button>
+                        <!-- Dropdown Content -->
+                        <div
+                            class="absolute top-full right-0 w-64 bg-[#0f172a]/95 backdrop-blur-xl border border-sky-500/20 rounded-md shadow-[0_0_30px_rgba(0,0,0,0.5)] pt-2 pb-2 hidden group-hover:block transition-all opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 z-50">
+                            <div class="absolute -top-2 left-0 w-full h-2 bg-transparent"></div> <!-- Bridge -->
+
+                            <div class="px-4 py-2 border-b border-white/5 mb-2">
+                                <span class="text-[10px] text-sky-500 font-mono font-bold tracking-widest">NAVIGATION //
+                                    導航</span>
+                            </div>
+
+                            <a href="index.html"
+                                class="block px-6 py-3 text-sm text-slate-300 hover:text-white hover:bg-sky-500/10 transition-colors border-l-2 border-transparent hover:border-sky-400">
+                                VR資訊站
+                            </a>
+                            <a href="tavr_features.html"
+                                class="block px-6 py-3 text-sm text-slate-300 hover:text-white hover:bg-sky-500/10 transition-colors border-l-2 border-transparent hover:border-sky-400">
+                                遊戲特色
+                            </a>
+                            <a href="tavr_arsenal.html"
+                                class="block px-6 py-3 text-sm text-slate-300 hover:text-white hover:bg-sky-500/10 transition-colors border-l-2 border-transparent hover:border-sky-400">
+                                軍械庫
+                            </a>
+                            <a href="tavr_resources.html"
+                                class="block px-6 py-3 text-sm text-slate-300 hover:text-white hover:bg-sky-500/10 transition-colors border-l-2 border-transparent hover:border-sky-400">
+                                新手與遊戲介紹
+                            </a>
+                            <a href="tavr.html#review"
+                                class="block px-6 py-3 text-sm text-slate-300 hover:text-white hover:bg-sky-500/10 transition-colors border-l-2 border-transparent hover:border-sky-400">
+                                深度評測
+                            </a>
+                            <a href="tavr_missions.html"
+                                class="block px-6 py-3 text-sm text-slate-300 hover:text-white hover:bg-sky-500/10 transition-colors border-l-2 border-transparent hover:border-sky-400">
+                                任務情報
+                            </a>
+                            <a href="https://line.me/ti/g2/oY0nGtpcU-Bm_2r72PEXypJFGLjYRaVa0HAEQw?utm_source=invitation&utm_medium=link_copy&utm_campaign=default"
+                                target="_blank"
+                                class="block px-6 py-3 text-sm text-green-400 hover:text-white hover:bg-green-600/10 transition-colors border-l-2 border-transparent hover:border-green-500">
+                                加入社群
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center space-x-3 ml-4 border-l border-white/10 pl-6">
+                        <a href="https://store.steampowered.com/app/2314160/Tactical_Assault_VR/" target="_blank"
+                            class="px-4 py-2 bg-[#2a475e] hover:bg-[#66c0f4] text-white hover:text-[#171a21] text-xs font-black tracking-[0.1em] rounded-sm transition-all border border-[#66c0f4]/30 uppercase clip-path-slant flex items-center">
+                            <i data-lucide="gamepad-2" class="w-3 h-3 mr-2"></i> Steam
+                        </a>
+                        <a href="https://www.meta.com/zh-tw/experiences/tactical-assault-vr/5190911237633299/"
+                            target="_blank"
+                            class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white text-xs font-black tracking-[0.1em] rounded-sm transition-all shadow-[0_0_15px_rgba(59,130,246,0.4)] uppercase clip-path-slant flex items-center">
+                            <img src="TAVR/uploaded_image_1768128306650.png" class="w-4 h-auto mr-2" alt="Meta"> Meta
+                        </a>
+                    </div>
+                </div>
+
+                <button class="lg:hidden text-white p-2" onclick="toggleMobileMenu()">
+                    <i data-lucide="menu" class="w-8 h-8"></i>
+                </button>
+            </div>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobileMenu"
+            class="fixed inset-0 z-[200] bg-blue-950/95 backdrop-blur-2xl hidden flex-col p-8 transition-all duration-300 opacity-0">
+            <div class="flex justify-between items-center mb-12">
+                <span class="font-black text-2xl tracking-tighter text-sky-400 font-mono">TAVR_MENU</span>
+                <button onclick="toggleMobileMenu()"><i data-lucide="x" class="w-10 h-10 text-white"></i></button>
+            </div>
+            <div class="flex flex-col space-y-10">
+                <a href="tavr.html" onclick="toggleMobileMenu()" class="text-3xl font-black text-white">回首頁</a>
+                <a href="index.html" onclick="toggleMobileMenu()"
+                    class="text-3xl font-black text-white hover:text-sky-400">VR資訊站</a>
+                <a href="tavr_features.html" onclick="toggleMobileMenu()"
+                    class="text-3xl font-black text-white hover:text-sky-400">遊戲特色</a>
+                <a href="tavr_arsenal.html" onclick="toggleMobileMenu()"
+                    class="text-3xl font-black text-white hover:text-sky-400">軍械庫</a>
+                <a href="tavr_resources.html" onclick="toggleMobileMenu()"
+                    class="text-3xl font-black text-white hover:text-sky-400">新手與遊戲介紹</a>
+                <a href="https://store.steampowered.com/app/2314160/Tactical_Assault_VR/" target="_blank"
+                    onclick="toggleMobileMenu()" class="text-3xl font-black text-[#66c0f4] hover:text-white">Steam
+                    商店頁面</a>
+                <a href="https://www.meta.com/zh-tw/experiences/tactical-assault-vr/5190911237633299/" target="_blank"
+                    onclick="toggleMobileMenu()" class="text-3xl font-black text-blue-500 hover:text-blue-400">Meta
+                    商店頁面</a>
+            </div>
+        </div>
+
+        <script>
+            function toggleMobileMenu() {
+                const menu = document.getElementById('mobileMenu');
+                if (menu.classList.contains('hidden')) {
+                    menu.classList.remove('hidden');
+                    menu.classList.add('flex');
+                    setTimeout(() => {
+                        menu.classList.remove('opacity-0');
+                        menu.classList.add('opacity-100');
+                    }, 10);
+                } else {
+                    menu.classList.remove('opacity-100');
+                    menu.classList.add('opacity-0');
+                    setTimeout(() => {
+                        menu.classList.remove('flex');
+                        menu.classList.add('hidden');
+                    }, 300);
+                }
+            }
+        </script>
+
+        <!-- Header -->
+        <header class="relative pt-32 pb-16 px-6 overflow-hidden">
+            <div class="max-w-7xl mx-auto text-center relative z-10">
+                <h1 class="text-5xl md:text-7xl font-black text-white uppercase tracking-tighter mb-4 neon-text-blue">
+                    Combat <span
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-blue-600">Arsenal</span>
+                </h1>
+                <p class="text-slate-400 text-lg tracking-widest uppercase mb-12">特種部隊武器庫</p>
+
+                <div
+                    class="inline-block px-8 py-4 bg-yellow-500/10 border border-yellow-500/30 rounded-lg text-yellow-500 font-black text-3xl md:text-5xl font-mono tracking-wider animate-pulse uppercase">
+                    ⚠ DATA UNDER CONSTRUCTION // 建構中
+                </div>
+            </div>
+        </header>
+
+        <!-- Arsenal Content -->
+        <section class="relative z-10 py-12 px-6">
+            <div class="max-w-6xl mx-auto space-y-16">
+
+                <!-- LMG Section -->
+                <div class="space-y-6">
+                    <div class="flex items-center space-x-4 border-b border-white/10 pb-4">
+                        <h2 class="text-4xl font-black text-white uppercase tracking-tighter flex items-center">
+                            <span class="text-sky-500 mr-4">///</span> Light Machine Guns
+                        </h2>
+                        <span
+                            class="px-2 py-1 bg-sky-500/20 text-sky-400 text-xs font-bold rounded border border-sky-500/30">LMG</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- MAG58 -->
+                        <div
+                            class="bg-black/30 border border-white/10 p-6 rounded-lg hover:border-sky-500/50 transition-all group">
+                            <h3 class="text-2xl font-black text-white mb-2 group-hover:text-sky-400">MAG58</h3>
+                            <p class="text-xs text-slate-500 font-mono">BELT-FED GENERAL PURPOSE MG</p>
+                        </div>
+                        <!-- MINIMI -->
+                        <div
+                            class="bg-black/30 border border-white/10 p-6 rounded-lg hover:border-sky-500/50 transition-all group">
+                            <h3 class="text-2xl font-black text-white mb-2 group-hover:text-sky-400">MINIMI</h3>
+                            <p class="text-xs text-slate-500 font-mono">SQUAD AUTOMATIC WEAPON</p>
+                        </div>
+                        <!-- PKM -->
+                        <div
+                            class="bg-black/30 border border-white/10 p-6 rounded-lg hover:border-sky-500/50 transition-all group">
+                            <h3 class="text-2xl font-black text-white mb-2 group-hover:text-sky-400">PKM</h3>
+                            <p class="text-xs text-slate-500 font-mono">RUSSIAN GENERAL PURPOSE MG</p>
+                        </div>
+                        <!-- RPK74 -->
+                        <div
+                            class="bg-black/30 border border-white/10 p-6 rounded-lg hover:border-sky-500/50 transition-all group">
+                            <h3 class="text-2xl font-black text-white mb-2 group-hover:text-sky-400">RPK74</h3>
+                            <p class="text-xs text-slate-500 font-mono">LIGHT MACHINE GUN</p>
+                        </div>
+                        <!-- RPK -->
+                        <div
+                            class="bg-black/30 border border-white/10 p-6 rounded-lg hover:border-sky-500/50 transition-all group">
+                            <h3 class="text-2xl font-black text-white mb-2 group-hover:text-sky-400">RPK</h3>
+                            <p class="text-xs text-slate-500 font-mono">CLASSIC LIGHT MACHINE GUN</p>
+                        </div>
+                        <!-- AUG LMG -->
+                        <div
+                            class="bg-black/30 border border-white/10 p-6 rounded-lg hover:border-sky-500/50 transition-all group">
+                            <h3 class="text-2xl font-black text-white mb-2 group-hover:text-sky-400">AUG LMG</h3>
+                            <p class="text-xs text-slate-500 font-mono">HBAR BULLPUP LMG</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shotgun Section -->
+                <div class="space-y-6">
+                    <div class="flex items-center space-x-4 border-b border-white/10 pb-4">
+                        <h2 class="text-4xl font-black text-white uppercase tracking-tighter flex items-center">
+                            <span class="text-red-500 mr-4">///</span> Shotguns
+                        </h2>
+                        <span
+                            class="px-2 py-1 bg-red-500/20 text-red-400 text-xs font-bold rounded border border-red-500/30">SG</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- M4 ENTRY -->
+                        <div
+                            class="bg-black/30 border border-white/10 p-6 rounded-lg hover:border-red-500/50 transition-all group">
+                            <h3 class="text-2xl font-black text-white mb-2 group-hover:text-red-400">M4 ENTRY</h3>
+                            <p class="text-xs text-slate-500 font-mono">SEMI-AUTO COMBAT SHOTGUN</p>
+                        </div>
+                        <!-- 590A1 -->
+                        <div
+                            class="bg-black/30 border border-white/10 p-6 rounded-lg hover:border-red-500/50 transition-all group">
+                            <h3 class="text-2xl font-black text-white mb-2 group-hover:text-red-400">590A1</h3>
+                            <p class="text-xs text-slate-500 font-mono">PUMP-ACTION TACTICAL</p>
+                        </div>
+                        <!-- MARINER -->
+                        <div
+                            class="bg-black/30 border border-white/10 p-6 rounded-lg hover:border-red-500/50 transition-all group">
+                            <h3 class="text-2xl font-black text-white mb-2 group-hover:text-red-400">MARINER</h3>
+                            <p class="text-xs text-slate-500 font-mono">CORROSION RESISTANT PUMP</p>
+                        </div>
+                        <!-- VEPR12 -->
+                        <div
+                            class="bg-black/30 border border-white/10 p-6 rounded-lg hover:border-red-500/50 transition-all group">
+                            <h3 class="text-2xl font-black text-white mb-2 group-hover:text-red-400">VEPR12</h3>
+                            <p class="text-xs text-slate-500 font-mono">MAG-FED SEMI-AUTO</p>
+                        </div>
+                        <!-- SPAS12 -->
+                        <div
+                            class="bg-black/30 border border-white/10 p-6 rounded-lg hover:border-red-500/50 transition-all group">
+                            <h3 class="text-2xl font-black text-white mb-2 group-hover:text-red-400">SPAS12</h3>
+                            <p class="text-xs text-slate-500 font-mono">DUAL-MODE COMBAT SHOTGUN</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Handgun Section -->
+                <div class="space-y-6">
+                    <div class="flex items-center space-x-4 border-b border-white/10 pb-4">
+                        <h2 class="text-4xl font-black text-white uppercase tracking-tighter flex items-center">
+                            <span class="text-green-500 mr-4">///</span> Handguns
+                        </h2>
+                        <span
+                            class="px-2 py-1 bg-green-500/20 text-green-400 text-xs font-bold rounded border border-green-500/30">HG</span>
+                    </div>
+
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                        <!-- G18C -->
+                        <div
+                            class="bg-black/30 border border-white/10 p-4 rounded-lg hover:border-green-500/50 transition-all group">
+                            <h3 class="text-xl font-black text-white mb-1 group-hover:text-green-400">G18C</h3>
+                            <p class="text-[10px] text-slate-500 font-mono">SELECT-FIRE AUTO</p>
+                        </div>
+                        <!-- M45A1 -->
+                        <div
+                            class="bg-black/30 border border-white/10 p-4 rounded-lg hover:border-green-500/50 transition-all group">
+                            <h3 class="text-xl font-black text-white mb-1 group-hover:text-green-400">M45A1</h3>
+                            <p class="text-[10px] text-slate-500 font-mono">.45 CALIBER CQB</p>
+                        </div>
+                        <!-- P226R -->
+                        <div
+                            class="bg-black/30 border border-white/10 p-4 rounded-lg hover:border-green-500/50 transition-all group">
+                            <h3 class="text-xl font-black text-white mb-1 group-hover:text-green-400">P226R</h3>
+                            <p class="text-[10px] text-slate-500 font-mono">RAILED SERVICE PISTOL</p>
+                        </div>
+                        <!-- P320 -->
+                        <div
+                            class="bg-black/30 border border-white/10 p-4 rounded-lg hover:border-green-500/50 transition-all group">
+                            <h3 class="text-xl font-black text-white mb-1 group-hover:text-green-400">P320</h3>
+                            <p class="text-[10px] text-slate-500 font-mono">MODULAR SIDEARM</p>
+                        </div>
+                        <!-- M9A1 -->
+                        <div
+                            class="bg-black/30 border border-white/10 p-4 rounded-lg hover:border-green-500/50 transition-all group">
+                            <h3 class="text-xl font-black text-white mb-1 group-hover:text-green-400">M9A1</h3>
+                            <p class="text-[10px] text-slate-500 font-mono">CLASSIC 9MM</p>
+                        </div>
+                        <!-- HK45T -->
+                        <div
+                            class="bg-black/30 border border-white/10 p-4 rounded-lg hover:border-green-500/50 transition-all group">
+                            <h3 class="text-xl font-black text-white mb-1 group-hover:text-green-400">HK45T</h3>
+                            <p class="text-[10px] text-slate-500 font-mono">TACTICAL .45</p>
+                        </div>
+                        <!-- FIVESEVEN -->
+                        <div
+                            class="bg-black/30 border border-white/10 p-4 rounded-lg hover:border-green-500/50 transition-all group">
+                            <h3 class="text-xl font-black text-white mb-1 group-hover:text-green-400">FIVESEVEN</h3>
+                            <p class="text-[10px] text-slate-500 font-mono">ARMOR PIERCING 5.7</p>
+                        </div>
+                        <!-- G45 -->
+                        <div
+                            class="bg-black/30 border border-white/10 p-4 rounded-lg hover:border-green-500/50 transition-all group">
+                            <h3 class="text-xl font-black text-white mb-1 group-hover:text-green-400">G45</h3>
+                            <p class="text-[10px] text-slate-500 font-mono">CROSSOVER 9MM</p>
+                        </div>
+                        <!-- G23 -->
+                        <div
+                            class="bg-black/30 border border-white/10 p-4 rounded-lg hover:border-green-500/50 transition-all group">
+                            <h3 class="text-xl font-black text-white mb-1 group-hover:text-green-400">G23</h3>
+                            <p class="text-[10px] text-slate-500 font-mono">COMPACT .40 S&W</p>
+                        </div>
+                        <!-- TX10 TASER -->
+                        <div
+                            class="bg-black/30 border border-yellow-500/30 p-4 rounded-lg hover:border-yellow-400 transition-all group shadow-[0_0_15px_rgba(234,179,8,0.1)]">
+                            <h3 class="text-xl font-black text-white mb-1 group-hover:text-yellow-400">TX10 TASER</h3>
+                            <p class="text-[10px] text-yellow-500 font-mono">NON-LETHAL TAKEDOWN</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center py-12 border-t border-sky-500/10 mt-12 bg-[#020210] relative z-10">
+            <a href="tavr.html"
+                class="inline-flex items-center text-slate-500 hover:text-sky-400 font-bold tracking-widest uppercase text-sm transition-colors">
+                <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i> Return to Main Operations
+            </a>
+        </footer>
+
+        <script src="script.js"></script>
+        <script>
+            lucide.createIcons();
+        </script>
+</body>
+
+</html>
