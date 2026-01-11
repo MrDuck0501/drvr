@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh-TW" class="scroll-smooth">
+<html lang="en" class="scroll-smooth">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TAVR - 遊戲特色深度解析 | Tactical Assault VR</title>
+    <title>TAVR - Deep Dive into Features | Tactical Assault VR</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -38,7 +38,7 @@
         class="fixed w-full z-[100] transition-all duration-500 py-4 backdrop-blur-md bg-[#0f172a]/90 border-b border-sky-500/20">
         <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
             <!-- Logo -->
-            <a href="tavr.html" class="flex items-center space-x-3 group cursor-pointer">
+            <a href="tavr_en.html" class="flex items-center space-x-3 group cursor-pointer">
                 <div
                     class="bg-gradient-to-br from-blue-600 to-slate-800 p-2 rounded-lg group-hover:rotate-12 transition-all shadow-[0_0_15px_rgba(56,189,248,0.4)]">
                     <i data-lucide="crosshair" class="text-white w-6 h-6"></i>
@@ -52,16 +52,17 @@
 
             <!-- Desktop Menu -->
             <div class="hidden lg:flex items-center space-x-8">
-                <a href="tavr.html"
-                    class="text-xs font-bold tracking-[0.2em] text-slate-400 hover:text-sky-400 transition-colors uppercase">回首頁</a>
+                <a href="tavr_en.html"
+                    class="text-xs font-bold tracking-[0.2em] text-slate-400 hover:text-sky-400 transition-colors uppercase">HOME</a>
                 <a href="index.html"
-                    class="text-xs font-bold tracking-[0.2em] text-slate-400 hover:text-sky-400 transition-colors uppercase">VR資訊站</a>
-                <a href="tavr_features.html"
-                    class="text-xs font-bold tracking-[0.2em] text-slate-400 hover:text-sky-400 transition-colors uppercase">遊戲特色</a>
-                <a href="tavr_arsenal.html"
-                    class="text-sm font-bold text-slate-300 hover:text-sky-400 tracking-widest uppercase transition-colors">軍械庫</a>
-                <a href="tavr_resources.html"
-                    class="text-sm font-bold text-slate-300 hover:text-sky-400 tracking-widest uppercase transition-colors">新手與遊戲介紹</a>
+                    class="text-xs font-bold tracking-[0.2em] text-slate-400 hover:text-sky-400 transition-colors uppercase">VR
+                    GUIDE</a>
+                <a href="tavr_features_en.html"
+                    class="text-xs font-bold tracking-[0.2em] text-slate-400 hover:text-sky-400 transition-colors uppercase">FEATURES</a>
+                <a href="tavr_arsenal_en.html"
+                    class="text-sm font-bold text-slate-300 hover:text-sky-400 tracking-widest uppercase transition-colors">ARSENAL</a>
+                <a href="tavr_resources_en.html"
+                    class="text-sm font-bold text-slate-300 hover:text-sky-400 tracking-widest uppercase transition-colors">GUIDES</a>
                 <div class="flex items-center space-x-3">
                     <a href="https://store.steampowered.com/app/2314160/Tactical_Assault_VR/" target="_blank"
                         class="px-4 py-2 bg-[#2a475e] hover:bg-[#66c0f4] text-white hover:text-[#171a21] text-xs font-black tracking-[0.1em] rounded-sm transition-all border border-[#66c0f4]/30 uppercase clip-path-slant flex items-center">
@@ -72,9 +73,9 @@
                         class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white text-xs font-black tracking-[0.1em] rounded-sm transition-all shadow-[0_0_15px_rgba(59,130,246,0.4)] uppercase clip-path-slant flex items-center">
                         <img src="TAVR/uploaded_image_1768128306650.png" class="w-4 h-auto mr-2" alt="Meta"> Meta
                     </a>
-                    <a href="tavr_features_en.html"
+                    <a href="tavr_features.html"
                         class="px-3 py-2 bg-white hover:bg-slate-200 text-black text-xs font-black tracking-widest rounded-sm transition-all uppercase shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:scale-105 active:scale-95">
-                        EN
+                        CN
                     </a>
                 </div>
             </div>
@@ -92,24 +93,24 @@
             <button onclick="toggleMobileMenu()"><i data-lucide="x" class="w-10 h-10 text-white"></i></button>
         </div>
         <div class="flex flex-col space-y-10">
-            <a href="tavr_features_en.html" onclick="toggleMobileMenu()"
-                class="text-3xl font-black text-yellow-400 hover:text-white border-b-2 border-yellow-500/30 pb-2 mb-4 inline-block">Switch
-                Language (EN)</a>
-            <a href="tavr.html" onclick="toggleMobileMenu()" class="text-3xl font-black text-white">回首頁</a>
-            <a href="index.html" onclick="toggleMobileMenu()"
-                class="text-3xl font-black text-white hover:text-sky-400">VR資訊站</a>
             <a href="tavr_features.html" onclick="toggleMobileMenu()"
-                class="text-3xl font-black text-white hover:text-sky-400">遊戲特色</a>
-            <a href="tavr_arsenal.html" onclick="toggleMobileMenu()"
-                class="text-3xl font-black text-white hover:text-sky-400">軍械庫</a>
-            <a href="tavr_resources.html" onclick="toggleMobileMenu()"
-                class="text-3xl font-black text-white hover:text-sky-400">新手與遊戲介紹</a>
+                class="text-3xl font-black text-yellow-400 hover:text-white border-b-2 border-yellow-500/30 pb-2 mb-4 inline-block">切換語言
+                (中文)</a>
+            <a href="tavr_en.html" onclick="toggleMobileMenu()" class="text-3xl font-black text-white">HOME</a>
+            <a href="index.html" onclick="toggleMobileMenu()"
+                class="text-3xl font-black text-white hover:text-sky-400">VR GUIDE</a>
+            <a href="tavr_features_en.html" onclick="toggleMobileMenu()"
+                class="text-3xl font-black text-white hover:text-sky-400">FEATURES</a>
+            <a href="tavr_arsenal_en.html" onclick="toggleMobileMenu()"
+                class="text-3xl font-black text-white hover:text-sky-400">ARSENAL</a>
+            <a href="tavr_resources_en.html" onclick="toggleMobileMenu()"
+                class="text-3xl font-black text-white hover:text-sky-400">GUIDES</a>
             <a href="https://store.steampowered.com/app/2314160/Tactical_Assault_VR/" target="_blank"
                 onclick="toggleMobileMenu()" class="text-3xl font-black text-[#66c0f4] hover:text-white">Steam
-                商店頁面</a>
+                Store</a>
             <a href="https://www.meta.com/zh-tw/experiences/tactical-assault-vr/5190911237633299/" target="_blank"
                 onclick="toggleMobileMenu()" class="text-3xl font-black text-blue-500 hover:text-blue-400">Meta
-                商店頁面</a>
+                Store</a>
         </div>
     </div>
 
@@ -139,13 +140,15 @@
         <div class="max-w-4xl mx-auto text-center relative z-10">
             <h1
                 class="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter mb-6 neon-text-blue leading-tight">
-                為何你玩不膩？
-                <br><span class="text-2xl md:text-4xl text-slate-400">遊戲特色深度解析</span>
+                Why You Won't Get Bored?
+                <br><span class="text-2xl md:text-4xl text-slate-400">Deep Dive into Game Features</span>
             </h1>
             <p class="text-lg text-slate-300 leading-relaxed mb-8">
-                這款遊戲不靠<span class="text-sky-400 font-bold border-b border-sky-500/50">數值堆疊</span>或<span
-                    class="text-sky-400 font-bold border-b border-sky-500/50">解鎖裝備</span>來吸引玩家，<br>
-                而是以「遊玩體驗」本身的深度與變化，讓人一場接一場主動投入。
+                This game doesn't rely on <span class="text-sky-400 font-bold border-b border-sky-500/50">stacking
+                    stats</span> or <span class="text-sky-400 font-bold border-b border-sky-500/50">unlocking
+                    gear</span> to attract players,<br>
+                but rather on the depth and variety of the "gameplay experience" itself, making people actively engage
+                match after match.
             </p>
             <div
                 class="w-full max-w-3xl mx-auto border border-sky-500/20 rounded-lg overflow-hidden relative shadow-[0_0_30px_rgba(56,189,248,0.1)]">
@@ -167,14 +170,18 @@
                         01</div>
                 </div>
                 <div>
-                    <h2 class="text-2xl font-black text-white mb-4 uppercase">任務地圖固定，但戰術<span
-                            class="text-sky-400">自由度極高</span></h2>
+                    <h2 class="text-2xl font-black text-white mb-4 uppercase">Fixed Mission Maps, But <span
+                            class="text-sky-400">High Tactical Freedom</span></h2>
                     <p class="text-slate-400 leading-loose">
-                        每張地圖雖是固定設計，對熟練的玩家來說自然能掌握地形節奏，但進攻路線選擇非常多樣。不論是從正面強行突入、繞側翼突襲，或是配合隊友多點穿插，每次都可以重新思考最適合的突破方式。<br>
-                        這種空間結構也恰好營造出近距離戰鬥中常見的壓迫感與節奏，讓玩家時刻保持警覺。
+                        Although each map is a fixed design, experienced players can master the terrain rhythm, but
+                        there are varied attack routes. Whether it's a forceful frontal entry, flanking, or multi-point
+                        penetration with teammates, you can rethink the most suitable breakthrough method every
+                        time.<br>
+                        This spatial structure also creates the oppression and rhythm common in close-quarters combat,
+                        keeping players alert at all times.
                     </p>
                     <div class="mt-4 p-4 bg-sky-500/10 border-l-4 border-sky-500 text-sky-100 text-sm font-bold">
-                        沒有「唯一正解」，這種高度戰術自由，才是重玩價值來源。
+                        No "Single Correct Answer", this high tactical freedom is the source of replay value.
                     </div>
                 </div>
             </div>
@@ -187,10 +194,14 @@
                         02</div>
                 </div>
                 <div>
-                    <h2 class="text-2xl font-black text-white mb-4 uppercase">敵人反應靈活，行動充滿<span
-                            class="text-sky-400">變數</span></h2>
+                    <h2 class="text-2xl font-black text-white mb-4 uppercase">Smart Enemy Reactions, Action Full of
+                        <span class="text-sky-400">Variables</span>
+                    </h2>
                     <p class="text-slate-400 leading-loose">
-                        遊戲中的敵人會根據玩家行動快速尋找掩護，不會死守同一位置，也不會讓你照劇本打到底。這種臨場反應會讓近距離接觸時格外刺激，推進時每個轉角、每個門縫都充滿變數，讓你不斷修正觀察與攻擊時機。
+                        Enemies in the game will quickly find cover based on player actions. They won't stay in one spot
+                        or follow a script. This on-the-spot reaction makes close encounters exciting. Every corner and
+                        doorway during a push is full of variables, constantly forcing you to adjust your observation
+                        and attack timing.
                     </p>
                 </div>
             </div>
@@ -203,24 +214,27 @@
                         03</div>
                 </div>
                 <div>
-                    <h2 class="text-2xl font-black text-white mb-4 uppercase">技術驅動，成就靠<span
-                            class="text-sky-400">實力</span>而非時間堆疊</h2>
+                    <h2 class="text-2xl font-black text-white mb-4 uppercase">Skill-Driven, Achievement Based on <span
+                            class="text-sky-400">Skill</span> Not Time Spent</h2>
                     <p class="text-slate-400 leading-loose mb-4">
-                        與許多遊戲不同，《Tactical Assault VR》從一開始就開放所有武器與裝備，新手與老手的差距完全取決於實際操作與戰術理解，而不是刷多久、解鎖了什麼。
+                        Unlike many games, TAVR unlocks all weapons and equipment from the start. The gap between new
+                        and veteran players depends entirely on actual operation and tactical understanding, not how
+                        long you grind or what you unlock.
                     </p>
                     <ul class="grid grid-cols-1 md:grid-cols-2 gap-2 text-slate-300 text-sm">
                         <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-sky-500 mr-2"></i>
-                            對地圖的熟悉</li>
+                            Map Familiarity</li>
                         <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-sky-500 mr-2"></i>
-                            舉槍速度與瞄準反應</li>
+                            Weapon Readiness & Aim Speed</li>
                         <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-sky-500 mr-2"></i>
-                            換彈效率與操作節奏</li>
-                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-sky-500 mr-2"></i> 走位習慣
+                            Reload Efficiency & Rhythm</li>
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-sky-500 mr-2"></i>
+                            Movement Habits
                         </li>
                         <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-sky-500 mr-2"></i>
-                            擲彈與道具使用的臨場判斷</li>
-                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-sky-500 mr-2"></i> CQB
-                            的理解運用</li>
+                            Grenade & Utility Usage Judgment</li>
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-sky-500 mr-2"></i>
+                            CQB Understanding & Application</li>
                     </ul>
                 </div>
             </div>
@@ -234,23 +248,28 @@
                             04</div>
                     </div>
                     <div>
-                        <h2 class="text-2xl font-black text-white mb-4 uppercase">核心設計：每一次戰場都不是重複</h2>
+                        <h2 class="text-2xl font-black text-white mb-4 uppercase">Core Design: No Battlefield is a
+                            Repeat</h2>
                         <ul class="space-y-3">
                             <li class="flex items-start">
                                 <i data-lucide="chevron-right" class="w-5 h-5 text-sky-500 mt-1 mr-2 flex-shrink-0"></i>
-                                <span class="text-slate-300"><strong>地圖設計與進攻規劃：</strong>沙盒般的關卡結構，允許無限種攻略路徑。</span>
+                                <span class="text-slate-300"><strong>Map Design & Planning:</strong> Sandbox-like level
+                                    structure allowing infinite approach paths.</span>
                             </li>
                             <li class="flex items-start">
                                 <i data-lucide="chevron-right" class="w-5 h-5 text-sky-500 mt-1 mr-2 flex-shrink-0"></i>
-                                <span class="text-slate-300"><strong>不可預測的壓力：</strong>敵人的隨機生成與行為模式，讓你無法背板。</span>
+                                <span class="text-slate-300"><strong>Unpredictable Pressure:</strong> Randomized enemy
+                                    spawns and behaviors, so you can't just memorize the map.</span>
                             </li>
                             <li class="flex items-start">
                                 <i data-lucide="chevron-right" class="w-5 h-5 text-sky-500 mt-1 mr-2 flex-shrink-0"></i>
-                                <span class="text-slate-300"><strong>累積理解：</strong>每一場勝利或失敗，都積累成你真實的戰鬥直覺。</span>
+                                <span class="text-slate-300"><strong>Accumulated Understanding:</strong> Every victory
+                                    or defeat builds your real combat intuition.</span>
                             </li>
                             <li class="flex items-start">
                                 <i data-lucide="chevron-right" class="w-5 h-5 text-sky-500 mt-1 mr-2 flex-shrink-0"></i>
-                                <span class="text-slate-300"><strong>不被裝備壓制：</strong>沒有繁瑣的升級系統，新兵也能靠槍法擊敗老兵。</span>
+                                <span class="text-slate-300"><strong>No Gear Suppression:</strong> No tedious upgrade
+                                    systems; recruits can beat veterans with marksmanship.</span>
                             </li>
                         </ul>
                     </div>
@@ -265,20 +284,23 @@
                         05</div>
                 </div>
                 <div>
-                    <h2 class="text-2xl font-black text-white mb-4 uppercase">從操作中成長，從<span
-                            class="text-sky-400">戰術</span>中找到樂趣</h2>
+                    <h2 class="text-2xl font-black text-white mb-4 uppercase">Grow from Action, Find Fun in <span
+                            class="text-sky-400">Tactics</span></h2>
                     <p class="text-slate-400 leading-loose">
-                        《Tactical Assault
-                        VR》不是內容量爆炸的大型射擊遊戲，也不是讓人疲乏農資源的解鎖系統。它靠的是每場戰鬥都能帶來實質壓力與學習的空間，尤其在中近距離環境下，對清角、判斷、反應的要求都轉化為高度沉浸的實戰體驗。
+                        TAVR isn't a massive shooter with explosive content volume, nor a grind-heavy unlock system. It
+                        relies on the space for real pressure and learning in every battle, especially in CQB
+                        environments, transforming requirements for clearing corners, judgment, and reaction into a
+                        highly immersive combat experience.
                     </p>
                     <div class="mt-4 space-y-2">
                         <div class="flex items-center text-slate-300">
                             <div class="w-1.5 h-1.5 bg-sky-500 rounded-full mr-3"></div>
-                            玩家的技巧可以在任務中直接反映成果，不靠裝備數值疊加。
+                            Player skills reflect results directly in missions, not through gear stat stacking.
                         </div>
                         <div class="flex items-center text-slate-300">
                             <div class="w-1.5 h-1.5 bg-sky-500 rounded-full mr-3"></div>
-                            成功完成高難度任務的成就感是建立在實力與理解上的，而非簡單的「打多場就變強」。
+                            The sense of achievement in completing high-difficulty missions is built on skill and
+                            understanding, not simply "getting stronger by playing more".
                         </div>
                     </div>
                 </div>
@@ -292,22 +314,23 @@
         <div
             class="max-w-4xl mx-auto text-center border-t border-b border-sky-500/20 py-12 bg-[#020617]/50 backdrop-blur-sm">
             <h3 class="text-xl md:text-3xl font-bold text-white leading-relaxed mb-6">
-                「不是變強了才好玩，<br>而是<span class="text-sky-400">好玩中自然就變強</span>。」
+                "It's not fun because you got stronger,<br>it's that you naturally <span class="text-sky-400">got
+                    stronger while having fun</span>."
             </h3>
             <p class="text-slate-400 text-sm md:text-base">
-                這是一款不會用數值懲罰你，也不會用裝備逼你練功的遊戲。<br>
-                真正讓人不膩的，是操作精進與戰術思維成長的過程。
+                This is a game that won't punish you with stats, nor force you to grind with gear.<br>
+                What truly keeps it fresh is the process of refining your operation and tactical thinking.
             </p>
         </div>
     </section>
 
     <footer class="text-center py-12 bg-[#020210] relative z-10">
         <div class="flex flex-col md:flex-row justify-center gap-6">
-            <a href="tavr.html"
+            <a href="tavr_en.html"
                 class="inline-flex items-center text-slate-500 hover:text-sky-400 font-bold tracking-widest uppercase text-sm transition-colors">
                 <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i> Back to Home
             </a>
-            <a href="tavr_missions.html"
+            <a href="tavr_missions_en.html"
                 class="inline-flex items-center text-slate-500 hover:text-sky-400 font-bold tracking-widest uppercase text-sm transition-colors">
                 View Missions Intel <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
             </a>
