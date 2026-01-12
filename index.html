@@ -100,6 +100,64 @@
         </div>
     </section>
 
+    <!-- Update Log Section -->
+    <section id="recent-logs" class="relative z-10 py-12 px-6 bg-slate-950/20">
+        <div class="max-w-4xl mx-auto">
+            <div class="flex items-center space-x-4 mb-8">
+                <div class="h-px bg-green-500/30 flex-1"></div>
+                <h2 class="text-xl md:text-2xl font-black text-white tracking-widest uppercase flex items-center">
+                    <i data-lucide="terminal" class="w-5 h-5 text-green-500 mr-3"></i>
+                    SYSTEM_LOG // <span class="text-green-500">更新日誌</span>
+                </h2>
+                <div class="h-px bg-green-500/30 flex-1"></div>
+            </div>
+
+            <div class="glass rounded-3xl p-6 md:p-8 font-mono text-sm relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-8 opacity-5">
+                    <i data-lucide="database" class="w-24 h-24 text-green-500"></i>
+                </div>
+
+                <div class="space-y-6 relative z-10">
+                    <!-- Log Entry -->
+                    <div class="flex flex-col md:flex-row md:items-center gap-4 group">
+                        <span
+                            class="text-green-500 font-black bg-green-500/10 px-3 py-1 rounded border border-green-500/20 w-fit">2026/01/12</span>
+                        <div class="flex-1">
+                            <h3
+                                class="text-white font-bold text-sm mb-1 group-hover:text-green-400 transition-colors italic">
+                                v1.2 // 戰術專題更新</h3>
+                            <p class="text-slate-400 text-xs">於熱門遊戲頁面新增「Tactical Assault VR」專屬推薦橫幅與導航優化。</p>
+                        </div>
+                    </div>
+
+                    <!-- Log Entry -->
+                    <div class="flex flex-col md:flex-row md:items-center gap-4 group">
+                        <span
+                            class="text-slate-500 font-black bg-white/5 px-3 py-1 rounded border border-white/10 w-fit">2026/01/12</span>
+                        <div class="flex-1">
+                            <h3
+                                class="text-white font-bold text-sm mb-1 group-hover:text-green-400 transition-colors italic">
+                                v1.1 // 多國語系部署</h3>
+                            <p class="text-slate-400 text-xs">完成全站英文版翻譯及語系切換功能，全面支援全球 VR 玩家。</p>
+                        </div>
+                    </div>
+
+                    <!-- Log Entry -->
+                    <div class="flex flex-col md:flex-row md:items-center gap-4 group">
+                        <span
+                            class="text-slate-500 font-black bg-white/5 px-3 py-1 rounded border border-white/10 w-fit">2026/01/09</span>
+                        <div class="flex-1">
+                            <h3
+                                class="text-white font-bold text-sm mb-1 group-hover:text-green-400 transition-colors italic">
+                                v1.0 // 攻略站正式啟動</h3>
+                            <p class="text-slate-400 text-xs">Duck & Rabbit VR Guide Station 正式上線，包含購機攻略與各項資源。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Features Grid -->
     <section id="features" class="relative z-10 pt-12 pb-32 px-6">
         <div class="max-w-7xl mx-auto">
@@ -123,7 +181,7 @@
         </div>
     </section>
 
-    <footer class="relative z-10 py-24 px-6 border-t border-white/5">
+    <footer class="relative z-10 py-24 px-6 border-t border-white/5 bg-slate-950/40">
         <div class="max-w-7xl mx-auto text-center">
             <div class="mb-10 flex justify-center space-x-6">
                 <!-- Facebook -->
@@ -142,16 +200,10 @@
                     <i data-lucide="mail" class="w-6 h-6"></i>
                 </a>
             </div>
-            <p class="text-sm text-slate-500 tracking-widest font-bold">© 2023 鴨先生與兔小姐 — <span
-                    class="text-slate-300 font-black font-mono">虛擬次元的絕對攻略領航員</span></p>
+            <p class="text-sm text-slate-500 tracking-widest font-bold font-mono">© 2023 鴨先生與兔小姐 — <span
+                    class="text-slate-300 font-black">虛擬次元的絕對攻略領航員</span></p>
         </div>
     </footer>
-
-    <!-- Back to Top Button -->
-    <button id="backToTop" onclick="scrollToTop()"
-        class="fixed bottom-8 right-8 bg-green-500 text-black p-4 rounded-full shadow-[0_0_20px_rgba(34,197,94,0.6)] hover:bg-green-400 hover:scale-110 transition-all z-50 opacity-0 translate-y-10 pointer-events-none">
-        <i data-lucide="arrow-up" class="w-8 h-8"></i>
-    </button>
 
     <script src="script.js"></script>
     <script>
@@ -247,16 +299,6 @@
         });
         lucide.createIcons();
     </script>
-    <footer class="py-24 px-6 border-t border-white/5 text-center relative z-10">
-        <p class="text-sm text-slate-500 tracking-widest font-bold">© 2023 鴨先生與兔小姐 — <span
-                class="text-slate-300 font-black font-mono">Absolute Navigator for the Virtual Dimension</span></p>
-    </footer>
-
-    <!-- Back to Top Button -->
-    <button id="backToTop" onclick="scrollToTop()"
-        class="fixed bottom-8 right-8 bg-green-500 text-black p-4 rounded-full shadow-[0_0_20px_rgba(34,197,94,0.6)] hover:bg-green-400 hover:scale-110 transition-all z-50 opacity-0 translate-y-10 pointer-events-none">
-        <i data-lucide="arrow-up" class="w-8 h-8"></i>
-    </button>
 </body>
 
 </html>

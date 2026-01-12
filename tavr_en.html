@@ -138,8 +138,9 @@
             </a>
 
             <div class="hidden lg:flex items-center space-x-8">
-                <a href="tavr_en.html"
-                    class="text-xs font-bold tracking-[0.2em] text-slate-400 hover:text-sky-400 transition-colors uppercase">HOME</a>
+                <a href="index_en.html"
+                    class="text-xs font-bold tracking-[0.2em] text-green-500 hover:text-green-400 transition-colors uppercase">VR
+                    Guide Station</a>
 
                 <!-- Dropdown -->
                 <div class="relative group">
@@ -157,10 +158,6 @@
                             <span class="text-[10px] text-sky-500 font-mono font-bold tracking-widest">NAVIGATION</span>
                         </div>
 
-                        <a href="index.html"
-                            class="block px-6 py-3 text-sm text-slate-300 hover:text-white hover:bg-sky-500/10 transition-colors border-l-2 border-transparent hover:border-sky-400">
-                            VR Guide Station
-                        </a>
                         <a href="tavr_features_en.html"
                             class="block px-6 py-3 text-sm text-slate-300 hover:text-white hover:bg-sky-500/10 transition-colors border-l-2 border-transparent hover:border-sky-400">
                             Features
@@ -218,9 +215,10 @@
             <a href="tavr.html" onclick="toggleMobileMenu()"
                 class="text-3xl font-black text-yellow-400 hover:text-white border-b-2 border-yellow-500/30 pb-2 mb-4 inline-block">切換語言
                 (中文)</a>
-            <a href="tavr_en.html" onclick="toggleMobileMenu()" class="text-3xl font-black text-white">HOME</a>
-            <a href="index.html" onclick="toggleMobileMenu()"
-                class="text-3xl font-black text-white hover:text-sky-400">VR GUIDE</a>
+            <a href="index_en.html" onclick="toggleMobileMenu()"
+                class="text-3xl font-black text-green-500 hover:text-green-400 transition-colors uppercase">VR Guide
+                Station</a>
+
             <a href="tavr_features_en.html" onclick="toggleMobileMenu()"
                 class="text-3xl font-black text-white hover:text-sky-400">FEATURES</a>
             <a href="tavr_arsenal_en.html" onclick="toggleMobileMenu()"
@@ -268,6 +266,46 @@
                     class="text-white border-b-2 border-white">replayable</span> tactical shooter you'll ever play.
             </p>
 
+
+            <!-- Update Log Section -->
+            <div id="system-log" class="max-w-3xl mx-auto mb-12 text-left">
+                <div class="flex items-center space-x-4 mb-6">
+                    <div class="h-px bg-sky-500/30 flex-1"></div>
+                    <h2 class="text-lg font-black text-white tracking-widest uppercase flex items-center">
+                        <i data-lucide="terminal" class="w-4 h-4 text-sky-400 mr-2"></i>
+                        TAVR_LOG // <span class="text-sky-400">UPDATE HISTORY</span>
+                    </h2>
+                    <div class="h-px bg-sky-500/30 flex-1"></div>
+                </div>
+
+                <div
+                    class="glass rounded-2xl p-6 font-mono text-sm relative overflow-hidden backdrop-blur-md border border-sky-500/20 shadow-[0_0_20px_rgba(14,165,233,0.05)]">
+                    <div class="space-y-4 relative z-10">
+                        <!-- Log Entry -->
+                        <div class="flex flex-col md:flex-row md:items-center gap-3 group">
+                            <span
+                                class="text-sky-400 font-black bg-sky-400/10 px-2 py-0.5 rounded border border-sky-400/20 w-fit text-xs">2026/01/12</span>
+                            <div class="flex-1">
+                                <h3
+                                    class="text-white font-bold text-xs group-hover:text-sky-300 transition-colors italic">
+                                    v1.1 // UI Localization</h3>
+                                <p class="text-slate-400 text-[10px]">Optimized multilingual navigation.</p>
+                            </div>
+                        </div>
+                        <!-- Log Entry -->
+                        <div class="flex flex-col md:flex-row md:items-center gap-3 group">
+                            <span
+                                class="text-slate-500 font-black bg-white/5 px-2 py-0.5 rounded border border-white/10 w-fit text-xs">2026/01/10</span>
+                            <div class="flex-1">
+                                <h3
+                                    class="text-white font-bold text-xs group-hover:text-sky-300 transition-colors italic">
+                                    v1.0 // Section Launch</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
                 <a href="tavr_features_en.html"
                     class="px-6 py-4 text-sky-400 font-black tracking-widest uppercase hover:text-white hover:bg-sky-500/20 transition-all flex items-center justify-center tech-border group">
@@ -286,6 +324,8 @@
             </div>
         </div>
     </header>
+
+
 
     <!-- Latest Intelligence / Updates -->
     <section id="updates" class="relative z-10 py-16 px-6 border-b border-white/5 bg-[#050510]">
@@ -621,9 +661,9 @@
                     class="bg-blue-600 hover:bg-blue-500 text-white px-8 py-4 rounded-sm font-black tracking-widest uppercase transition-all shadow-[0_0_30px_rgba(59,130,246,0.4)] hover:shadow-[0_0_50px_rgba(59,130,246,0.6)] flex items-center justify-center">
                     <img src="TAVR/uploaded_image_1768128306650.png" class="w-6 h-auto mr-3" alt="Meta"> Meta Store
                 </a>
-                <a href="index.html"
-                    class="border border-white/20 hover:bg-white/5 text-white px-10 py-4 rounded-sm font-bold tracking-widest uppercase transition-all flex items-center justify-center">
-                    <i data-lucide="home" class="w-5 h-5 mr-3"></i> Back to Main Guide
+                <a href="index_en.html"
+                    class="border border-green-500/30 hover:bg-green-500/5 text-green-500 px-10 py-4 rounded-sm font-bold tracking-widest uppercase transition-all flex items-center justify-center">
+                    <i data-lucide="home" class="w-5 h-5 mr-3"></i> Back to VR Guide Station
                 </a>
             </div>
 
