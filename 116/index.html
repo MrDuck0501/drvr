@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>抽水肥紀錄報告 - 社區公告</title>
+    <link rel="stylesheet" href="septic_report_styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>抽水肥施工紀錄報告</h1>
+            <p class="report-date">施工日期：2026年1月16日</p>
+        </header>
+
+        <section class="section intro-thanks">
+            <h2 class="section-title">最誠摯的感謝</h2>
+            <p class="thanks-text">
+                感謝各位鄰居今日的溫暖配合與體諒！因為大家的齊心協助，讓這次的工程能夠在如此順暢的情況下圓滿完成。這並不僅僅是一項例行維護，更是我們優質社區、和睦鄰里共同維護生活品質的一份心意。再次謝謝大家的幫忙，讓我們的居住環境更美好、更舒適！🙏
+            </p>
+            <div class="illustration-container">
+                <img src="images/neighbor_illustration.png" alt="鄰友合作插圖" class="cute-illustration"
+                    style="cursor: pointer;" onclick="openModal(this.src, '鄰友合作，共同維護良好居住環境')">
+            </div>
+        </section>
+
+        <section class="section" id="status">
+            <h2 class="section-title">施工前情況紀錄</h2>
+            <div class="highlight-box">
+                <p>⚠️ 掀蓋檢查時：水肥已滿</p>
+            </div>
+            <p>經專業團隊現場檢查，化糞池於施工前已達飽和狀態，今日已順利完成清理作業。</p>
+        </section>
+
+        <section class="section" id="cost">
+            <h2 class="section-title">費用分攤與收據</h2>
+            <div class="cost-receipt-container">
+                <div class="cost-summary-card">
+                    <div class="highlight-box"
+                        style="background-color: #fafafa; border: 1px solid #eee; text-align: left; padding: 25px; margin-bottom: 0;">
+                        <p style="color: var(--primary-color); font-size: 1.15rem; margin-bottom: 15px;">
+                            工程總額：<strong>4,500 元</strong>
+                            <br>
+                            <small style="font-weight: normal; color: #8d6e63;">* 分攤範圍： 共 8 戶分攤 (14號、16號)</small>
+                        </p>
+                        <div style="border-top: 1px dashed #ddd; padding-top: 20px; text-align: center;">
+                            <p style="font-size: 1.1rem; color: var(--text-color); margin-bottom: 5px;">每戶應繳金額</p>
+                            <p class="cost-per" style="font-size: 3.2rem; line-height: 1;">560 <small
+                                    style="font-size: 1.2rem; font-weight: normal;">元</small></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="receipt-preview-card">
+                    <div class="gallery-item" style="margin: 0; border: 2px solid #f0e6d2; cursor: pointer;"
+                        onclick="openModal('images/receipt.jpg', '工程正式收據憑證')">
+                        <img src="images/receipt.jpg" alt="工程收據" style="height: 250px;">
+                        <div class="caption">工程正式收據憑證 (點擊放大)</div>
+                    </div>
+                </div>
+            </div>
+            <div class="company-info"
+                style="margin-top: 25px; padding: 15px; background: none; border: none; border-top: 1px solid #f0e6d2;">
+                <p style="font-size: 1rem; color: #8d6e63; text-align: center;">施工單位：京讚衛生工程行 | 服務專線：<a
+                        href="tel:0800663889">0800-663-889</a></p>
+            </div>
+        </section>
+
+        <section class="section" id="photos">
+            <h2 class="section-title">施工現場照片紀錄</h2>
+            <div class="gallery">
+                <!-- 1. 施工前 -->
+                <div class="gallery-item" style="cursor: pointer;"
+                    onclick="openModal(this.querySelector('img').src, '1. 施工前：化糞池已滿')">
+                    <img src="images/septic_before.jpg" alt="施工前">
+                    <div class="caption">1. 施工前：化糞池已滿</div>
+                </div>
+                <!-- 2. 工程單位 -->
+                <div class="gallery-item" style="cursor: pointer;"
+                    onclick="openModal(this.querySelector('img').src, '2. 專業施工單位：京讚')">
+                    <img src="images/septic_company.jpg" alt="工程單位">
+                    <div class="caption">2. 專業施工單位：京讚</div>
+                </div>
+                <!-- 3. 作業車輛 -->
+                <div class="gallery-item" style="cursor: pointer;"
+                    onclick="openModal(this.querySelector('img').src, '3. 水肥車定位與機具準備')">
+                    <img src="images/septic_truck.jpg" alt="作業車輛">
+                    <div class="caption">3. 水肥車定位與機具準備</div>
+                </div>
+                <!-- 4. 施工中 1 -->
+                <div class="gallery-item" style="cursor: pointer;"
+                    onclick="openModal(this.querySelector('img').src, '4. 施工中：管線牽引作業 (1)')">
+                    <img src="images/septic_during_1.jpg" alt="施工中">
+                    <div class="caption">4. 施工中：管線牽引作業 (1)</div>
+                </div>
+                <!-- 5. 施工中 2 -->
+                <div class="gallery-item" style="cursor: pointer;"
+                    onclick="openModal(this.querySelector('img').src, '5. 施工中：抽吸作業進行')">
+                    <img src="images/septic_during_2.jpg" alt="施工中">
+                    <div class="caption">5. 施工中：抽吸作業進行</div>
+                </div>
+                <!-- 6. 施工中 3 -->
+                <div class="gallery-item" style="cursor: pointer;"
+                    onclick="openModal(this.querySelector('img').src, '6. 施工中：管線牽引作業 (2)')">
+                    <img src="images/septic_during_3.jpg" alt="施工中">
+                    <div class="caption">6. 施工中：管線牽引作業 (2)</div>
+                </div>
+                <!-- 7. 施工後 -->
+                <div class="gallery-item" style="cursor: pointer;"
+                    onclick="openModal(this.querySelector('img').src, '7. 施工後：水肥車已滿載')">
+                    <img src="images/septic_after.jpg" alt="施工後">
+                    <div class="caption">7. 施工後：水肥車已滿載</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="advice">
+            <h2 class="section-title">專業工程建議</h2>
+            <div class="thanks-text" style="background-color: #fff5f5; border: 1px solid #ffc1c1; color: #d32f2f;">
+                <p>已詢問水肥工程人員，化糞池建議<strong>每年定期抽取一次</strong>。</p>
+                <p style="margin-top: 10px;">若未定期清理，內部糞水堆積過滿時會溢流向後方排水溝，導致環境衛生不良，並容易造成臭氣溢散及蟑鼠滋生。感謝各位鄰居一起配合維護良好的居住空間！🍃
+                </p>
+            </div>
+        </section>
+
+        <footer>
+            <p>感謝各位鄰居今日的幫忙與配合！🙏</p>
+        </footer>
+    </div>
+    <script>
+        function openModal(imgSrc, captionText) {
+            const modal = document.getElementById('image-modal');
+            const modalImg = document.getElementById('modal-img');
+            const modalCaption = document.getElementById('modal-caption');
+            modal.style.display = "flex";
+            modalImg.src = imgSrc;
+            modalCaption.innerText = captionText;
+        }
+    </script>
+
+    <!-- 通用圖片放大模態框 -->
+    <div id="image-modal" class="modal" onclick="this.style.display='none'">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <img id="modal-img" src="" alt="放大圖">
+            <p id="modal-caption" style="color: white; margin-top: 15px; font-size: 1.2rem; font-weight: bold;"></p>
+            <p style="color: rgba(255,255,255,0.7); margin-top: 5px; font-size: 0.9rem;">點擊任何處關閉</p>
+        </div>
+    </div>
+
+</body>
+
+</html>
