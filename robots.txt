@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://drvr.store/sitemap.xml

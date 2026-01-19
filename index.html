@@ -4,7 +4,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>鴨先生與兔小姐的 VR 攻略站</title>
+    <title>鴨先生與兔小姐的 VR 攻略站 | Duck & Rabbit VR Guide</title>
+    <meta name="description" content="Meta Quest 3/3S 完整中文攻略，提供 VR 遊戲推薦、新手購機指南、優惠碼疊加教學與玩家社群資源。由鴨子先生精心整理的虛擬實境入口。">
+    <meta name="keywords" content="VR, Meta Quest 3, Quest 3S, VR遊戲推薦, 鴨子先生, VR攻略, Legendary Tales, Pixel Dungeon">
+    <meta name="author" content="Duck & Rabbit">
+    <link rel="canonical" href="https://drvr.store/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://drvr.store/">
+    <meta property="og:title" content="鴨先生與兔小姐的 VR 攻略站 | Duck & Rabbit VR Guide">
+    <meta property="og:description" content="Meta Quest 3/3S 完整中文攻略，提供 VR 遊戲推薦、新手購機指南、優惠碼疊加教學與玩家社群資源。">
+    <meta property="og:image" content="https://drvr.store/assets/images/duck_rabbit_neo_v2.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://drvr.store/">
+    <meta property="twitter:title" content="鴨先生與兔小姐的 VR 攻略站 | Duck & Rabbit VR Guide">
+    <meta property="twitter:description" content="Meta Quest 3/3S 完整中文攻略，提供 VR 遊戲推薦、新手購機指南、優惠碼疊加教學與玩家社群資源。">
+    <meta property="twitter:image" content="https://drvr.store/assets/images/duck_rabbit_neo_v2.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Duck & Rabbit VR Guide",
+      "url": "https://drvr.store/",
+      "author": {
+        "@type": "Person",
+        "name": "Mr. Duck"
+      },
+      "description": "Comprehensive VR guide for Meta Quest users."
+    }
+    </script>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -94,198 +126,218 @@
                     世界</span>
             </h1>
 
-            <p class="text-lg text-slate-400 mb-0 max-w-xl mx-auto leading-relaxed font-medium">
-                歡迎光臨鴨先生與兔小姐的 VR 秘密基地。<br>這裡有最專業的推坑、最詳細的攻略，帶你直達虛擬世界最深處。
-            </p>
-        </div>
-    </section>
-
-    <!-- Update Log Section -->
-    <section id="recent-logs" class="relative z-10 py-12 px-6 bg-slate-950/20">
-        <div class="max-w-4xl mx-auto">
-            <div class="flex items-center space-x-4 mb-8">
-                <div class="h-px bg-green-500/30 flex-1"></div>
-                <h2 class="text-xl md:text-2xl font-black text-white tracking-widest uppercase flex items-center">
-                    <i data-lucide="terminal" class="w-5 h-5 text-green-500 mr-3"></i>
-                    SYSTEM_LOG // <span class="text-green-500">更新日誌</span>
-                </h2>
-                <div class="h-px bg-green-500/30 flex-1"></div>
-            </div>
-
-            <div class="glass rounded-3xl p-6 md:p-8 font-mono text-sm relative overflow-hidden">
-                <div class="absolute top-0 right-0 p-8 opacity-5">
-                    <i data-lucide="database" class="w-24 h-24 text-green-500"></i>
-                </div>
-
-                <div class="space-y-6 relative z-10">
-                    <!-- Log Entry -->
-                    <div class="flex flex-col md:flex-row md:items-center gap-4 group">
-                        <span
-                            class="text-green-500 font-black bg-green-500/10 px-3 py-1 rounded border border-green-500/20 w-fit">2026/01/19</span>
-                        <div class="flex-1">
-                            <h3
-                                class="text-white font-bold text-sm mb-1 group-hover:text-green-400 transition-colors italic">
-                                v1.3 // 新增多人連線遊戲</h3>
-                            <p class="text-slate-400 text-xs">於多人遊戲頁面新增「Legendary Tales」與「Pixel Dungeon」，包含商店與攻略連結。</p>
+            <!-- VR Entry Guide Banner -->
+            <div class="mt-12 max-w-4xl mx-auto text-left">
+                <a href="guide.html"
+                    class="group relative block w-full overflow-hidden rounded-[2.5rem] border-4 border-orange-300 bg-gradient-to-br from-orange-50 to-orange-100 p-8 shadow-xl transition-all hover:-translate-y-1 hover:shadow-2xl hover:border-orange-400">
+                    <div
+                        class="absolute -right-12 -top-12 h-64 w-64 rounded-full bg-orange-400/20 blur-3xl transition-all group-hover:scale-110">
+                    </div>
+                    <div class="relative flex flex-col md:flex-row items-center gap-8">
+                        <div
+                            class="relative h-32 w-32 shrink-0 overflow-hidden rounded-full border-4 border-white shadow-md">
+                            <img src="assets/images/duck_rabbit_neo_v2.png" alt="VR Guide"
+                                class="h-full w-full object-cover">
+                        </div>
+                        <div class="flex-1 text-center md:text-left">
+                            <div
+                                class="mb-2 inline-flex items-center rounded-full bg-orange-500 px-3 py-1 text-xs font-black text-white shadow-sm">
+                                <i data-lucide="sparkles" class="mr-1 h-3 w-3"></i> NEW FEATURE
+                            </div>
+                            <h3 class="mb-2 text-3xl font-black text-orange-900 tracking-tight">我想入坑 VR，該怎麼做？</h3>
+                            <p class="font-bold text-orange-700/80">
+                                別擔心！點擊這裡進入<span class="text-orange-600 underline decoration-2 underline-offset-2">「VR
+                                    入坑引導員」</span>。<br>
+                                從購機建議、領取 $60 購物金到必玩遊戲，手把手帶你飛！
+                            </p>
+                        </div>
+                        <div class="shrink-0">
+                            <span
+                                class="inline-flex h-14 w-14 items-center justify-center rounded-full bg-white text-orange-500 shadow-md transition-transform group-hover:scale-110">
+                                <i data-lucide="arrow-right" class="h-8 w-8"></i>
+                            </span>
                         </div>
                     </div>
-
-                    <!-- Log Entry -->
-                    <div class="flex flex-col md:flex-row md:items-center gap-4 group">
-                        <span
-                            class="text-slate-500 font-black bg-white/5 px-3 py-1 rounded border border-white/10 w-fit">2026/01/12</span>
-                        <div class="flex-1">
-                            <h3
-                                class="text-white font-bold text-sm mb-1 group-hover:text-green-400 transition-colors italic">
-                                v1.2 // 戰術專題更新</h3>
-                            <p class="text-slate-400 text-xs">於熱門遊戲頁面新增「Tactical Assault VR」專屬推薦橫幅與導航優化。</p>
-                        </div>
-                    </div>
-
-                    <!-- Log Entry -->
-                    <div class="flex flex-col md:flex-row md:items-center gap-4 group">
-                        <span
-                            class="text-slate-500 font-black bg-white/5 px-3 py-1 rounded border border-white/10 w-fit">2026/01/12</span>
-                        <div class="flex-1">
-                            <h3
-                                class="text-white font-bold text-sm mb-1 group-hover:text-green-400 transition-colors italic">
-                                v1.1 // 多國語系部署</h3>
-                            <p class="text-slate-400 text-xs">完成全站英文版翻譯及語系切換功能，全面支援全球 VR 玩家。</p>
-                        </div>
-                    </div>
-
-                    <!-- Log Entry -->
-                    <div class="flex flex-col md:flex-row md:items-center gap-4 group">
-                        <span
-                            class="text-slate-500 font-black bg-white/5 px-3 py-1 rounded border border-white/10 w-fit">2026/01/09</span>
-                        <div class="flex-1">
-                            <h3
-                                class="text-white font-bold text-sm mb-1 group-hover:text-green-400 transition-colors italic">
-                                v1.0 // 攻略站正式啟動</h3>
-                            <p class="text-slate-400 text-xs">Duck & Rabbit VR Guide Station 正式上線，包含購機攻略與各項資源。</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Grid -->
-    <section id="features" class="relative z-10 pt-12 pb-32 px-6">
-        <div class="max-w-7xl mx-auto">
-            <div
-                class="flex flex-col md:flex-row md:items-end justify-between mb-20 space-y-8 md:space-y-0 text-center md:text-left">
-                <div>
-                    <h2
-                        class="text-5xl md:text-7xl font-black text-white italic tracking-tighter neon-text-green uppercase">
-                        VR 世界 <br><span
-                            class="text-green-500/50 not-italic text-3xl font-bold tracking-widest block mt-4">從這裡開始精彩</span>
-                    </h2>
-                </div>
-                <p class="text-slate-500 max-w-xs font-bold uppercase tracking-widest text-sm leading-relaxed">
-                    從硬體配件到內容訂閱，我們為你打點好了一切。
-                </p>
-            </div>
-
-            <div id="features-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Cards will be injected by JS -->
-            </div>
-        </div>
-    </section>
-
-    <footer class="relative z-10 py-24 px-6 border-t border-white/5 bg-slate-950/40">
-        <div class="max-w-7xl mx-auto text-center">
-            <div class="mb-10 flex justify-center space-x-6">
-                <!-- Facebook -->
-                <a href="https://www.facebook.com/profile.php?id=61557386747389" target="_blank"
-                    class="text-slate-500 hover:text-blue-500 transition-colors">
-                    <i data-lucide="facebook" class="w-6 h-6"></i>
-                </a>
-                <!-- YouTube -->
-                <a href="https://www.youtube.com/@a0916991876" target="_blank"
-                    class="text-slate-500 hover:text-red-500 transition-colors">
-                    <i data-lucide="youtube" class="w-6 h-6"></i>
-                </a>
-
-                <!-- Email -->
-                <a href="mailto:duck0800080123@Gmail.com" class="text-slate-500 hover:text-green-400 transition-colors">
-                    <i data-lucide="mail" class="w-6 h-6"></i>
                 </a>
             </div>
-            <p class="text-sm text-slate-500 tracking-widest font-bold font-mono">© 2023 鴨先生與兔小姐 — <span
-                    class="text-slate-300 font-black">虛擬次元的絕對攻略領航員</span></p>
-        </div>
-    </footer>
+            <section id="recent-logs" class="relative z-10 py-12 px-6 bg-slate-950/20">
+                <div class="max-w-4xl mx-auto">
+                    <div class="flex items-center space-x-4 mb-8">
+                        <div class="h-px bg-green-500/30 flex-1"></div>
+                        <h2
+                            class="text-xl md:text-2xl font-black text-white tracking-widest uppercase flex items-center">
+                            <i data-lucide="terminal" class="w-5 h-5 text-green-500 mr-3"></i>
+                            SYSTEM_LOG // <span class="text-green-500">更新日誌</span>
+                        </h2>
+                        <div class="h-px bg-green-500/30 flex-1"></div>
+                    </div>
 
-    <script src="script.js"></script>
-    <script>
-        const features = [
-            {
-                url: "https://www.youtube.com/@a0916991876",
-                title: "鴨先生與兔小姐",
-                subtitle: "YouTube 官方頻道",
-                content: "收錄最新的 VR 遊戲評測、硬體開箱與教學。想看動態影像攻略？訂閱我們就對了！",
-                tag: "官方頻道",
-                image: "assets/images/duck_rabbit_wide.png",
-                icon: "youtube",
-                color: "from-red-600 to-red-900"
-            },
-            {
-                url: "welcome.html#promo-60",
-                title: "領好領滿 $60 美金",
-                subtitle: "完美疊加術攻略",
-                content: "隱藏優惠 + 好友推薦 = 雙重回饋。跟著攻略做，現賺 NT$1,900！錯過不再。",
-                tag: "限時優惠",
-                image: "assets/images/promo_cover.jpg",
-                icon: "sparkles",
-                color: "from-rose-600 to-purple-900"
-            },
+                    <div class="glass rounded-3xl p-6 md:p-8 font-mono text-sm relative overflow-hidden">
+                        <div class="absolute top-0 right-0 p-8 opacity-5">
+                            <i data-lucide="database" class="w-24 h-24 text-green-500"></i>
+                        </div>
 
-            {
-                url: "games.html",
-                title: "熱門遊戲推薦",
-                subtitle: "我推薦的遊戲大集結",
-                content: "熱門遊戲大集合，VR 世界怎能少了它們！嚴選社群最推清單。",
-                tag: "熱門排行",
-                image: "assets/images/vr_games_collection.png",
-                icon: "gamepad-2",
-                color: "from-blue-600 to-blue-900"
-            },
-            {
-                url: "subscription.html",
-                title: "Meta Horizon +",
-                subtitle: "無限暢玩訂閱制",
-                content: "從免費訂閱開始，暢遊 20 多款精選遊戲。超值內容不漏接。",
-                tag: "訂閱推薦",
-                image: "https://static.xx.fbcdn.net/rsrc.php/v4/yb/r/z7edGJNrFTu.png",
-                icon: "infinity",
-                color: "from-green-900 to-black"
-            },
-            {
-                url: "accessories.html",
-                title: "必買 VR 配件",
-                subtitle: "舒適度與沉浸感的關鍵",
-                content: "工欲善其事，必先利其器！鴨先生推薦的必備裝備，讓續航力翻倍。",
-                tag: "配件指南",
-                image: "https://tshop.r10s.com/e14/81a/a10b/8ec1/c06b/c753/3b86/112aef85ec0242ac110002.jpg?_ex=486x486",
-                icon: "settings",
-                color: "from-slate-700 to-slate-900"
-            },
-            {
-                url: "community.html",
-                title: "社群資源",
-                subtitle: "加入討論與尋找戰友",
-                content: "一個人玩太孤單？這裡有 LINE 群組、巴哈討輪區與特價資訊。加入我們，一起探索 VR 世界。",
-                tag: "友善連結",
-                image: "assets/images/da963a2810a11d0d4e2db4867558e304.jpg",
-                icon: "users",
-                color: "from-emerald-600 to-emerald-900"
-            }
-        ];
+                        <div class="space-y-6 relative z-10">
+                            <!-- Log Entry -->
+                            <div class="flex flex-col md:flex-row md:items-center gap-4 group">
+                                <span
+                                    class="text-green-500 font-black bg-green-500/10 px-3 py-1 rounded border border-green-500/20 w-fit">2026/01/19</span>
+                                <div class="flex-1">
+                                    <h3
+                                        class="text-white font-bold text-sm mb-1 group-hover:text-green-400 transition-colors italic">
+                                        v1.4 // 入坑引導、SEO 優化與遊戲推薦</h3>
+                                    <p class="text-slate-400 text-xs">新增「VR 入坑引導員」互動頁面、全站 SEO 優化以及多人連線遊戲推薦。</p>
+                                </div>
+                            </div>
 
-        const container = document.getElementById('features-container');
-        features.forEach(f => {
-            const card = `
+                            <!-- Log Entry -->
+                            <div class="flex flex-col md:flex-row md:items-center gap-4 group">
+                                <span
+                                    class="text-slate-500 font-black bg-white/5 px-3 py-1 rounded border border-white/10 w-fit">2026/01/12</span>
+                                <div class="flex-1">
+                                    <h3
+                                        class="text-white font-bold text-sm mb-1 group-hover:text-green-400 transition-colors italic">
+                                        v1.2 // 戰術專題更新</h3>
+                                    <p class="text-slate-400 text-xs">於熱門遊戲頁面新增「Tactical Assault VR」專屬推薦橫幅與導航優化。</p>
+                                </div>
+                            </div>
+
+                            <!-- Log Entry -->
+                            <div class="flex flex-col md:flex-row md:items-center gap-4 group">
+                                <span
+                                    class="text-slate-500 font-black bg-white/5 px-3 py-1 rounded border border-white/10 w-fit">2026/01/12</span>
+                                <div class="flex-1">
+                                    <h3
+                                        class="text-white font-bold text-sm mb-1 group-hover:text-green-400 transition-colors italic">
+                                        v1.1 // 多國語系部署</h3>
+                                    <p class="text-slate-400 text-xs">完成全站英文版翻譯及語系切換功能，全面支援全球 VR 玩家。</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+
+            <!-- Features Grid -->
+            <section id="features" class="relative z-10 pt-12 pb-32 px-6">
+                <div class="max-w-7xl mx-auto">
+                    <div
+                        class="flex flex-col md:flex-row md:items-end justify-between mb-20 space-y-8 md:space-y-0 text-center md:text-left">
+                        <div>
+                            <h2
+                                class="text-5xl md:text-7xl font-black text-white italic tracking-tighter neon-text-green uppercase">
+                                VR 世界 <br><span
+                                    class="text-green-500/50 not-italic text-3xl font-bold tracking-widest block mt-4">從這裡開始精彩</span>
+                            </h2>
+                        </div>
+                        <p class="text-slate-500 max-w-xs font-bold uppercase tracking-widest text-sm leading-relaxed">
+                            從硬體配件到內容訂閱，我們為你打點好了一切。
+                        </p>
+                    </div>
+
+                    <div id="features-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <!-- Cards will be injected by JS -->
+                    </div>
+                </div>
+            </section>
+
+            <footer class="relative z-10 py-24 px-6 border-t border-white/5 bg-slate-950/40">
+                <div class="max-w-7xl mx-auto text-center">
+                    <div class="mb-10 flex justify-center space-x-6">
+                        <!-- Facebook -->
+                        <a href="https://www.facebook.com/profile.php?id=61557386747389" target="_blank"
+                            class="text-slate-500 hover:text-blue-500 transition-colors">
+                            <i data-lucide="facebook" class="w-6 h-6"></i>
+                        </a>
+                        <!-- YouTube -->
+                        <a href="https://www.youtube.com/@a0916991876" target="_blank"
+                            class="text-slate-500 hover:text-red-500 transition-colors">
+                            <i data-lucide="youtube" class="w-6 h-6"></i>
+                        </a>
+
+                        <!-- Email -->
+                        <a href="mailto:duck0800080123@Gmail.com"
+                            class="text-slate-500 hover:text-green-400 transition-colors">
+                            <i data-lucide="mail" class="w-6 h-6"></i>
+                        </a>
+                    </div>
+                    <p class="text-sm text-slate-500 tracking-widest font-bold font-mono">© 2023 鴨先生與兔小姐 — <span
+                            class="text-slate-300 font-black">虛擬次元的絕對攻略領航員</span></p>
+                </div>
+            </footer>
+
+            <script src="script.js"></script>
+            <script>
+                const features = [
+                    {
+                        url: "https://www.youtube.com/@a0916991876",
+                        title: "鴨先生與兔小姐",
+                        subtitle: "YouTube 官方頻道",
+                        content: "收錄最新的 VR 遊戲評測、硬體開箱與教學。想看動態影像攻略？訂閱我們就對了！",
+                        tag: "官方頻道",
+                        image: "assets/images/duck_rabbit_wide.png",
+                        icon: "youtube",
+                        color: "from-red-600 to-red-900"
+                    },
+                    {
+                        url: "welcome.html#promo-60",
+                        title: "領好領滿 $60 美金",
+                        subtitle: "完美疊加術攻略",
+                        content: "隱藏優惠 + 好友推薦 = 雙重回饋。跟著攻略做，現賺 NT$1,900！錯過不再。",
+                        tag: "限時優惠",
+                        image: "assets/images/promo_cover.jpg",
+                        icon: "sparkles",
+                        color: "from-rose-600 to-purple-900"
+                    },
+
+                    {
+                        url: "games.html",
+                        title: "熱門遊戲推薦",
+                        subtitle: "我推薦的遊戲大集結",
+                        content: "熱門遊戲大集合，VR 世界怎能少了它們！嚴選社群最推清單。",
+                        tag: "熱門排行",
+                        image: "assets/images/vr_games_collection.png",
+                        icon: "gamepad-2",
+                        color: "from-blue-600 to-blue-900"
+                    },
+                    {
+                        url: "subscription.html",
+                        title: "Meta Horizon +",
+                        subtitle: "無限暢玩訂閱制",
+                        content: "從免費訂閱開始，暢遊 20 多款精選遊戲。超值內容不漏接。",
+                        tag: "訂閱推薦",
+                        image: "https://static.xx.fbcdn.net/rsrc.php/v4/yb/r/z7edGJNrFTu.png",
+                        icon: "infinity",
+                        color: "from-green-900 to-black"
+                    },
+                    {
+                        url: "accessories.html",
+                        title: "必買 VR 配件",
+                        subtitle: "舒適度與沉浸感的關鍵",
+                        content: "工欲善其事，必先利其器！鴨先生推薦的必備裝備，讓續航力翻倍。",
+                        tag: "配件指南",
+                        image: "https://tshop.r10s.com/e14/81a/a10b/8ec1/c06b/c753/3b86/112aef85ec0242ac110002.jpg?_ex=486x486",
+                        icon: "settings",
+                        color: "from-slate-700 to-slate-900"
+                    },
+                    {
+                        url: "community.html",
+                        title: "社群資源",
+                        subtitle: "加入討論與尋找戰友",
+                        content: "一個人玩太孤單？這裡有 LINE 群組、巴哈討輪區與特價資訊。加入我們，一起探索 VR 世界。",
+                        tag: "友善連結",
+                        image: "assets/images/da963a2810a11d0d4e2db4867558e304.jpg",
+                        icon: "users",
+                        color: "from-emerald-600 to-emerald-900"
+                    }
+                ];
+
+                const container = document.getElementById('features-container');
+                features.forEach(f => {
+                    const card = `
                 <div class="group relative glass rounded-[2.5rem] p-4 h-[550px] overflow-hidden cursor-pointer hover:border-green-500/50 transition-all duration-500 card-glow" onclick="location.href='${f.url}'">
                     <div class="relative h-full overflow-hidden rounded-[2rem]">
                         <img src="${f.image}" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 opacity-40 group-hover:opacity-60" alt="${f.title}">
@@ -307,10 +359,10 @@
                     </div>
                 </div>
             `;
-            container.innerHTML += card;
-        });
-        lucide.createIcons();
-    </script>
+                    container.innerHTML += card;
+                });
+                lucide.createIcons();
+            </script>
 </body>
 
 </html>
