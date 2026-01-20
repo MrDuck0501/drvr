@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>機電巡檢系統 - 專業設備維護</title>
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mrduck.my.canva.site/inspection">
+    <meta property="og:title" content="機電巡檢系統 - 專業設備維護">
+    <meta property="og:description" content="包含 A/B 棟巡檢清單、平日與假日工作指引、組圖示範及即時回報彙整。">
+    <meta property="og:image" content="https://raw.githubusercontent.com/username/repo/main/og_image.png">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
+
+        :root {
+            --primary-blue: #2563eb;
+            --primary-dark: #1e40af;
+            --accent-orange: #f97316;
+            --bg-gray: #f8fafc;
+        }
+
+        body {
+            font-family: 'Noto+Sans+TC', sans-serif;
+            background-color: var(--bg-gray);
+            -webkit-tap-highlight-color: transparent;
+            color: #1e293b;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tab-active {
+            position: relative;
+            color: var(--primary-blue);
+            font-weight: 700;
+        }
+
+        .tab-active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40%;
+            height: 3px;
+            background: var(--primary-blue);
+            border-radius: 99px;
+        }
+
+        .sticky-tabs {
+            position: sticky;
+            top: 64px;
+            z-index: 40;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+        }
+
+        .card-shadow {
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+        }
+
+        .image-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            cursor: zoom-out;
+        }
+
+        .image-modal img {
+            max-width: 95%;
+            max-height: 85%;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .copyable-text {
+            user-select: all;
+            cursor: pointer;
+        }
+
+        #digitalClock {
+            font-variant-numeric: tabular-nums;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen pb-20">
+
+    <!-- 頂部導航 -->
+    <header class="bg-blue-600 text-white sticky top-0 z-50 shadow-lg h-16 flex items-center px-4">
+        <div class="max-w-4xl mx-auto flex items-center justify-between w-full">
+            <div class="flex items-center">
+                <button id="backBtn"
+                    class="mr-4 hidden hover:bg-white/20 p-2 rounded-full transition-colors active:scale-90">
+                    <i data-lucide="arrow-left"></i>
+                </button>
+                <div class="flex flex-col">
+                    <h1 id="headerTitle" class="text-lg font-black tracking-tight leading-none">機電巡檢系統</h1>
+                    <span id="headerDate" class="text-[10px] font-bold opacity-70 mt-1">載入中...</span>
+                </div>
+            </div>
+            <div class="flex items-center bg-black/10 px-3 py-1.5 rounded-xl border border-white/10">
+                <div class="flex flex-col items-end">
+                    <span id="digitalClock" class="text-sm font-black tracking-wider leading-none">00:00:00</span>
+                    <span class="text-[8px] font-black uppercase tracking-[0.2em] opacity-50">Current Time</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto p-4 md:p-6">
+        <!-- 主導航區域 -->
+        <div id="navigationArea" class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 fade-in">
+            <!-- 由 JS 生成 -->
+        </div>
+
+        <!-- 巡檢指引容器 -->
+        <div id="guideContainer" class="hidden fade-in space-y-4">
+
+            <!-- 分頁切換 -->
+            <div class="flex bg-white rounded-2xl sticky-tabs card-shadow overflow-hidden">
+                <button onclick="switchTab('guide')" id="tabBtnGuide"
+                    class="flex-1 py-4 text-center transition-all flex justify-center items-center hover:bg-gray-50 active:bg-gray-100">
+                    <i data-lucide="file-text" class="w-4 h-4 mr-2"></i>工作指引
+                </button>
+                <button onclick="switchTab('samples')" id="tabBtnSamples"
+                    class="flex-1 py-4 text-center text-gray-400 transition-all flex justify-center items-center hover:bg-gray-50 active:bg-gray-100">
+                    <i data-lucide="images" class="w-4 h-4 mr-2"></i>組圖示範
+                </button>
+            </div>
+
+            <!-- 分頁內容區域 -->
+            <div id="contentGuide" class="space-y-6"></div>
+            <div id="contentSamples" class="hidden space-y-8 pb-10"></div>
+        </div>
+    </main>
+
+    <!-- 圖片放大 Modal -->
+    <div id="imageModal" class="image-modal" onclick="closeModal()">
+        <img id="modalImg" src="" alt="放大圖">
+        <div
+            class="text-white mt-6 text-sm bg-white/10 px-6 py-2 rounded-full font-medium border border-white/20 backdrop-blur-md">
+            點擊任何地方關閉</div>
+    </div>
+
+    <!-- 懸浮底部資訊 -->
+    <footer
+        class="fixed bottom-4 left-1/2 -translate-x-1/2 bg-white/80 backdrop-blur-md px-6 py-2 rounded-full shadow-lg border border-gray-100 text-[10px] text-gray-400 font-bold z-30">
+        © 2026 機電維修部 · 數位化巡檢方案
+    </footer>
+
+    <script>
+        // 即時時鐘功能
+        function updateClock() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('zh-TW', { hour12: false });
+            const dateStr = now.toLocaleDateString('zh-TW', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' });
+
+            const clockEl = document.getElementById('digitalClock');
+            const dateEl = document.getElementById('headerDate');
+            if (clockEl) clockEl.innerText = timeStr;
+            if (dateEl) dateEl.innerText = dateStr;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        let currentPath = ['home'];
+        let currentTab = 'guide';
+
+        const data = {
+            home: {
+                title: '機電巡檢系統',
+                items: [
+                    { id: 'buildingA', title: 'A 棟', icon: 'building-2', color: 'bg-blue-600', desc: '巡檢週期與詳細指則' },
+                    { id: 'buildingB', title: 'B 棟', icon: 'building', color: 'bg-indigo-600', desc: '大樓機房與公共設施' },
+                    { id: 'map', title: '區域地圖', icon: 'map', color: 'bg-emerald-600', desc: '全區設備位置分布' }
+                ]
+            },
+            buildingA: {
+                title: 'A 棟 - 巡檢週期',
+                items: [
+                    { id: 'weekday', title: '平日巡檢', icon: 'calendar-days', color: 'bg-orange-500', desc: '週一至週五固定項目' },
+                    { id: 'holiday', title: '假日巡檢', icon: 'calendar-heart', color: 'bg-pink-500', desc: '例假日專用巡檢流程' }
+                ]
+            },
+            weekday: {
+                title: '平日巡檢清單',
+                items: [
+                    { id: 'elevator', title: '電梯設備', icon: 'arrow-up-down', color: 'bg-slate-700', desc: '08:00 前巡查完畢' },
+                    { id: 'machineFloor', title: '機械樓層', icon: 'settings', color: 'bg-slate-700', desc: '08:30 前完成回報' }
+                ]
+            },
+            holiday: {
+                title: '假日巡檢清單',
+                items: [
+                    { id: 'elevator', title: '電梯設備', icon: 'arrow-up-down', color: 'bg-slate-700', desc: '08:00 前巡查完畢' },
+                    { id: 'machineFloor', title: '機械樓層', icon: 'settings', color: 'bg-slate-700', desc: '08:30 前完成回報' }
+                ]
+            }
+        };
+
+        function getMachineFloorContent(isWeekday) {
+            const gymSection = isWeekday ? `
+                <section class="bg-white rounded-3xl shadow-sm overflow-hidden border border-gray-100 mb-4 transition-all hover:shadow-md">
+                    <div class="bg-blue-600 px-6 py-4 flex justify-between items-center text-white cursor-pointer" onclick="toggleSection('section-17f')">
+                        <h3 class="font-bold flex items-center"><i data-lucide="dumbbell" class="w-5 h-5 mr-3"></i> 17F 巡檢項目</h3>
+                        <div class="flex items-center space-x-3">
+                            <span class="bg-orange-500/20 text-orange-200 text-[10px] px-2 py-0.5 rounded-full font-black border border-orange-500/30">平日限定</span>
+                            <i data-lucide="chevron-down" id="section-17f-icon" class="w-5 h-5 transition-transform duration-300"></i>
+                        </div>
+                    </div>
+                    <div id="section-17f" class="p-6 hidden">
+                        <div class="flex items-start">
+                            <div class="bg-blue-50 text-blue-600 rounded-2xl p-3 mr-4"><i data-lucide="wind" class="w-5 h-5"></i></div>
+                            <div class="flex-1">
+                                <p class="font-black text-lg text-gray-800">17F 健身房排氣風機</p>
+                                <p class="text-sm text-gray-500 mt-2">拍照紀錄現況並<span class="text-red-500 font-black underline decoration-2 underline-offset-4">組圖傳送：大群組</span>。</p>
+
+                                <!-- 17F 示範圖 -->
+                                <button onclick="toggleSubSection('img-17f')" class="mt-4 text-xs font-bold text-orange-600 flex items-center bg-orange-50 px-3 py-1.5 rounded-lg hover:bg-orange-100 transition-colors">
+                                    <i data-lucide="image" class="w-3 h-3 mr-2"></i> 查看巡檢示範圖
+                                </button>
+                                <div id="img-17f" class="mt-4 hidden grid grid-cols-1 gap-4">
+                                    <div class="relative group cursor-pointer h-auto rounded-2xl overflow-hidden border border-gray-100 shadow-sm" onclick="zoomImage('uploaded_image_1_1768903703958.jpg')">
+                                        <img src="uploaded_image_1_1768903703958.jpg" class="w-full h-auto object-contain transition-transform">
+                                        <div class="absolute bottom-0 inset-x-0 bg-black/60 backdrop-blur-sm text-white text-[10px] py-1.5 text-center font-bold">17F 健身房風機巡視正常 (最新示範)</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>` : '';
+
+            return {
+                guide: `
+                    <div class="flex items-center justify-between mb-4 px-1">
+                        <h2 class="font-black text-gray-400 text-xs uppercase tracking-[0.2em]">機械樓層工作紀錄</h2>
+                        <span class="bg-red-500 text-white text-[10px] font-black px-3 py-1.5 rounded-full">截止 08:30</span>
+                    </div>
+
+                    <div class="space-y-4">
+                        <section class="bg-white rounded-3xl shadow-sm overflow-hidden border border-gray-100">
+                            <div class="bg-slate-800 px-6 py-4 text-white flex justify-between items-center cursor-pointer" onclick="toggleSection('section-27f')">
+                                <h3 class="font-bold flex items-center"><i data-lucide="layers" class="w-5 h-5 mr-3"></i> 27F 巡檢項目</h3>
+                                <i data-lucide="chevron-down" id="section-27f-icon" class="w-5 h-5 transition-transform duration-300"></i>
+                            </div>
+                            <div id="section-27f" class="p-6 hidden">
+                                <div class="flex items-start">
+                                    <div class="bg-blue-50 text-blue-600 rounded-2xl p-3 mr-4"><i data-lucide="check" class="w-5 h-5"></i></div>
+                                    <div class="flex-1">
+                                        <p class="font-black text-lg text-gray-800 leading-tight">27F 東側空調機</p>
+                                        <p class="text-sm text-gray-500 mt-3">拍照紀錄現況(高低水壓)並<span class="text-blue-600 font-black underline decoration-2 underline-offset-4">組圖傳送：空調群組</span>。</p>
+                                        
+                                        <!-- 27F 示範圖 (預設縮起) -->
+                                        <button onclick="toggleSubSection('img-27f')" class="mt-4 text-xs font-bold text-orange-600 flex items-center bg-orange-50 px-3 py-1.5 rounded-lg hover:bg-orange-100 transition-colors">
+                                            <i data-lucide="image" class="w-3 h-3 mr-2"></i> 查看巡檢示範圖 (含壓力表)
+                                        </button>
+                                        <div id="img-27f" class="mt-4 hidden space-y-4">
+                                            <div class="relative group cursor-pointer h-auto rounded-2xl overflow-hidden border border-gray-100 shadow-sm" onclick="zoomImage('uploaded_image_0_1768903588977.jpg')">
+                                                <img src="uploaded_image_0_1768903588977.jpg" class="w-full h-auto">
+                                                <div class="absolute bottom-0 inset-x-0 bg-black/60 backdrop-blur-sm text-white text-[10px] py-1.5 text-center font-bold">27F 冰水壓力巡視正常 (主範例)</div>
+                                            </div>
+                                            
+                                            <!-- 新增快速複製文字 -->
+                                            <div class="p-4 bg-blue-50 border border-blue-100 rounded-2xl flex items-center justify-between group cursor-pointer hover:bg-blue-100 transition-colors" onclick="copyToClipboard('A棟27樓冰水壓力巡視正常')">
+                                                <span class="text-sm font-black text-blue-800 tracking-tight">「A棟27樓冰水壓力巡視正常」</span>
+                                                <i data-lucide="copy" class="w-4 h-4 text-blue-400 group-hover:scale-110 transition-transform"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="bg-white rounded-3xl shadow-sm overflow-hidden border border-gray-100">
+                            <div class="bg-slate-800 px-6 py-4 text-white flex justify-between items-center cursor-pointer" onclick="toggleSection('section-18f')">
+                                <h3 class="font-bold flex items-center"><i data-lucide="layers" class="w-5 h-5 mr-3"></i> 18F 巡檢項目</h3>
+                                <i data-lucide="chevron-down" id="section-18f-icon" class="w-5 h-5 transition-transform duration-300"></i>
+                            </div>
+                            <div id="section-18f" class="p-6 space-y-6 hidden">
+                                <div class="flex items-start">
+                                    <div class="bg-blue-50 text-blue-600 rounded-2xl p-3 mr-4"><i data-lucide="gauge" class="w-5 h-5"></i></div>
+                                    <div class="flex-1">
+                                        <p class="font-black text-lg text-gray-800">18F 進出水壓力表</p>
+                                        <ul class="mt-3 space-y-2 text-sm text-gray-500">
+                                            <li class="flex items-center"><span class="w-1.5 h-1.5 bg-blue-500 rounded-full mr-3"></span>務必寫下進出時間。</li>
+                                            <li class="flex items-center"><span class="w-1.5 h-1.5 bg-blue-500 rounded-full mr-3"></span>拍照紀錄現況並<span class="text-blue-600 font-bold ml-1 uppercase underline decoration-2 underline-offset-4">組圖傳送：空調群組</span>。</li>
+                                        </ul>
+
+                                        <!-- 18F 壓力表示範圖 (預設縮起) -->
+                                        <button onclick="toggleSubSection('img-18f-gauge')" class="mt-4 text-xs font-bold text-orange-600 flex items-center bg-orange-50 px-3 py-1.5 rounded-lg hover:bg-orange-100 transition-colors">
+                                            <i data-lucide="image" class="w-3 h-3 mr-2"></i> 查看壓力表示範圖
+                                        </button>
+                                        <div id="img-18f-gauge" class="mt-4 hidden space-y-4">
+                                            <div class="relative group cursor-pointer h-auto rounded-2xl overflow-hidden border border-gray-100 shadow-sm" onclick="zoomImage('uploaded_image_4_1768903655212.jpg')">
+                                                <img src="uploaded_image_4_1768903655212.jpg" class="w-full h-auto">
+                                                <div class="absolute bottom-0 inset-x-0 bg-black/60 backdrop-blur-sm text-white text-[10px] py-1.5 text-center font-bold">18F 冰水壓力巡視正常 (主範例)</div>
+                                            </div>
+
+                                            <!-- 新增快速複製文字 (18F) -->
+                                            <div class="p-4 bg-indigo-50 border border-indigo-100 rounded-2xl flex items-center justify-between group cursor-pointer hover:bg-indigo-100 transition-colors" onclick="copyToClipboard('A棟18樓高低樓層冰水壓力巡視正常')">
+                                                <span class="text-xs font-black text-indigo-800 tracking-tight">「A棟18樓高低樓層冰水壓力巡視正常」</span>
+                                                <i data-lucide="copy" class="w-4 h-4 text-indigo-400 group-hover:scale-110 transition-transform"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="pt-6 border-t border-gray-50 flex items-start">
+                                    <div class="bg-blue-50 text-blue-600 rounded-2xl p-3 mr-4"><i data-lucide="wind" class="w-5 h-5"></i></div>
+                                    <div class="flex-1">
+                                        <p class="font-black text-gray-800">18F 排氣風機</p>
+                                        <p class="text-sm text-gray-500 mt-1">拍照紀錄現況並<span class="text-blue-600 font-bold ml-1 underline underline-offset-2">組圖傳送：空調群組</span>。</p>
+
+                                        <!-- 18F 風機示範圖 (預設縮起) -->
+                                        <button onclick="toggleSubSection('img-18f-ef')" class="mt-4 text-xs font-bold text-orange-600 flex items-center bg-orange-50 px-3 py-1.5 rounded-lg hover:bg-orange-100 transition-colors">
+                                            <i data-lucide="image" class="w-3 h-3 mr-2"></i> 查看排氣風機示範圖
+                                        </button>
+                                        <div id="img-18f-ef" class="mt-4 hidden space-y-4">
+                                            <div class="relative group cursor-pointer h-auto rounded-2xl overflow-hidden border border-gray-100 shadow-sm" onclick="zoomImage('uploaded_image_2_1768903725070.jpg')">
+                                                <img src="uploaded_image_2_1768903725070.jpg" class="w-full h-auto">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="pt-6 border-t border-gray-50 flex items-start">
+                            <div class="bg-emerald-50 text-emerald-600 rounded-2xl p-3 mr-4"><i data-lucide="layout" class="w-5 h-5"></i></div>
+                            <div class="flex-1">
+                                <p class="font-black text-gray-800">18F 落水頭/護城河檢查</p>
+                                <p class="text-sm text-gray-500 mt-1 font-bold">拍照紀錄現況並<span class="text-red-500 underline underline-offset-2">組圖傳送：大群組</span>。</p>
+                                
+                                <!-- 18F 落水頭示範圖 -->
+                                <button onclick="toggleSubSection('img-18f-drain')" class="mt-4 text-xs font-bold text-orange-600 flex items-center bg-orange-50 px-3 py-1.5 rounded-lg hover:bg-orange-100 transition-colors">
+                                    <i data-lucide="image" class="w-3 h-3 mr-2"></i> 查看落水頭示範圖
+                                </button>
+                                <div id="img-18f-drain" class="mt-4 hidden space-y-4">
+                                    <div class="relative group cursor-pointer h-auto rounded-2xl overflow-hidden border border-gray-100 shadow-sm" onclick="zoomImage('uploaded_image_1768905742174.jpg')">
+                                        <img src="uploaded_image_1768905742174.jpg" class="w-full h-auto object-contain group-hover:scale-105 transition-transform">
+                                        <div class="absolute bottom-0 inset-x-0 bg-black/60 backdrop-blur-sm text-white text-[10px] py-1.5 text-center font-bold">18F 機械樓層落水頭、排水孔、地板巡視正常</div>
+                                    </div>
+
+                                    <!-- 新增快速複製文字 (18F 落水頭) -->
+                                    <div class="p-4 bg-emerald-50 border border-emerald-100 rounded-2xl flex items-center justify-between group cursor-pointer hover:bg-emerald-100 transition-colors" onclick="copyToClipboard('A棟18樓機械樓層落水頭、排水孔、地板巡視正常')">
+                                        <span class="text-[11px] font-black text-emerald-800 tracking-tight leading-relaxed">「A棟18樓機械樓層落水頭、排水孔、地板巡視正常」</span>
+                                        <i data-lucide="copy" class="w-4 h-4 text-emerald-400 group-hover:scale-110 transition-transform"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                                <div class="pt-6 border-t border-gray-50 flex items-start">
+                                    <div class="bg-emerald-50 text-emerald-600 rounded-2xl p-3 mr-4"><i data-lucide="droplet" class="w-5 h-5"></i></div>
+                                    <div class="flex-1">
+                                        <p class="font-black text-gray-800">18F 水桶/水箱狀態</p>
+                                        <p class="text-sm text-gray-500">確認水桶有無滿水狀態。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        ${gymSection}
+
+                        <section class="bg-slate-900 rounded-3xl shadow-xl overflow-hidden mt-8 border border-slate-800">
+                            <div class="px-6 py-5 border-b border-slate-800 text-white bg-slate-800/50 flex justify-between items-center cursor-pointer" onclick="toggleSection('section-report-summary')">
+                                <h3 class="font-black flex items-center text-lg">
+                                    <i data-lucide="send" class="w-5 h-5 mr-3 text-blue-400"></i> 08:30 回報彙整
+                                </h3>
+                                <i data-lucide="chevron-down" id="section-report-summary-icon" class="w-5 h-5 transition-transform duration-300"></i>
+                            </div>
+                            <div id="section-report-summary" class="p-6 space-y-6 hidden">
+                                <div class="bg-slate-800/30 rounded-2xl p-5 border border-slate-700/50">
+                                    <div class="flex justify-between items-center mb-6">
+                                        <div class="space-y-1">
+                                            <span class="bg-blue-600 text-white text-[10px] font-black px-3 py-1 rounded-full shadow-lg">大群組回報 (${isWeekday ? '五合一' : '四合一'})</span>
+                                            <p class="text-[10px] text-slate-400 font-bold mt-2">*務必將以下${isWeekday ? '五' : '四'}張圖組成一張發送</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="grid grid-cols-1 gap-2 text-sm">
+                                        <div class="flex items-center text-slate-300 bg-slate-800/80 p-3 rounded-xl border border-slate-700/30">
+                                            <span class="w-6 h-6 bg-blue-500 text-white rounded-lg flex items-center justify-center text-[10px] font-black mr-3">1</span>
+                                            27F 高低水壓壓力表
+                                        </div>
+                                        <div class="flex items-center text-slate-300 bg-slate-800/80 p-3 rounded-xl border border-slate-700/30">
+                                            <span class="w-6 h-6 bg-blue-500 text-white rounded-lg flex items-center justify-center text-[10px] font-black mr-3">2</span>
+                                            18F 水壓壓力表
+                                        </div>
+                                        ${isWeekday ? `
+                                        <div class="flex items-center text-slate-300 bg-slate-800/80 p-3 rounded-xl border border-slate-700/30">
+                                            <span class="w-6 h-6 bg-blue-500 text-white rounded-lg flex items-center justify-center text-[10px] font-black mr-3">3</span>
+                                            17F 健身房風機 (平日)
+                                        </div>` : ''}
+                                        <div class="flex items-center text-slate-300 bg-slate-800/80 p-3 rounded-xl border border-slate-700/30">
+                                            <span class="w-6 h-6 bg-blue-500 text-white rounded-lg flex items-center justify-center text-[10px] font-black mr-3">${isWeekday ? '4' : '3'}</span>
+                                            18F 排氣風機
+                                        </div>
+                                        <div class="flex items-center text-slate-300 bg-slate-800/80 p-3 rounded-xl border border-slate-700/30">
+                                            <span class="w-6 h-6 bg-blue-500 text-white rounded-lg flex items-center justify-center text-[10px] font-black mr-3">${isWeekday ? '5' : '4'}</span>
+                                            早上簽名表 (含手寫內容)
+                                        </div>
+                                    </div>
+
+                                    <!-- 組圖示範圖 (預設縮起) -->
+                                    <div class="mt-8 space-y-3">
+                                        <button onclick="toggleSubSection('img-report-sample')" class="text-[10px] font-black text-blue-400 uppercase tracking-widest flex items-center bg-blue-500/10 px-3 py-1.5 rounded-lg hover:bg-blue-500/20 transition-colors">
+                                            <i data-lucide="image" class="w-3 h-3 mr-2"></i> 查看${isWeekday ? '五合一' : '四合一'}組圖示範
+                                        </button>
+                                        <div id="img-report-sample" class="hidden relative group cursor-pointer rounded-2xl overflow-hidden border border-slate-700 transition-all hover:border-blue-500/50" onclick="zoomImage('uploaded_image_1768906087236.jpg')">
+                                            <img src="uploaded_image_1768906087236.jpg" class="w-full h-auto opacity-80 group-hover:opacity-100 transition-opacity">
+                                            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent flex items-end justify-center pb-4">
+                                                <span class="text-[10px] text-white/60 font-bold">點擊查看完整大圖</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <div class="mt-10 mb-2 px-1">
+                            <h2 class="font-black text-gray-400 text-xs uppercase tracking-[0.2em]">定時與獨立任務</h2>
+                        </div>
+                        <section class="bg-white rounded-3xl shadow-sm border border-gray-100 divide-y divide-gray-50 overflow-hidden mb-10">
+                            <div class="p-5 flex items-center justify-between hover:bg-gray-50 transition-colors">
+                                <div class="flex items-center"><span class="bg-red-50 text-red-600 font-black px-4 py-1.5 rounded-xl text-xs mr-4">07:50</span><span class="font-bold text-gray-700">排紅龍</span></div>
+                                <i data-lucide="arrow-right-circle" class="text-red-300 w-5 h-5"></i>
+                            </div>
+                            <div class="p-5 flex items-center justify-between hover:bg-gray-50 transition-colors">
+                                <div class="flex items-center"><span class="bg-red-50 text-red-600 font-black px-4 py-1.5 rounded-xl text-xs mr-4">09:20</span><span class="font-bold text-gray-700">收紅龍</span></div>
+                                <i data-lucide="arrow-right-circle" class="text-red-300 w-5 h-5"></i>
+                            </div>
+                            <div class="p-5 flex items-center justify-between hover:bg-gray-50 transition-colors">
+                                <div class="flex items-center"><span class="bg-red-50 text-red-600 font-black px-4 py-1.5 rounded-xl text-xs mr-4">09:30</span><span class="font-bold text-gray-700">量測辦公室高低樓層溫度</span></div>
+                                <i data-lucide="thermometer" class="text-red-300 w-5 h-5"></i>
+                            </div>
+                            <!-- 15:30 項目合併 -->
+                            <div class="p-5 flex flex-col hover:bg-gray-50 transition-colors border-t border-gray-50">
+                                <div class="flex items-center justify-between w-full mb-3">
+                                    <div class="flex items-center"><span class="bg-red-50 text-red-600 font-black px-4 py-1.5 rounded-xl text-xs mr-4">15:30</span><span class="font-bold text-gray-700">傳群組</span></div>
+                                    <i data-lucide="send" class="text-blue-400 w-5 h-5"></i>
+                                </div>
+                                <div class="pl-16 space-y-2">
+                                    <div class="text-xs text-gray-500 font-bold bg-blue-50/50 p-3 rounded-xl border border-blue-100/50">
+                                        <div class="flex items-center mb-2"><span class="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></span>空調溫度總表</div>
+                                        <div class="flex items-center mb-2"><span class="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></span>A棟高樓層辦公室環境溫度</div>
+                                        <div class="flex items-center mb-2"><span class="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></span>A棟低樓層辦公室環境溫度</div>
+                                        <div class="text-[10px] text-blue-600 mt-2 font-black border-t border-blue-100 pt-2">傳送：大群組 + 空調機構</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                `,
+                samples: `
+                    <div class="space-y-6">
+                        <section class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+                            <div class="bg-blue-600 p-5 text-white flex justify-between items-center"><span class="font-black tracking-tight">壓力表組圖示範 (空調群組)</span></div>
+                            <div class="p-5 space-y-8">
+                                <!-- 27F -->
+                                <div class="space-y-3">
+                                    <div class="flex items-center text-xs font-black text-gray-400 uppercase tracking-widest"><span class="w-2 h-2 bg-blue-500 rounded-full mr-2"></span> 27F 東側空調機</div>
+                                    <div class="relative group cursor-pointer h-auto rounded-2xl overflow-hidden border border-gray-100 shadow-sm" onclick="zoomImage('uploaded_image_0_1768903588977.jpg')">
+                                        <img src="uploaded_image_0_1768903588977.jpg" class="w-full h-auto object-contain group-hover:scale-105 transition-transform">
+                                        <div class="absolute bottom-0 inset-x-0 bg-black/60 backdrop-blur-sm text-white text-[10px] py-1.5 text-center font-bold">27F 冰水壓力巡視正常 (主範例)</div>
+                                    </div>
+                                </div>
+                                <!-- 18F -->
+                                <div class="space-y-3">
+                                    <div class="flex items-center text-xs font-black text-gray-400 uppercase tracking-widest"><span class="w-2 h-2 bg-indigo-500 rounded-full mr-2"></span> 18F 進出水壓力表</div>
+                                    <div class="relative group cursor-pointer h-auto rounded-2xl overflow-hidden border border-gray-100 shadow-sm" onclick="zoomImage('uploaded_image_4_1768903655212.jpg')">
+                                        <img src="uploaded_image_4_1768903655212.jpg" class="w-full h-auto object-contain group-hover:scale-105 transition-transform">
+                                        <div class="absolute bottom-0 inset-x-0 bg-black/60 backdrop-blur-sm text-white text-[10px] py-1.5 text-center font-bold">18F 冰水壓力巡視正常 (主範例)</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <section class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+                            <div class="bg-indigo-600 p-5 text-white flex justify-between items-center"><span class="font-black tracking-tight">風機與環境示範 (大群組)</span></div>
+                            <div class="p-5 space-y-8">
+                                <div class="space-y-3">
+                                    <div class="flex items-center text-xs font-black text-gray-400 uppercase tracking-widest"><span class="w-2 h-2 bg-indigo-500 rounded-full mr-2"></span> 18F 排氣風機</div>
+                                    <div class="relative group cursor-pointer h-auto rounded-2xl overflow-hidden border border-gray-100 shadow-sm" onclick="zoomImage('uploaded_image_2_1768903725070.jpg')">
+                                        <img src="uploaded_image_2_1768903725070.jpg" class="w-full h-auto object-contain group-hover:scale-105 transition-transform">
+                                        <div class="absolute bottom-0 inset-x-0 bg-black/60 backdrop-blur-sm text-white text-[10px] py-1.5 text-center font-bold">18F 排氣風機巡視正常 (主範例)</div>
+                                    </div>
+                                </div>
+
+                                ${isWeekday ? `
+                                <div class="space-y-3">
+                                    <div class="flex items-center text-xs font-black text-gray-400 uppercase tracking-widest"><span class="w-2 h-2 bg-blue-500 rounded-full mr-2"></span> 17F 健身房風機</div>
+                                    <div class="relative group cursor-pointer h-auto rounded-2xl overflow-hidden border border-gray-100 shadow-sm" onclick="zoomImage('uploaded_image_1_1768903703958.jpg')">
+                                        <img src="uploaded_image_1_1768903703958.jpg" class="w-full h-auto object-contain group-hover:scale-105 transition-transform">
+                                        <div class="absolute bottom-0 inset-x-0 bg-black/60 backdrop-blur-sm text-white text-[10px] py-1.5 text-center font-bold">17F 健身房風機巡視正常 (主範例)</div>
+                                    </div>
+                                </div>
+                                ` : ''}
+
+                                <div class="space-y-3">
+                                    <div class="flex items-center text-xs font-black text-gray-400 uppercase tracking-widest"><span class="w-2 h-2 bg-amber-500 rounded-full mr-2"></span> 早上簽名表 (含手寫內容)</div>
+                                    <div class="relative group cursor-pointer h-auto rounded-3xl overflow-hidden border border-gray-100 shadow-sm transition-all hover:ring-4 hover:ring-amber-500/10" onclick="zoomImage('uploaded_image_1768907169123.png')">
+                                        <img src="uploaded_image_1768907169123.png" class="w-full h-auto object-contain">
+                                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end justify-center pb-4">
+                                            <span class="text-[10px] text-white font-black tracking-widest px-4 py-2 bg-black/40 backdrop-blur-md rounded-full">點擊查看回報組圖範例</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                `
+            };
+        }
+
+        const elevatorContent = {
+            guide: `
+                <div class="flex items-center justify-between mb-4 px-1">
+                    <h2 class="font-black text-gray-400 text-xs uppercase tracking-[0.2em]">早晨巡檢項目</h2>
+                    <span class="bg-red-500 text-white text-[10px] font-black px-3 py-1.5 rounded-full">截止 08:00</span>
+                </div>
+                <section class="bg-white rounded-3xl shadow-sm overflow-hidden border border-gray-100 mb-6 transition-all hover:shadow-md">
+                    <div class="bg-blue-600 px-6 py-4 flex justify-between items-center text-white cursor-pointer" onclick="toggleSection('section-elevator-ac')">
+                        <h3 class="font-black flex items-center"><i data-lucide="power" class="w-5 h-5 mr-3"></i> 電梯冷氣開機</h3>
+                        <i data-lucide="chevron-down" id="section-elevator-ac-icon" class="w-5 h-5 transition-transform duration-300"></i>
+                    </div>
+                    <div id="section-elevator-ac" class="p-6 space-y-6 hidden">
+                        <div class="flex items-start">
+                            <div class="bg-blue-50 text-blue-600 rounded-2xl p-3 mr-4"><i data-lucide="check" class="w-5 h-5"></i></div>
+                            <div class="flex-1">
+                                <p class="font-black text-lg text-gray-800 leading-tight">12 台電梯冷氣開機 (A1~A12)</p>
+                                <p class="text-base font-black mt-4 px-4 py-2 text-gray-900 border-l-4 border-gray-900 bg-gray-50">拍照紀錄現況並組圖傳送：大群組 (高低各一)</p>
+                                
+                                <!-- 新增快速複製文字 (電梯溫度) -->
+                                <div class="mt-4 space-y-2">
+                                    <div class="p-3 bg-blue-50 border border-blue-100 rounded-xl flex items-center justify-between group cursor-pointer hover:bg-blue-100 transition-colors" onclick="copyToClipboard('A棟高樓層電梯冷氣溫度測量')">
+                                        <span class="text-xs font-black text-blue-800 tracking-tight">「A棟高樓層電梯冷氣溫度測量」</span>
+                                        <i data-lucide="copy" class="w-4 h-4 text-blue-400 group-hover:scale-110 transition-transform"></i>
+                                    </div>
+                                    <div class="p-3 bg-blue-50 border border-blue-100 rounded-xl flex items-center justify-between group cursor-pointer hover:bg-blue-100 transition-colors" onclick="copyToClipboard('A棟低樓層電梯冷氣溫度測量')">
+                                        <span class="text-xs font-black text-blue-800 tracking-tight">「A棟低樓層電梯冷氣溫度測量」</span>
+                                        <i data-lucide="copy" class="w-4 h-4 text-blue-400 group-hover:scale-110 transition-transform"></i>
+                                    </div>
+                                </div>
+
+                                <!-- 電梯照片示範 (預設縮起) -->
+                                <button onclick="toggleSubSection('img-elevator-ac')" class="mt-4 text-xs font-bold text-orange-600 flex items-center bg-orange-50 px-3 py-1.5 rounded-lg hover:bg-orange-100 transition-colors">
+                                    <i data-lucide="image" class="w-3 h-3 mr-2"></i> 查看巡檢示範圖
+                                </button>
+                                <div id="img-elevator-ac" class="mt-4 hidden grid grid-cols-2 gap-4">
+                                    <div class="relative group cursor-pointer h-auto rounded-2xl overflow-hidden border border-gray-100 shadow-sm" onclick="zoomImage('uploaded_image_1_1768907019857.png')">
+                                        <img src="uploaded_image_1_1768907019857.png" class="w-full h-auto object-contain transition-transform">
+                                        <div class="absolute bottom-0 inset-x-0 bg-black/60 backdrop-blur-sm text-white text-[10px] py-1.5 text-center font-bold">高樓層範例</div>
+                                    </div>
+                                    <div class="relative group cursor-pointer h-auto rounded-2xl overflow-hidden border border-gray-100 shadow-sm" onclick="zoomImage('uploaded_image_0_1768907019857.png')">
+                                        <img src="uploaded_image_0_1768907019857.png" class="w-full h-auto object-contain transition-transform">
+                                        <div class="absolute bottom-0 inset-x-0 bg-black/60 backdrop-blur-sm text-white text-[10px] py-1.5 text-center font-bold">低樓層範例</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="bg-white rounded-3xl shadow-sm overflow-hidden border border-gray-100 mb-10">
+                    <div class="bg-slate-800 px-6 py-4 text-white flex justify-between items-center cursor-pointer" onclick="toggleSection('section-signature')">
+                        <h3 class="font-black flex items-center"><i data-lucide="clipboard-list" class="w-5 h-5 mr-3 text-blue-400"></i> 08:00 簽名表與巡檢總表回傳</h3>
+                         <i data-lucide="chevron-down" id="section-signature-icon" class="w-5 h-5 transition-transform duration-300"></i>
+                    </div>
+                    <div id="section-signature" class="p-6 hidden">
+                        <div class="flex flex-col space-y-3 text-sm text-gray-600 mb-6 bg-gray-50 rounded-2xl p-5 border border-gray-100">
+                            <div class="font-bold flex items-center">A1-A18 電梯溫度 <span class="text-blue-600 ml-2">(A15-18手寫)</span></div>
+                            <div class="font-bold flex items-center">B1-B9 電梯溫度 <span class="text-blue-600 ml-2">(B7-9手寫)</span></div>
+                            <div class="font-bold flex items-center">C1, 2, 8 電梯溫度 <span class="text-blue-600 ml-2">(C1, 2, 8手寫)</span></div>
+                        </div>
+                        
+                        <div class="flex items-center justify-center space-x-2 mb-4">
+                            <span class="text-[10px] font-black bg-red-500 text-white px-3 py-1.5 rounded-full shadow-sm">截止時間 08:00</span>
+                            <span class="text-xs font-bold bg-blue-50 text-blue-700 px-4 py-1.5 rounded-full border border-blue-100">完成後組圖上傳：大群組</span>
+                        </div>
+                        
+                        <!-- 簽名表示範 (預設縮起) -->
+                        <div class="mb-6">
+                            <button onclick="toggleSubSection('img-signature-sample')" class="text-xs font-bold text-orange-600 flex items-center bg-orange-50 px-3 py-1.5 rounded-lg hover:bg-orange-100 transition-colors mx-auto">
+                                <i data-lucide="image" class="w-3 h-3 mr-2"></i> 查看回報組圖範例
+                            </button>
+                            <div id="img-signature-sample" class="mt-4 hidden relative group cursor-pointer h-auto rounded-3xl overflow-hidden border border-gray-100 shadow-sm" onclick="zoomImage('uploaded_image_1768907169123.png')">
+                                <img src="uploaded_image_1768907169123.png" class="w-full h-auto object-contain">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
+                            </div>
+                        </div>
+
+                        <div class="relative group">
+                            <div class="absolute -top-3 left-6 bg-blue-600 text-white text-[10px] px-3 py-1 rounded-full font-black uppercase tracking-widest shadow-lg">快速複製回報文字</div>
+                            <div class="p-8 bg-blue-50 border border-blue-100 rounded-3xl transition-all hover:bg-blue-100/50 cursor-pointer" onclick="copyToClipboard('ABC棟電梯試乘及環境溫度量測正常')">
+                                <p class="text-xl text-blue-900 font-black italic leading-tight text-center copyable-text">「ABC棟電梯試乘及環境溫度量測正常」</p>
+                                <p class="text-[10px] text-blue-600 text-center mt-4 font-bold opacity-60">點擊文字可自動複製</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="mt-10 mb-2 px-1">
+                    <h2 class="font-black text-gray-400 text-xs uppercase tracking-[0.2em]">定時與獨立任務</h2>
+                </div>
+                <section class="bg-white rounded-3xl shadow-sm border border-gray-100 divide-y divide-gray-50 overflow-hidden mb-10">
+                    <div class="p-5 flex items-center justify-between hover:bg-gray-50 transition-colors">
+                        <div class="flex items-center"><span class="bg-red-50 text-red-600 font-black px-4 py-1.5 rounded-xl text-xs mr-4">07:50</span><span class="font-bold text-gray-700">排紅龍</span></div>
+                        <i data-lucide="arrow-right-circle" class="text-red-300 w-5 h-5"></i>
+                    </div>
+                    <div class="p-5 flex items-center justify-between hover:bg-gray-50 transition-colors">
+                        <div class="flex items-center"><span class="bg-red-50 text-red-600 font-black px-4 py-1.5 rounded-xl text-xs mr-4">09:20</span><span class="font-bold text-gray-700">收紅龍</span></div>
+                        <i data-lucide="arrow-right-circle" class="text-red-300 w-5 h-5"></i>
+                    </div>
+                    <div class="p-5 flex items-center justify-between hover:bg-gray-50 transition-colors">
+                        <div class="flex items-center"><span class="bg-red-50 text-red-600 font-black px-4 py-1.5 rounded-xl text-xs mr-4">09:30</span><span class="font-bold text-gray-700">量測辦公室高低樓層溫度</span></div>
+                        <i data-lucide="thermometer" class="text-red-300 w-5 h-5"></i>
+                    </div>
+                     <!-- 15:30 項目合併 -->
+                    <div class="p-5 flex flex-col hover:bg-gray-50 transition-colors border-t border-gray-50">
+                        <div class="flex items-center justify-between w-full mb-3">
+                            <div class="flex items-center"><span class="bg-red-50 text-red-600 font-black px-4 py-1.5 rounded-xl text-xs mr-4">15:30</span><span class="font-bold text-gray-700">傳群組</span></div>
+                            <i data-lucide="send" class="text-blue-400 w-5 h-5"></i>
+                        </div>
+                        <div class="pl-16 space-y-2">
+                            <div class="text-xs text-gray-500 font-bold bg-blue-50/50 p-3 rounded-xl border border-blue-100/50">
+                                <div class="flex items-center mb-2"><span class="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></span>空調溫度總表</div>
+                                <div class="flex items-center mb-2"><span class="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></span>A棟高樓層辦公室環境溫度</div>
+                                <div class="flex items-center mb-2"><span class="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></span>A棟低樓層辦公室環境溫度</div>
+                                <div class="text-[10px] text-blue-600 mt-2 font-black border-t border-blue-100 pt-2">傳送：大群組 + 空調機構</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+        `,
+            samples: `
+            <div class="space-y-6 pb-12">
+                <section class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+                    <div class="bg-blue-600 p-5 text-white flex justify-between items-center"><span class="font-black tracking-tight">電梯巡檢組圖範例</span></div>
+                    <div class="p-6 grid grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                             <div class="text-xs font-bold text-center text-gray-500">A棟高樓層</div>
+                             <img src="uploaded_image_1_1768907019857.png" class="rounded-2xl w-full h-auto object-contain shadow-sm transition-transform active:scale-95" onclick="zoomImage(this.src)">
+                        </div>
+                        <div class="space-y-2">
+                             <div class="text-xs font-bold text-center text-gray-500">A棟低樓層</div>
+                             <img src="uploaded_image_0_1768907019857.png" class="rounded-2xl w-full h-auto object-contain shadow-sm transition-transform active:scale-95" onclick="zoomImage(this.src)">
+                        </div>
+                    </div>
+                </section>
+                
+                <div class="mt-4">
+                    <img src="uploaded_image_1768907169123.png" class="w-full h-auto rounded-3xl shadow-sm border border-gray-100 cursor-pointer" onclick="zoomImage(this.src)">
+                </div>
+            </div>
+            `
+        };
+
+        function toggleSection(id) {
+            const section = document.getElementById(id);
+            const icon = document.getElementById(id + '-icon');
+            if (!section) return;
+            section.classList.toggle('hidden');
+            if (icon) {
+                icon.style.transform = section.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
+            }
+        }
+
+        function toggleSubSection(id) {
+            const section = document.getElementById(id);
+            if (!section) return;
+            section.classList.toggle('hidden');
+        }
+        window.toggleSection = toggleSection;
+        window.toggleSubSection = toggleSubSection;
+
+        function render() {
+            const navArea = document.getElementById('navigationArea');
+            const guideContainer = document.getElementById('guideContainer');
+            const headerTitle = document.getElementById('headerTitle');
+            const backBtn = document.getElementById('backBtn');
+            const currentLevel = currentPath[currentPath.length - 1];
+
+            const isGuidePage = (currentLevel === 'elevator' || currentLevel === 'machineFloor') &&
+                (currentPath.includes('weekday') || currentPath.includes('holiday')) &&
+                currentPath.includes('buildingA');
+
+            if (isGuidePage) {
+                if (navArea) navArea.classList.add('hidden');
+                if (guideContainer) guideContainer.classList.remove('hidden');
+
+                const isWeekday = currentPath.includes('weekday');
+                const dayType = isWeekday ? '平日' : '假日';
+                if (headerTitle) headerTitle.innerText = currentLevel === 'elevator' ? `A 棟${dayType}電梯巡檢` : `A 棟${dayType}機械樓層`;
+
+                if (currentLevel === 'elevator') {
+                    document.getElementById('contentGuide').innerHTML = elevatorContent.guide;
+                    document.getElementById('contentSamples').innerHTML = elevatorContent.samples;
+                } else {
+                    const machineContent = getMachineFloorContent(isWeekday);
+                    document.getElementById('contentGuide').innerHTML = machineContent.guide;
+                    document.getElementById('contentSamples').innerHTML = machineContent.samples;
+                }
+
+                switchTab(currentTab);
+            } else if (currentLevel === 'map') {
+                // 區域地圖顯示邏輯
+                if (navArea) navArea.classList.remove('hidden');
+                if (guideContainer) guideContainer.classList.add('hidden');
+                if (headerTitle) headerTitle.innerText = '區域地圖';
+
+                if (navArea) {
+                    navArea.innerHTML = `
+                        <div class="col-span-1 sm:col-span-2 space-y-6">
+                     <!-- A Building Map -->
+                     <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
+                        <div class="flex items-center mb-4">
+                             <span class="w-3 h-3 bg-blue-500 rounded-full mr-2"></span>
+                             <h2 class="font-black text-lg text-gray-800">A 棟地圖</h2>
+                        </div>
+                        <div class="rounded-xl overflow-hidden border border-gray-100 cursor-zoom-in" onclick="zoomImage('uploaded_image_0_1768907579639.jpg')">
+                            <img src="uploaded_image_0_1768907579639.jpg" class="w-full h-auto">
+                        </div>
+                     </div>
+
+                     <!-- B Building Map -->
+                     <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
+                        <div class="flex items-center mb-4">
+                             <span class="w-3 h-3 bg-indigo-500 rounded-full mr-2"></span>
+                             <h2 class="font-black text-lg text-gray-800">B 棟地圖</h2>
+                        </div>
+                        <div class="rounded-xl overflow-hidden border border-gray-100 cursor-zoom-in" onclick="zoomImage('uploaded_image_1_1768907579639.jpg')">
+                            <img src="uploaded_image_1_1768907579639.jpg" class="w-full h-auto">
+                        </div>
+                     </div>
+
+                     <!-- C Building Map -->
+                     <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
+                        <div class="flex items-center mb-4">
+                             <span class="w-3 h-3 bg-emerald-500 rounded-full mr-2"></span>
+                             <h2 class="font-black text-lg text-gray-800">C 棟地圖</h2>
+                        </div>
+                                <div class="rounded-xl overflow-hidden border border-gray-100 cursor-zoom-in" onclick="zoomImage('uploaded_image_2_1768907579639.jpg')">
+                                    <img src="uploaded_image_2_1768907579639.jpg" class="w-full h-auto">
+                                </div>
+                             </div>
+                        </div>
+                    `;
+                }
+            } else {
+                if (navArea) navArea.classList.remove('hidden');
+                if (guideContainer) guideContainer.classList.add('hidden');
+
+                const levelData = data[currentLevel] || { title: '機電巡檢系統', items: [] };
+                if (headerTitle) headerTitle.innerText = levelData.title;
+
+                if (navArea) {
+                    navArea.innerHTML = '';
+                    levelData.items.forEach((item, index) => {
+                        const card = document.createElement('div');
+                        card.className = "group cursor-pointer bg-white p-6 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl hover:translate-y-[-4px] active:scale-[0.98] transition-all duration-300 flex items-center space-x-5";
+                        card.style.animationDelay = `${index * 50}ms`;
+                        card.classList.add('fade-in');
+
+                        card.innerHTML = `
+                    <div class="${item.color} p-5 rounded-2xl text-white shadow-lg shadow-gray-200 transition-transform group-hover:rotate-6">
+                        <i data-lucide="${item.icon}" class="w-6 h-6"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h2 class="text-xl font-black text-gray-800 tracking-tight">${item.title}</h2>
+                        <p class="text-[11px] text-gray-400 font-bold mt-1 uppercase tracking-wider">${item.desc || ''}</p>
+                    </div>
+                    <i data-lucide="chevron-right" class="text-gray-200 group-hover:text-blue-500 group-hover:translate-x-1 transition-all"></i>
+                        `;
+                        card.onclick = () => {
+                            currentPath.push(item.id);
+                            render();
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                        };
+                        navArea.appendChild(card);
+                    });
+                }
+            }
+
+            if (backBtn) {
+                if (currentPath.length > 1) backBtn.classList.remove('hidden');
+                else backBtn.classList.add('hidden');
+            }
+
+            lucide.createIcons();
+        }
+
+        function switchTab(tabName) {
+            currentTab = tabName;
+            const guideContent = document.getElementById('contentGuide');
+            const sampleContent = document.getElementById('contentSamples');
+            const btnGuide = document.getElementById('tabBtnGuide');
+            const btnSamples = document.getElementById('tabBtnSamples');
+
+            if (tabName === 'guide') {
+                if (guideContent) guideContent.classList.remove('hidden');
+                if (sampleContent) sampleContent.classList.add('hidden');
+                if (btnGuide) btnGuide.classList.add('tab-active');
+                if (btnSamples) btnSamples.classList.remove('tab-active');
+                if (btnSamples) btnSamples.classList.add('text-gray-400');
+            } else {
+                if (guideContent) guideContent.classList.add('hidden');
+                if (sampleContent) sampleContent.classList.remove('hidden');
+                if (btnSamples) btnSamples.classList.add('tab-active');
+                if (btnSamples) btnSamples.classList.remove('text-gray-400');
+                if (btnGuide) btnGuide.classList.remove('tab-active');
+                if (btnGuide) btnGuide.classList.add('text-gray-400');
+            }
+            lucide.createIcons();
+        }
+
+        function zoomImage(src) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImg');
+            if (modalImg) modalImg.src = src;
+            if (modal) modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            if (modal) modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('已複製：' + text);
+            });
+        }
+
+        const backBtnEl = document.getElementById('backBtn');
+        if (backBtnEl) {
+            backBtnEl.onclick = () => {
+                if (currentPath.length > 1) {
+                    currentPath.pop();
+                    currentTab = 'guide';
+                    render();
+                }
+            };
+        }
+
+        window.onload = render;
+    </script>
+</body>
+
+</html>
