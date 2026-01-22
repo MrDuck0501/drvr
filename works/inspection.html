@@ -984,37 +984,52 @@
                     navArea.innerHTML = `
                         <div class="col-span-1 sm:col-span-2 space-y-6">
                      <!-- A Building Map -->
-                     <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
-                        <div class="flex items-center mb-4">
-                             <span class="w-3 h-3 bg-blue-500 rounded-full mr-2"></span>
-                             <h2 class="font-black text-lg text-gray-800">A 棟地圖</h2>
+                     <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+                        <div class="p-6 flex justify-between items-center cursor-pointer hover:bg-gray-50 transition-colors" onclick="toggleSection('map-a')">
+                            <div class="flex items-center">
+                                 <span class="w-3 h-3 bg-blue-500 rounded-full mr-3"></span>
+                                 <h2 class="font-black text-lg text-gray-800">A 棟地圖</h2>
+                            </div>
+                            <i data-lucide="chevron-down" id="map-a-icon" class="w-5 h-5 text-gray-400 transition-transform duration-300"></i>
                         </div>
-                        <div class="rounded-xl overflow-hidden border border-gray-100 cursor-zoom-in" onclick="zoomImage('works/uploaded_image_0_1768907579639.jpg')">
-                            <img src="works/uploaded_image_0_1768907579639.jpg" class="w-full h-auto">
+                        <div id="map-a" class="px-6 pb-6 hidden">
+                            <div class="rounded-xl overflow-hidden border border-gray-100 cursor-zoom-in" onclick="zoomImage('uploaded_image_0_1768907579639.jpg')">
+                                <img src="uploaded_image_0_1768907579639.jpg" class="w-full h-auto">
+                            </div>
                         </div>
                      </div>
 
                      <!-- B Building Map -->
-                     <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
-                        <div class="flex items-center mb-4">
-                             <span class="w-3 h-3 bg-indigo-500 rounded-full mr-2"></span>
-                             <h2 class="font-black text-lg text-gray-800">B 棟地圖</h2>
+                     <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+                        <div class="p-6 flex justify-between items-center cursor-pointer hover:bg-gray-50 transition-colors" onclick="toggleSection('map-b')">
+                            <div class="flex items-center">
+                                 <span class="w-3 h-3 bg-indigo-500 rounded-full mr-3"></span>
+                                 <h2 class="font-black text-lg text-gray-800">B 棟地圖</h2>
+                            </div>
+                            <i data-lucide="chevron-down" id="map-b-icon" class="w-5 h-5 text-gray-400 transition-transform duration-300"></i>
                         </div>
-                        <div class="rounded-xl overflow-hidden border border-gray-100 cursor-zoom-in" onclick="zoomImage('uploaded_image_1_1768907579639.jpg')">
-                            <img src="uploaded_image_1_1768907579639.jpg" class="w-full h-auto">
+                        <div id="map-b" class="px-6 pb-6 hidden">
+                            <div class="rounded-xl overflow-hidden border border-gray-100 cursor-zoom-in" onclick="zoomImage('uploaded_image_1_1768907579639.jpg')">
+                                <img src="uploaded_image_1_1768907579639.jpg" class="w-full h-auto">
+                            </div>
                         </div>
                      </div>
 
                      <!-- C Building Map -->
-                     <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
-                        <div class="flex items-center mb-4">
-                             <span class="w-3 h-3 bg-emerald-500 rounded-full mr-2"></span>
-                             <h2 class="font-black text-lg text-gray-800">C 棟地圖</h2>
+                     <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+                        <div class="p-6 flex justify-between items-center cursor-pointer hover:bg-gray-50 transition-colors" onclick="toggleSection('map-c')">
+                            <div class="flex items-center">
+                                 <span class="w-3 h-3 bg-emerald-500 rounded-full mr-3"></span>
+                                 <h2 class="font-black text-lg text-gray-800">C 棟地圖</h2>
+                            </div>
+                            <i data-lucide="chevron-down" id="map-c-icon" class="w-5 h-5 text-gray-400 transition-transform duration-300"></i>
                         </div>
-                                <div class="rounded-xl overflow-hidden border border-gray-100 cursor-zoom-in" onclick="zoomImage('uploaded_image_2_1768907579639.jpg')">
-                                    <img src="uploaded_image_2_1768907579639.jpg" class="w-full h-auto">
-                                </div>
-                             </div>
+                        <div id="map-c" class="px-6 pb-6 hidden">
+                            <div class="rounded-xl overflow-hidden border border-gray-100 cursor-zoom-in" onclick="zoomImage('uploaded_image_2_1768907579639.jpg')">
+                                <img src="uploaded_image_2_1768907579639.jpg" class="w-full h-auto">
+                            </div>
+                        </div>
+                     </div>
                         </div>
                     `;
                 }
