@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>萌萌童話大冒險</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=cwTeXYen:wght@400;600&family=Nunito:wght@400;700;900&display=swap');
+
+        body {
+            background-color: #fdf2f8;
+            font-family: 'Nunito', 'cwTeXYen', 'Microsoft JhengHei Rounded', 'Microsoft JhengHei', sans-serif;
+            font-weight: 600;
+            /* Make text a bit more prominent by default */
+        }
+
+        .animate-spin-slow {
+            animation: spin 8s linear infinite;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        // --- Icons (Inline SVGs to avoid dependency issues) ---
+        const IconBase = ({ d, className, ...props }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} {...props}>
+                {d}
+            </svg>
+        );
+
+        const Star = (props) => <IconBase d={<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />} {...props} />;
+        const Sparkles = (props) => <IconBase d={<><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" /><path d="M5 3v4" /><path d="M9 3v4" /><path d="M3 5h4" /><path d="M3 9h4" /></>} {...props} />;
+        const Heart = (props) => <IconBase d={<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />} {...props} />;
+        const MapPin = (props) => <IconBase d={<><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" /></>} {...props} />;
+        const Clock = (props) => <IconBase d={<><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></>} {...props} />;
+        const Cloud = (props) => <IconBase d={<path d="M17.5 19c0-1.7-1.3-3-3-3h-1.1c-.1-2.9-2.4-5.2-5.3-5.3-2.6-.1-4.9 1.7-5.4 4.3C1.6 15.6 2.3 18.2 4.4 19c.4.1.9.1 1.3.1h11.8Z" />} {...props} />;
+        const Baby = (props) => <IconBase d={<><path d="M9 12h.01" /><path d="M15 12h.01" /><path d="M10 16c.5.3 1.2.5 2 .5s1.5-.2 2-.5" /><path d="M19 6.3a9 9 0 0 1 1.8 3.9 2 2 0 0 1 0 3.6 9 9 0 0 1-17.6 0 2 2 0 0 1 0-3.6A9 9 0 0 1 12 3c2 1 2.6 2 3.4 3.3z" /></>} {...props} />;
+        const FileText = (props) => <IconBase d={<><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" /><polyline points="14 2 14 8 20 8" /><line x1="16" x2="8" y1="13" y2="13" /><line x1="16" x2="8" y1="17" y2="17" /><line x1="10" x2="8" y1="9" y2="9" /></>} {...props} />;
+        const Copy = (props) => <IconBase d={<><rect width="14" height="14" x="8" y="8" rx="2" ry="2" /><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" /></>} {...props} />;
+        const BookOpen = (props) => <IconBase d={<><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" /><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" /></>} {...props} />;
+        const CheckCircle2 = (props) => <IconBase d={<><circle cx="12" cy="12" r="10" /><path d="m9 12 2 2 4-4" /></>} {...props} />;
+
+        // --- Data ---
+        const MODULES_DATA = [
+            {
+                id: 'M1',
+                title: '選主角好朋友 (選 1 ~ 4 個)',
+                icon: <Star className="w-6 h-6 text-yellow-500" />,
+                description: '誰是故事裡的小明星？',
+                multiSelect: true,
+                max: 4,
+                options: [
+                    { label: '默默 (粉紅馬)', value: '核心領隊：默默 (粉紅的馬，活潑好動、有活力、勇敢)', img: 'momo.jpg' },
+                    { label: '悠悠 (獨角獸)', value: '核心領隊：悠悠 (藍色的獨角獸，膽小懦弱、行動慢、怕事情)', img: 'yoyo.jpg' },
+                    { label: '阿寶 (乳牛貓)', value: '阿寶 (黑白乳牛貓，活潑好動但膽小、與愛講話、超級撒嬌)' },
+                    { label: '瑞比 (馬爾吉斯)', value: '瑞比 (馬爾吉斯，小貪吃鬼、但是對朋友最忠誠)' },
+                    { label: '吱吱鼠', value: '吱吱鼠 (總是有鬼點子、喜歡收集亮晶晶的小東西)' },
+                    { label: '哞哞牛', value: '哞哞牛 (動作慢但是超級可靠、喜歡種花)' },
+                    { label: '虎呼將', value: '虎呼將 (雖然是大老虎但其實很愛撒嬌、怕黑)' },
+                    { label: '跳跳兔', value: '跳跳兔 (急性子、永遠停不下來、聽到音樂就會跳舞)' },
+                    { label: '閃閃龍', value: '閃閃龍 (戴著眼鏡博學多聞、喜歡講冷笑話)' },
+                    { label: '溜溜蛇', value: '溜溜蛇 (擅長打聽消息的情報員、喜歡躲貓貓)' },
+                    { label: '奔奔馬', value: '奔奔馬 (熱愛運動的教練、看到人就想比賽跑步)' },
+                    { label: '咩咩羊', value: '咩咩羊 (最棒的聆聽者、做出的甜點超好吃)' },
+                    { label: '哈哈猴', value: '哈哈猴 (惡作劇大王、但也是大家的開心果)' },
+                    { label: '咕咕雞', value: '咕咕雞 (非常守時的管家、看到亂七八糟就會受不了)' },
+                    { label: '汪汪狗', value: '汪汪狗 (正義感爆棚的巡邏隊長、總是隨身帶著急救包)' },
+                    { label: '嘟嘟豬', value: '嘟嘟豬 (美食評論家、鼻子超靈能聞到遠處的香味)' }
+                ]
+            },
+            {
+                id: 'M2',
+                title: '它們遇到了甚麼困難',
+                icon: <Sparkles className="w-6 h-6 text-purple-500" />,
+                description: '發生了什麼麻煩的事？',
+                options: [
+                    { label: '迷路了', value: '大迷路 (找不到回家的方向，周圍看起來都一樣)' },
+                    { label: '東西不見了', value: '寶物遺失 (最重要的東西突然不見了，急死人了)' },
+                    { label: '吵架了', value: '意見不合 (好朋友吵架了，大家都不理對方)' },
+                    { label: '肚子好餓', value: '食物危機 (肚子餓得咕嚕咕嚕叫，卻找不到東西吃)' },
+                    { label: '遇到大怪物', value: '怪物擋路 (前方出現了看起來好可怕的怪物)' },
+                    { label: '掉進大洞裡', value: '受困陷阱 (不小心掉進好深的洞，自己爬不出來)' },
+                    { label: '有人受傷了', value: '受傷生病 (有人不小心跌倒受傷，需要大家幫忙)' },
+                    { label: '被魔法變小', value: '變身意外 (不小心碰到魔法，身體變得很小很小)' },
+                    { label: '時間快到了', value: '緊急倒數 (任務必須在時間內完成，可是快來不及了)' },
+                    { label: '大家都睡著', value: '沉睡魔法 (除了主角，其他人都中了睡覺魔法叫不醒)' }
+                ]
+            },
+            {
+                id: 'M3',
+                title: '學到什麼事',
+                icon: <Heart className="w-6 h-6 text-red-500" />,
+                description: '故事裡藏著什麼小秘密？',
+                options: [
+                    { label: '互相關愛', value: '愛' },
+                    { label: '變勇敢', value: '勇氣' },
+                    { label: '和平相處', value: '和平' },
+                    { label: '原諒別人', value: '包容' },
+                    { label: '大方分享', value: '分享' },
+                    { label: '充滿好奇', value: '好奇' },
+                    { label: '負責任', value: '責任' }
+                ]
+            },
+            {
+                id: 'M4',
+                title: '去哪裡玩',
+                icon: <MapPin className="w-6 h-6 text-green-500" />,
+                description: '故事發生在什麼漂亮地方？',
+                options: [
+                    { label: '秘密森林', value: '秘密森林' },
+                    { label: '亮亮溪流', value: '泡泡溪流' },
+                    { label: '雲上的城堡', value: '雲朵城堡' },
+                    { label: '滴答時鐘村', value: '時鐘之村' },
+                    { label: '小小草叢', value: '微觀草叢' },
+                    { label: '溫暖的家', value: '家之港灣' }
+                ]
+            },
+            {
+                id: 'M5',
+                title: '什麼時候',
+                icon: <Clock className="w-6 h-6 text-orange-500" />,
+                description: '是白天還是晚上呢？',
+                options: [
+                    { label: '剛起床的早晨', value: '微光黎明' },
+                    { label: '亮晶晶的中午', value: '金色正午' },
+                    { label: '美麗的傍晚', value: '琥珀黃昏' },
+                    { label: '有星星的晚上', value: '繁星深夜' },
+                    { label: '春夏秋冬', value: '四季更迭' }
+                ]
+            },
+            {
+                id: 'M6',
+                title: '天氣怎麼樣',
+                icon: <Cloud className="w-6 h-6 text-blue-400" />,
+                description: '突然發生了什麼事？',
+                options: [
+                    { label: '大晴天', value: '燦爛晴天 (好天氣)' },
+                    { label: '下大雨了', value: '暴風大雨 (考驗)' },
+                    { label: '霧濛濛的', value: '迷幻大霧 (看不清楚)' },
+                    { label: '出現彩虹', value: '希望彩虹 (驚喜)' }
+                ]
+            },
+            {
+                id: 'M7',
+                title: '給誰聽的',
+                icon: <Baby className="w-6 h-6 text-pink-400" />,
+                description: '小朋友幾歲了呢？',
+                options: [
+                    { label: '小寶寶 (0-3歲)', value: 'Level 1 (0-3歲，簡單好懂)' },
+                    { label: '幼兒園 (3-6歲)', value: 'Level 2 (3-6歲，有趣好玩)' },
+                    { label: '小學生 (6-9歲)', value: 'Level 3 (6-9歲，豐富精彩)' }
+                ]
+            },
+            {
+                id: 'M8',
+                title: '故事長度',
+                icon: <FileText className="w-6 h-6 text-indigo-500" />,
+                description: '想聽很久還是快快講完？',
+                options: [
+                    { label: '短短的 (1分鐘)', value: '1 分鐘 (約 180 字)' },
+                    { label: '剛剛好 (3分鐘)', value: '3 分鐘 (約 510 字)' },
+                    { label: '講久一點 (5分鐘)', value: '5 分鐘 (約 900 字)' }
+                ]
+            }
+        ];
+
+        // --- Main Component ---
+        const App = () => {
+            const [selections, setSelections] = React.useState({
+                M1: [],
+                M2: null, M3: null, M4: null, M5: null, M6: null, M7: null, M8: null
+            });
+            const [copyStatus, setCopyStatus] = React.useState('變出故事魔法！');
+
+            const handleSelect = (moduleId, option) => {
+                if (moduleId === 'M1') {
+                    setSelections(prev => {
+                        const isAlreadySelected = prev.M1.some(item => item.label === option.label);
+                        if (isAlreadySelected) {
+                            return { ...prev, M1: prev.M1.filter(item => item.label !== option.label) };
+                        } else if (prev.M1.length < 4) {
+                            return { ...prev, M1: [...prev.M1, option] };
+                        }
+                        return prev;
+                    });
+                } else {
+                    setSelections(prev => ({ ...prev, [moduleId]: option }));
+                }
+            };
+
+            const isComplete = React.useMemo(() => {
+                return selections.M1.length > 0 && Object.entries(selections).every(([key, val]) => {
+                    if (key === 'M1') return val.length > 0;
+                    return val !== null;
+                });
+            }, [selections]);
+
+            const promptText = React.useMemo(() => {
+                if (!isComplete) return '小精靈還在準備材料，請把每一個選項都選好喔 (記得選 1-4 個主角)...';
+
+                const characters = selections.M1.map(c => c.value).join('、');
+                const spiritLabel = selections.M3?.label || '';
+
+                // Determine age-specific instructions
+                const ageGroup = selections.M7?.value || '';
+                let ageInstructions = '';
+
+                if (ageGroup.includes('Level 1')) { // 0-3歲
+                    ageInstructions = `【針對 0-3 歲寶寶的講故事技巧】
+- **詞彙**：請大量使用「疊字」（如：飛高高、亮晶晶、吃飯飯）和「擬聲詞」（如：汪汪、呼呼、蹦蹦跳）。
+- **句子**：句子要非常短，結構簡單重複（如：「默默跑跑，跑跑跑」）。
+- **內容**：專注在具體的感官描寫（顏色、形狀、聲音），不要有太複雜的邏輯。
+- **語氣**：極度溫柔、緩慢，像媽媽在哄睡或是逗寶寶笑的感覺。`;
+                } else if (ageGroup.includes('Level 2')) { // 3-6歲
+                    ageInstructions = `【針對 3-6 歲幼兒的講故事技巧】
+- **詞彙**：使用簡單但生動的形容詞，可以加入一點點魔法和想像力的詞彙。
+- **句子**：多用對話來推進故事，語氣要誇張、有戲劇性，角色聲音要有區別。
+- **內容**：情節要有小小的挑戰（如：東西不見了、迷路了），但最後一定要圓滿解決。
+- **互動**：故事中間可以穿插簡單的問句（如：「小朋友，你覺得他們該怎麼辦呢？」）。`;
+                } else { // 6-9歲
+                    ageInstructions = `【針對 6-9 歲兒童的講故事技巧】
+- **詞彙**：詞彙可以豐富些，加入優美的描寫、精確的動詞，甚至簡單的成語（如：五顏六色、興高采烈）。
+- **句子**：情節要有起承轉合，可以描寫角色的心理變化和合作過程。
+- **內容**：注重解決問題的「方法」和「邏輯」，以及朋友之間的團隊合作精神。
+- **風格**：像在講一部精彩的動畫電影，節奏輕快，讓孩子覺得很帥氣、很酷。`;
+                }
+
+                return `哈囉 AI 說故事哥哥/姊姊！請講一個好聽的故事給我聽：
+
+【故事也要這樣設定喔】
+1. 主角是：${characters}
+2. 今天遇到的困難：${selections.M2?.value}
+3. 這是關於「${spiritLabel}」的故事
+4. 地點在：${selections.M4?.value}
+5. 時間是：${selections.M5?.value}
+6. 天氣是：${selections.M6?.value}
+7. 我今年：${selections.M7?.value}
+8. 故事長度：${selections.M8?.value}
+
+${ageInstructions}
+
+【最後請記得...】
+- 故事要有開頭、中間發生有趣的事、最後大家都開開心心的。
+- 多形容一下顏色、聲音、味道，讓我覺得好像真的在那裡一樣！`;
+            }, [selections, isComplete]);
+
+            const copyToClipboard = () => {
+                navigator.clipboard.writeText(promptText).then(() => {
+                    setCopyStatus('✨ 魔法複製成功！ ✨');
+                    setTimeout(() => setCopyStatus('變出故事魔法！'), 2000);
+                });
+            };
+
+            return (
+                <div className="min-h-screen bg-pink-50 p-4 md:p-8 font-sans text-slate-700 selection:bg-pink-200 selection:text-pink-900">
+                    <div className="max-w-6xl mx-auto">
+                        {/* Header */}
+                        <header className="mb-10 text-center relative">
+                            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-yellow-200/50 rounded-full blur-3xl -z-10 animate-pulse"></div>
+                            <div className="inline-block p-5 bg-white rounded-full shadow-lg mb-6 border-4 border-pink-200 transform hover:scale-110 transition-transform duration-500 cursor-pointer">
+                                <BookOpen className="w-12 h-12 text-pink-500" />
+                            </div>
+                            <h1 className="text-4xl md:text-5xl font-black text-pink-600 mb-3 flex flex-wrap items-center justify-center gap-3 tracking-tight drop-shadow-sm">
+                                <span className="animate-bounce delay-100">萌</span>
+                                <span className="animate-bounce delay-200">萌</span>
+                                <span className="animate-bounce delay-300">童</span>
+                                <span className="animate-bounce delay-500">話</span>
+                                <span className="text-sky-500">大冒險</span>
+                            </h1>
+                            <p className="text-slate-500 font-bold text-lg md:text-xl tracking-wide bg-white/60 inline-block px-6 py-2 rounded-full backdrop-blur-sm">
+                                ✨ 選一選，變出專屬你的好聽故事 ✨
+                            </p>
+                        </header>
+
+                        {/* Modules Grid */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12 text-left">
+                            {MODULES_DATA.map((module) => (
+                                <div key={module.id} className="bg-[#fffcf0] rounded-[2rem] shadow-md border-2 border-white hover:border-pink-200 p-6 hover:shadow-xl transition-all duration-300 group relative">
+
+                                    <div className="flex items-center gap-4 mb-5">
+                                        <div className="p-3.5 bg-sky-50 text-sky-500 rounded-2xl group-hover:scale-110 group-hover:bg-sky-100 transition-all duration-500 shadow-sm">
+                                            {module.icon}
+                                        </div>
+                                        <div>
+                                            <h3 className="font-black text-xl text-slate-700 group-hover:text-pink-500 transition-colors">
+                                                {module.title}
+                                            </h3>
+                                            {module.id === 'M1' && (
+                                                <span className="inline-block mt-1 text-xs font-bold bg-pink-100 text-pink-600 px-2 py-0.5 rounded-full">
+                                                    已選 {selections.M1.length} / 4
+                                                </span>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    <div className="flex flex-wrap gap-2.5">
+                                        {module.options.map((opt) => {
+                                            const isSelected = module.id === 'M1'
+                                                ? selections.M1.some(item => item.label === opt.label)
+                                                : selections[module.id]?.label === opt.label;
+
+                                            return (
+                                                <button
+                                                    key={opt.label}
+                                                    onClick={() => handleSelect(module.id, opt)}
+                                                    className={`px-4 py-3 text-lg font-bold rounded-xl border-[3px] transition-all duration-200 flex items-center gap-2 ${isSelected
+                                                        ? 'bg-pink-500 border-pink-500 text-white shadow-md scale-105 -translate-y-0.5 ring-2 ring-pink-200 ring-offset-1'
+                                                        : 'bg-white border-slate-300 text-slate-700 hover:bg-sky-50 hover:border-sky-400 hover:text-sky-700 hover:shadow-sm'
+                                                        }`}
+                                                >
+                                                    {isSelected && <CheckCircle2 className="w-5 h-5" />}
+                                                    {opt.img && <img src={opt.img} alt={opt.label} className="w-12 h-12 rounded-full border-2 border-white shadow-sm object-cover" />}
+                                                    {opt.label}
+                                                </button>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Output Section */}
+                        <div className={`relative transition-all duration-700 transform ${isComplete ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-90'}`}>
+                            <div className="absolute -inset-1 bg-gradient-to-r from-pink-300 via-purple-300 to-sky-300 rounded-[3rem] blur opacity-30 animate-pulse"></div>
+                            <div className="relative bg-white rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white">
+                                <div className="bg-sky-50/80 px-8 py-6 flex flex-col md:flex-row justify-between items-center gap-5 border-b border-sky-100 backdrop-blur-sm">
+                                    <div className="flex items-center gap-4">
+                                        <div className="p-3 bg-white rounded-full shadow-inner ring-4 ring-sky-100">
+                                            <Sparkles className="w-8 h-8 text-yellow-400 animate-spin-slow" />
+                                        </div>
+                                        <div className="text-left">
+                                            <span className="block font-black text-2xl tracking-tight text-slate-700">魔法咒語準備好囉！</span>
+                                            <span className="text-sm text-sky-500 font-bold">複製給 AI，故事馬上開始</span>
+                                        </div>
+                                    </div>
+                                    <button
+                                        disabled={!isComplete}
+                                        onClick={copyToClipboard}
+                                        className={`w-full md:w-auto flex items-center justify-center gap-3 px-8 py-4 rounded-2xl font-black transition-all text-lg shadow-lg hover:shadow-xl active:scale-95 ${isComplete
+                                            ? 'bg-gradient-to-r from-pink-500 to-rose-500 text-white hover:from-pink-400 hover:to-rose-400 transform hover:-translate-y-1'
+                                            : 'bg-slate-200 text-slate-400 cursor-not-allowed shadow-none'
+                                            }`}
+                                    >
+                                        {copyStatus.includes('成功') ? <CheckCircle2 className="w-6 h-6 animate-bounce" /> : <Copy className="w-6 h-6" />}
+                                        {copyStatus}
+                                    </button>
+                                </div>
+
+                                <div className="p-8 md:p-12 bg-white">
+                                    <div className="relative">
+                                        <div className={`absolute -top-6 -left-4 text-6xl text-pink-100 select-none font-serif`}>“</div>
+                                        <div className={`p-6 md:p-8 rounded-3xl border-2 border-dashed ${isComplete ? 'border-pink-300 bg-pink-50/30' : 'border-slate-200 bg-slate-50'} whitespace-pre-wrap font-medium leading-loose text-lg text-slate-600 transition-colors`}>
+                                            {promptText}
+                                        </div>
+                                        <div className={`absolute -bottom-10 -right-4 text-6xl text-pink-100 select-none font-serif rotate-180`}>“</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <footer className="mt-16 text-center pb-8">
+                            <div className="flex justify-center flex-wrap gap-4 text-slate-400 text-sm font-bold mb-4">
+                                <span className="px-3 py-1 bg-white rounded-full shadow-sm">🌸 溫柔語氣</span>
+                                <span className="px-3 py-1 bg-white rounded-full shadow-sm">💧 精彩冒險</span>
+                                <span className="px-3 py-1 bg-white rounded-full shadow-sm">🎀 獨一無二</span>
+                            </div>
+                            <p className="text-pink-300 font-medium text-sm">Created for kids with ❤️</p>
+                        </footer>
+                    </div>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+
+</html>
