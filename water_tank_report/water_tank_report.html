@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>清洗水塔紀錄報告 - 社區公告</title>
+    <link rel="stylesheet" href="water_tank_report_styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>清洗水塔施工紀錄報告</h1>
+            <p class="report-date">施工日期：2026年2月7日</p>
+        </header>
+
+        <section class="section intro-thanks">
+            <h2 class="section-title">最誠摯的感謝</h2>
+            <p class="thanks-text">
+                感謝各位鄰居今日的溫暖配合與體諒！因為大家的齊心協助，讓這次水塔清洗工程能夠順利完成。定期的水塔清潔是確保我們日常用水衛生與健康的重要環節，感謝大家共同維護我們優質的居住環境與生活品質！🙏
+            </p>
+        </section>
+
+        <section class="section" id="status">
+            <h2 class="section-title">施工前情況紀錄</h2>
+            <div class="highlight-box">
+                <p>⚠️ 頂樓水塔定期清洗保養</p>
+            </div>
+            <p>經專業團隊現場檢查與清洗，包括管路檢查與塔內沉澱物清除，今日已順利完成作業，確保民生用水衛生安全。</p>
+        </section>
+
+        <section class="section" id="cost">
+            <h2 class="section-title">費用分攤與收據</h2>
+            <div class="cost-receipt-container">
+                <div class="cost-summary-card">
+                    <div class="highlight-box"
+                        style="background-color: #fafafa; border: 1px solid #eee; text-align: left; padding: 25px; margin-bottom: 0;">
+                        <p style="color: var(--primary-color); font-size: 1.15rem; margin-bottom: 15px;">
+                            工程總額：<strong>2,100 元</strong>
+                            <br>
+                            <small style="font-weight: normal; color: #546e7a;">* 分攤範圍： 共 4 戶分攤</small>
+                        </p>
+                        <div style="border-top: 1px dashed #ddd; padding-top: 20px; text-align: center;">
+                            <p style="font-size: 1.1rem; color: var(--text-color); margin-bottom: 5px;">每戶應繳金額</p>
+                            <p class="cost-per" style="font-size: 3.2rem; line-height: 1;">525 <small
+                                    style="font-size: 1.2rem; font-weight: normal;">元 (已收齊)</small></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="receipt-preview-card">
+                    <div class="gallery-item" style="margin: 0; border: 2px solid #b3e5fc; cursor: pointer;"
+                        onclick="openModal('receipt.jpg', '工程正式收據憑證')">
+                        <img src="receipt.jpg"
+                            alt="工程收據" style="height: 250px;">
+                        <div class="caption">工程正式收據憑證 (點擊放大)</div>
+                    </div>
+                </div>
+            </div>
+            <div class="company-info" style="margin-top: 25px;">
+                <p style="font-weight: bold; font-size: 1.1rem; margin-bottom: 5px;">施工單位：誠鑽清潔工作室</p>
+                <p>服務專線：<a href="tel:0920482101">0920-482-101</a></p>
+                <p style="font-size: 0.95rem; color: #666;">地址：新北市三重區中正南路 8 巷 1 弄 5 號 1 樓</p>
+            </div>
+        </section>
+
+        <section class="section" id="photos">
+            <h2 class="section-title">施工現場照片紀錄</h2>
+            <div class="gallery">
+                <!-- 1. 清洗前 -->
+                <div class="gallery-item" style="cursor: pointer;"
+                    onclick="openModal('1_before.jpg', '1. 清洗前狀況')">
+                    <img src="1_before.jpg"
+                        alt="清洗前">
+                    <div class="caption">1. 清洗前狀況</div>
+                </div>
+                <!-- 2. 頂樓外觀 -->
+                <div class="gallery-item" style="cursor: pointer;"
+                    onclick="openModal('2_appearance.jpg', '2. 頂樓外觀')">
+                    <img src="2_appearance.jpg"
+                        alt="頂樓外觀">
+                    <div class="caption">2. 頂樓外觀</div>
+                </div>
+                <!-- 3. 清洗中 (內部? or Detail) -->
+                <div class="gallery-item" style="cursor: pointer;"
+                    onclick="openModal('3_cleaning.jpg', '3. 清洗中')">
+                    <img src="3_cleaning.jpg"
+                        alt="清洗中">
+                    <div class="caption">3. 清洗中</div>
+                </div>
+                <!-- 4. 清洗後 -->
+                <div class="gallery-item" style="cursor: pointer;"
+                    onclick="openModal('4_after.jpg', '4. 清洗後')">
+                    <img src="4_after.jpg"
+                        alt="清洗後">
+                    <div class="caption">4. 清洗後</div>
+                </div>
+            </div>
+            <p style="margin-top: 20px; color: #666; font-size: 0.9rem; text-align: center;">* 若需查看"清洗後"照片，請確認檔案是否已上傳完整。
+            </p>
+        </section>
+
+        <section class="section" id="advice">
+            <h2 class="section-title">專業維護建議</h2>
+            <div class="thanks-text" style="background-color: #e3f2fd; border: 1px solid #90caf9; color: #0277bd;">
+                <p>建議水塔應<strong>每一年定期清洗一次</strong>。</p>
+                <p style="margin-top: 10px;">定期清洗能有效去除沉澱的泥沙、苔藻與雜質，防止細菌滋生，確保家中用水衛生無虞。感謝各位鄰居一起配合維護良好的用水品質！💧
+                </p>
+            </div>
+        </section>
+
+        <footer>
+            <p>感謝各位鄰居今日的幫忙與配合！🙏</p>
+        </footer>
+    </div>
+    <script>
+        function openModal(imgSrc, captionText) {
+            const modal = document.getElementById('image-modal');
+            const modalImg = document.getElementById('modal-img');
+            const modalCaption = document.getElementById('modal-caption');
+            modal.style.display = "flex";
+            modalImg.src = imgSrc;
+            modalCaption.innerText = captionText;
+        }
+    </script>
+
+    <!-- 通用圖片放大模態框 -->
+    <div id="image-modal" class="modal" onclick="this.style.display='none'">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <img id="modal-img" src="" alt="放大圖">
+            <p id="modal-caption" style="color: white; margin-top: 15px; font-size: 1.2rem; font-weight: bold;"></p>
+            <p style="color: rgba(255,255,255,0.7); margin-top: 5px; font-size: 0.9rem;">點擊任何處關閉</p>
+        </div>
+    </div>
+
+</body>
+
+</html>

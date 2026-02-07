@@ -1,0 +1,279 @@
+:root {
+    --primary-color: #0277bd;
+    /* Deep Blue */
+    --accent-color: #0288d1;
+    /* Bright Blue */
+    --bg-color: #f1f8e9;
+    /* Light Mint/Green tint for fresh water feel, or just maintain white/blue */
+    --bg-color: #e1f5fe;
+    /* Light Blue */
+    --card-bg: #ffffff;
+    --text-color: #37474f;
+    /* Blue Grey for text */
+    --shadow: 0 8px 15px rgba(2, 119, 189, 0.1);
+    --alert-bg: #e0f7fa;
+    /* Cyan Lighter */
+    --alert-border: #00bcd4;
+    /* Cyan */
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'PingFang TC', 'Microsoft JhengHei', 'Segoe UI', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.8;
+    padding-bottom: 60px;
+}
+
+.container {
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    padding: 60px 20px;
+    background: #ffffff;
+    border: 2px dashed var(--primary-color);
+    color: var(--primary-color);
+    border-radius: 30px;
+    margin-bottom: 40px;
+    box-shadow: var(--shadow);
+}
+
+header h1 {
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+.report-date {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    background: #e1f5fe;
+    color: var(--primary-color);
+    display: inline-block;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+.section {
+    background: var(--card-bg);
+    padding: 35px;
+    border-radius: 25px;
+    margin-bottom: 35px;
+    box-shadow: var(--shadow);
+    border: 1px solid #b3e5fc;
+}
+
+.section-title {
+    font-size: 1.4rem;
+    color: var(--primary-color);
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+}
+
+.section-title::before {
+    content: '💧';
+    margin-right: 12px;
+    font-size: 1.2rem;
+}
+
+.highlight-box {
+    background: var(--alert-bg);
+    border: 2px solid var(--alert-border);
+    padding: 20px;
+    border-radius: 20px;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.highlight-box p {
+    font-weight: bold;
+    color: #006064;
+    font-size: 1.2rem;
+}
+
+.cost-total {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #455a64;
+}
+
+.cost-per {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--accent-color);
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 25px;
+}
+
+.gallery-item {
+    border-radius: 20px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+    border: 4px solid white;
+}
+
+.gallery-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 20px rgba(2, 119, 189, 0.15);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+}
+
+.gallery-item .caption {
+    padding: 15px;
+    font-size: 1.15rem;
+    color: var(--primary-color);
+    text-align: center;
+    font-weight: 700;
+}
+
+.advice-list {
+    list-style: none;
+}
+
+.advice-list li {
+    padding: 12px 0;
+    display: flex;
+    align-items: center;
+    font-size: 1.05rem;
+}
+
+.advice-list li::before {
+    content: '✨';
+    margin-right: 15px;
+}
+
+footer {
+    text-align: center;
+    padding: 50px 20px;
+    color: #546e7a;
+    font-size: 1.2rem;
+    line-height: 1.5;
+}
+
+.intro-thanks {
+    text-align: center;
+    border: 2px solid #b3e5fc;
+    background: #f0faff;
+}
+
+.thanks-text {
+    font-size: 1.15rem;
+    color: #455a64;
+    text-align: left;
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px dashed #b0beck;
+}
+
+.company-info {
+    margin-top: 30px;
+    padding: 20px;
+    background: #e1f5fe;
+    border-radius: 15px;
+    border: 1px solid #b3e5fc;
+    text-align: center;
+}
+
+.company-info p {
+    margin: 5px 0;
+    color: #0277bd;
+}
+
+.cost-receipt-container {
+    display: flex;
+    gap: 30px;
+    align-items: stretch;
+    flex-wrap: wrap;
+}
+
+.cost-summary-card {
+    flex: 1.2;
+    min-width: 300px;
+}
+
+.receipt-preview-card {
+    flex: 1;
+    min-width: 250px;
+}
+
+/* 模態框 (Lightbox) 樣式 */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.modal-content {
+    max-width: 90%;
+    max-height: 85%;
+    position: relative;
+    text-align: center;
+}
+
+.modal-content img {
+    max-width: 100%;
+    max-height: 80vh;
+    border-radius: 10px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+}
+
+.close-button {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-button:hover {
+    color: #ccc;
+}
+
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 1.8rem;
+    }
+
+    .section {
+        padding: 25px;
+    }
+
+    .cost-per {
+        font-size: 1.6rem;
+    }
+}
