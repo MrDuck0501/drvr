@@ -14,8 +14,8 @@
     <meta property="og:description" content="包含 A/B 棟巡檢清單、平日與假日工作指引、組圖示範及即時回報彙整。">
     <meta property="og:image" content="https://raw.githubusercontent.com/username/repo/main/og_image.png">
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="./lib/tailwindcss.js"></script>
+    <script src="./lib/lucide.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
 
@@ -1059,10 +1059,6 @@
                     <i data-lucide="chevron-right" class="text-gray-200 group-hover:text-blue-500 group-hover:translate-x-1 transition-all"></i>
                         `;
                         card.onclick = () => {
-                            if (item.id === 'buildingB') {
-                                window.location.href = 'inspection_b.html';
-                                return;
-                            }
                             currentPath.push(item.id);
                             render();
                             window.scrollTo({ top: 0, behavior: 'smooth' });
