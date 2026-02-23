@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>設備代碼檢索 - 機電巡檢系統</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
+
+    body {
+      font-family: 'Noto+Sans+TC', sans-serif;
+      background-color: #f8fafc;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .animate-fade-in {
+      animation: fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body class="min-h-screen bg-slate-50 pb-10 font-sans">
+  <div id="app"></div>
+
+  <script>
+    const INITIAL_CODES = [
+      { abbr: "PAH", name: "預冷空調箱", en: "Primary Air Handling Unit" },
+      { abbr: "AH", name: "空調箱", en: "Air Handling Unit" },
+      { abbr: "ZP", name: "中繼泵", en: "Zone Pump (空調冰水水泵)" },
+      { abbr: "CHP", name: "冰水水泵", en: "Chilled Water Pump" },
+      { abbr: "CWP", name: "冷卻水泵", en: "Cooling Water Pump" },
+      { abbr: "HWP", name: "熱水泵", en: "Hot Water Pump" },
+      { abbr: "BP", name: "滷水泵", en: "Brine Pump" },
+      { abbr: "FC", name: "小型冷風機", en: "Fan Coil Unit" },
+      { abbr: "CB", name: "冷卻樑板", en: "Chilled Beam" },
+      { abbr: "EF", name: "排氣風機", en: "Exhaust Fan" },
+      { abbr: "TEF", name: "廁所排氣風機", en: "Toilet Exhaust Fan" },
+      { abbr: "KEF", name: "廚房排氣風機", en: "Kitchen Exhaust Fan" },
+      { abbr: "SF", name: "進氣風機", en: "Supply Fan" },
+      { abbr: "JAF", name: "誘導式風機", en: "Jet Air Fan" },
+      { abbr: "CH", name: "冰水主機", en: "Chiller" },
+      { abbr: "BCH", name: "滷水主機", en: "Brine Chiller" },
+      { abbr: "SAC", name: "分離式冷氣", en: "Split Air Conditioner" },
+      { abbr: "PAC", name: "直立式冷氣", en: "Packaged Air Conditioner" },
+      { abbr: "WAC", name: "箱型冷氣機", en: "Water-cooled Air Conditioner" },
+      { abbr: "CT", name: "冷卻水塔", en: "Cooling Tower" },
+      { abbr: "HX", name: "板熱式交換器", en: "Heat Exchanger" },
+      { abbr: "IT", name: "儲冰槽", en: "Ice Tank" },
+      { abbr: "EXP", name: "膨脹水箱", en: "Expansion Tank" },
+      { abbr: "MFC", name: "冷卻水處理器", en: "Magnetic Flow Conditioner" },
+      { abbr: "WDA", name: "微氣泡處理機", en: "Water De-Aerator" }
+    ];
+
+    const INITIAL_MACHINES = [
+      { floor: "RF樓層", id: "ZP-B01", name: "中繼泵", status: "active", location: "" },
+      { floor: "RF樓層", id: "ZP-B02", name: "中繼泵", status: "active", location: "" },
+      { floor: "RF樓層", id: "ZP-B03", name: "中繼泵", status: "active", location: "" },
+      { floor: "RF樓層", id: "ZP-B04", name: "中繼泵", status: "active", location: "" },
+      { floor: "RF樓層", id: "ZP-B05", name: "中繼泵", status: "active", location: "" },
+      { floor: "RF樓層", id: "ZP-B06", name: "中繼泵", status: "active", location: "" },
+      { floor: "RF樓層", id: "ZP-B07", name: "從缺", status: "missing", location: "" },
+      { floor: "RF樓層", id: "ZP-B08", name: "從缺", status: "missing", location: "" },
+      { floor: "20樓", id: "AH-B2001", name: "空調箱", status: "active", location: "" },
+      { floor: "20樓", id: "AH-B2002", name: "空調箱", status: "active", location: "" },
+      { floor: "20樓", id: "ZP-B2001", name: "中繼泵", status: "active", location: "" },
+      { floor: "20樓", id: "ZP-B2002", name: "中繼泵", status: "active", location: "" },
+      { floor: "19樓", id: "AH-B1901", name: "空調箱", status: "active", location: "" },
+      { floor: "19樓", id: "AH-B1902", name: "空調箱", status: "active", location: "" },
+      { floor: "19樓", id: "ZP-B1901", name: "中繼泵", status: "active", location: "" },
+      { floor: "19樓", id: "ZP-B1902", name: "中繼泵", status: "active", location: "" },
+      { floor: "18樓", id: "AH-B1801", name: "空調箱", status: "active", location: "" },
+      { floor: "18樓", id: "AH-B1802", name: "空調箱", status: "active", location: "" },
+      { floor: "18樓", id: "ZP-B1801", name: "中繼泵", status: "active", location: "" },
+      { floor: "18樓", id: "ZP-B1802", name: "中繼泵", status: "active", location: "" },
+      { floor: "17樓", id: "AH-B1701", name: "空調箱", status: "active", location: "" },
+      { floor: "17樓", id: "AH-B1702", name: "空調箱", status: "active", location: "" },
+      { floor: "17樓", id: "ZP-B1701", name: "中繼泵", status: "active", location: "" },
+      { floor: "17樓", id: "ZP-B1702", name: "中繼泵", status: "active", location: "" },
+      { floor: "17樓", id: "ZP-B1703", name: "中繼泵", status: "active", location: "" },
+      { floor: "16樓", id: "AH-B1601", name: "空調箱", status: "active", location: "" },
+      { floor: "16樓", id: "AH-B1602", name: "空調箱", status: "active", location: "" },
+      { floor: "16樓", id: "ZP-B1601", name: "中繼泵", status: "active", location: "" },
+      { floor: "16樓", id: "ZP-B1602", name: "中繼泵", status: "active", location: "" },
+      { floor: "15樓", id: "AH-B1501", name: "空調箱", status: "active", location: "" },
+      { floor: "15樓", id: "AH-B1502", name: "空調箱", status: "active", location: "" },
+      { floor: "15樓", id: "ZP-B1501", name: "中繼泵", status: "active", location: "" },
+      { floor: "15樓", id: "ZP-B1502", name: "中繼泵", status: "active", location: "" },
+      { floor: "14樓", id: "AH-B1401", name: "空調箱", status: "active", location: "" },
+      { floor: "14樓", id: "AH-B1402", name: "空調箱", status: "active", location: "" },
+      { floor: "14樓", id: "ZP-B1401", name: "中繼泵", status: "active", location: "" },
+      { floor: "14樓", id: "ZP-B1402", name: "中繼泵", status: "active", location: "" },
+      { floor: "13樓", id: "AH-B1301", name: "空調箱", status: "active", location: "" },
+      { floor: "13樓", id: "AH-B1302", name: "空調箱", status: "active", location: "" },
+      { floor: "13樓", id: "ZP-B1301", name: "中繼泵", status: "active", location: "" },
+      { floor: "13樓", id: "ZP-B1302", name: "中繼泵", status: "active", location: "" },
+      { floor: "12樓", id: "AH-B1201", name: "空調箱", status: "active", location: "" },
+      { floor: "12樓", id: "AH-B1202", name: "空調箱", status: "active", location: "" },
+      { floor: "12樓", id: "ZP-B1201", name: "中繼泵", status: "active", location: "" },
+      { floor: "12樓", id: "ZP-B1202", name: "中繼泵", status: "active", location: "" },
+      { floor: "11樓", id: "AH-B1101", name: "空調箱", status: "active", location: "" },
+      { floor: "11樓", id: "AH-B1102", name: "空調箱", status: "active", location: "" },
+      { floor: "11樓", id: "ZP-B1101", name: "中繼泵", status: "active", location: "" },
+      { floor: "11樓", id: "ZP-B1102", name: "中繼泵", status: "active", location: "" },
+      { floor: "10樓", id: "AH-B1001", name: "空調箱", status: "active", location: "" },
+      { floor: "10樓", id: "AH-B1002", name: "空調箱", status: "active", location: "" },
+      { floor: "10樓", id: "ZP-B1001", name: "中繼泵", status: "active", location: "" },
+      { floor: "10樓", id: "ZP-B1002", name: "中繼泵", status: "active", location: "" },
+      { floor: "9樓", id: "AH-B901", name: "空調箱", status: "active", location: "" },
+      { floor: "9樓", id: "AH-B902", name: "空調箱", status: "active", location: "" },
+      { floor: "9樓", id: "ZP-B901", name: "中繼泵", status: "active", location: "" },
+      { floor: "9樓", id: "ZP-B902", name: "中繼泵", status: "active", location: "" },
+      { floor: "8樓", id: "AH-B801", name: "空調箱", status: "active", location: "" },
+      { floor: "8樓", id: "AH-B802", name: "空調箱", status: "active", location: "" },
+      { floor: "8樓", id: "ZP-B801", name: "中繼泵", status: "active", location: "" },
+      { floor: "8樓", id: "ZP-B802", name: "中繼泵", status: "active", location: "" },
+      { floor: "7樓", id: "AH-B701", name: "空調箱", status: "active", location: "" },
+      { floor: "7樓", id: "AH-B702", name: "空調箱", status: "active", location: "" },
+      { floor: "7樓", id: "ZP-B701", name: "中繼泵", status: "active", location: "" },
+      { floor: "7樓", id: "ZP-B702", name: "中繼泵", status: "active", location: "" },
+      { floor: "6樓", id: "AH-B601", name: "空調箱", status: "active", location: "" },
+      { floor: "6樓", id: "AH-B602", name: "空調箱", status: "active", location: "" },
+      { floor: "6樓", id: "ZP-B601", name: "中繼泵", status: "active", location: "" },
+      { floor: "6樓", id: "ZP-B602", name: "中繼泵", status: "active", location: "" },
+      { floor: "5樓", id: "AH-B501", name: "空調箱", status: "active", location: "" },
+      { floor: "5樓", id: "AH-B502", name: "空調箱", status: "active", location: "" },
+      { floor: "5樓", id: "ZP-B501", name: "中繼泵", status: "active", location: "" },
+      { floor: "5樓", id: "ZP-B502", name: "中繼泵", status: "active", location: "" },
+      { floor: "B1", id: "AH-BB101", name: "空調箱", status: "active", location: "回收場" },
+      { floor: "B1", id: "CHP-B01", name: "冰水泵", status: "active", location: "機房" },
+      { floor: "B1", id: "CWP-B01", name: "冷卻水泵", status: "active", location: "機房" },
+      { floor: "B2", id: "AH-BB201", name: "空調箱", status: "active", location: "" },
+      { floor: "B2", id: "AH-BB202", name: "空調箱", status: "active", location: "" },
+      { floor: "B2", id: "AH-BB203", name: "空調箱", status: "active", location: "" },
+      { floor: "B2", id: "AH-BB204", name: "空調箱", status: "active", location: "" },
+      { floor: "待補", id: "PAH-B01", name: "預冷空調箱", status: "pending", location: "待確認" },
+      { floor: "待補", id: "PAH-B02", name: "預冷空調箱", status: "pending", location: "待確認" },
+      { floor: "待補", id: "PAH-B03", name: "預冷空調箱", status: "pending", location: "待確認" },
+      { floor: "待補", id: "PAH-B04", name: "預冷空調箱", status: "pending", location: "待確認" }
+    ];
+
+    const state = {
+      searchTerm: '',
+      activeTab: 'codes'
+    };
+
+    function normalize(str) {
+      return (str || '').replace(/-/g, '').toLowerCase().trim();
+    }
+
+    function getFilteredCodes() {
+      const term = normalize(state.searchTerm);
+      if (!term) return INITIAL_CODES;
+      return INITIAL_CODES.filter(c =>
+        normalize(c.abbr).includes(term) ||
+        c.name.includes(state.searchTerm.trim()) ||
+        (c.en && c.en.toLowerCase().includes(term))
+      );
+    }
+
+    function getFilteredMachines() {
+      const term = normalize(state.searchTerm);
+      if (!term) return INITIAL_MACHINES;
+      return INITIAL_MACHINES.filter(m =>
+        normalize(m.id).includes(term) ||
+        normalize(m.floor).includes(term) ||
+        m.name.includes(state.searchTerm.trim()) ||
+        (m.location && m.location.includes(state.searchTerm.trim()))
+      );
+    }
+
+    function groupBy(array, key) {
+      const groups = array.reduce((result, item) => {
+        (result[item[key]] = result[item[key]] || []).push(item);
+        return result;
+      }, {});
+
+      // To ensure order logic somewhat matches original react structure
+      return Object.entries(groups);
+    }
+
+    function getMachineCardHTML(machine) {
+      const isMissing = machine.status === 'missing';
+      const isPending = machine.status === 'pending';
+      const copyTextStr = `${machine.floor} ${machine.id} ${machine.name} ${machine.location}`.trim();
+
+      return `
+            <div class="group relative bg-white p-5 rounded-3xl border-2 transition-all duration-300 ${isMissing ? 'bg-slate-50/50 border-slate-100 opacity-60' : 'border-white shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:border-purple-500/30 hover:shadow-xl hover:-translate-y-1'}">
+              <div class="flex justify-between items-start">
+                <div class="space-y-2.5">
+                  <div class="flex items-center gap-2">
+                    <div class="text-[10px] font-black px-1.5 py-0.5 rounded border ${isMissing ? 'bg-slate-100 text-slate-400 border-slate-200' : 'bg-purple-50 text-purple-600 border-purple-100'}">
+                      ${machine.floor}
+                    </div>
+                    <div class="font-mono font-black text-2xl tracking-tighter ${isMissing ? 'text-slate-400 line-through' : 'text-slate-900'}">
+                      ${machine.id}
+                    </div>
+                  </div>
+
+                  <div class="space-y-1">
+                    <h4 class="text-xl font-black flex items-center gap-2 ${isMissing ? 'text-slate-400' : 'text-slate-800'}">
+                      ${machine.name}
+                      ${isPending ? '<span class="text-[10px] bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded-full font-bold shadow-sm">待確認</span>' : ''}
+                    </h4>
+                    ${machine.location ? `
+                      <div class="flex items-center gap-1.5 text-slate-400 mt-1">
+                        <i data-lucide="map-pin" class="w-3 h-3"></i>
+                        <span class="text-xs font-medium">${machine.location}</span>
+                      </div>
+                    ` : ''}
+                  </div>
+                </div>
+
+                <div class="flex flex-col items-end gap-3">
+                  ${isMissing ? `
+                    <span class="text-[9px] font-black text-white bg-slate-300 px-2 py-0.5 rounded-full uppercase tracking-tighter shadow-sm">從缺中</span>
+                  ` : `
+                    <button 
+                        onclick="copyToClipboard('${copyTextStr}')"
+                        class="p-3 bg-slate-50 text-slate-400 hover:text-purple-600 hover:bg-purple-50 rounded-2xl transition-all shadow-sm active:scale-95 group-hover:bg-purple-50/50"
+                        title="複製設備詳細資訊"
+                    >
+                        <i data-lucide="clipboard" class="w-4 h-4"></i>
+                    </button>
+                  `}
+                </div>
+              </div>
+            </div>
+            `;
+    }
+
+    function render() {
+      const appEl = document.getElementById('app');
+
+      const headerHTML = `
+              <div class="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-slate-200 px-4 pt-4 pb-2 shadow-sm">
+                <div class="max-w-2xl mx-auto space-y-4">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                      <button onclick="window.location.href='index.html'" class="mr-3 p-2 bg-slate-100 text-slate-600 rounded-full hover:bg-slate-200 transition-colors active:scale-95">
+                         <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                      </button>
+                      <div>
+                        <h1 class="text-xl font-black text-slate-900 tracking-tight">設備代碼檢索</h1>
+                        <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-0.5">Equipment Search</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="relative group">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                      <i data-lucide="search" class="h-5 w-5 text-slate-400 group-focus-within:text-purple-500 transition-colors"></i>
+                    </div>
+                    <input
+                      id="searchInput"
+                      type="text"
+                      class="block w-full pl-11 pr-10 py-3.5 border-2 border-slate-100 rounded-2xl leading-5 bg-white placeholder-slate-400 focus:outline-none focus:ring-4 focus:ring-purple-500/10 focus:border-purple-500 transition-all text-base font-medium shadow-sm"
+                      placeholder="搜尋編號 (如: ZPB01)、代碼或樓層..."
+                      value="${state.searchTerm}"
+                      oninput="setSearchTerm(this.value)"
+                    />
+                    ${state.searchTerm ? `
+                        <button 
+                            onclick="clearSearch()"
+                            class="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-300 hover:text-slate-500 transition-colors"
+                        >
+                            <i data-lucide="x-circle" class="w-5 h-5"></i>
+                        </button>
+                    ` : ''}
+                  </div>
+
+                  <div class="flex p-1.5 bg-slate-100/80 rounded-2xl">
+                    <button
+                      onclick="setActiveTab('codes')"
+                      class="flex-1 flex items-center justify-center gap-2 py-2.5 text-sm font-bold rounded-xl transition-all ${state.activeTab === 'codes' ? 'bg-white text-purple-600 shadow-sm scale-[1.02]' : 'text-slate-500 hover:text-slate-700'
+        }"
+                    >
+                      <i data-lucide="info" class="w-4 h-4"></i>
+                      設備代碼說明
+                    </button>
+                    <button
+                      onclick="setActiveTab('machines')"
+                      class="flex-1 flex items-center justify-center gap-2 py-2.5 text-sm font-bold rounded-xl transition-all ${state.activeTab === 'machines' ? 'bg-white text-purple-600 shadow-sm scale-[1.02]' : 'text-slate-500 hover:text-slate-700'
+        }"
+                    >
+                      <i data-lucide="layers" class="w-4 h-4"></i>
+                      機器分佈清單
+                    </button>
+                  </div>
+                </div>
+              </div>
+            `;
+
+      let contentHTML = '';
+
+      if (state.activeTab === 'codes') {
+        const codes = getFilteredCodes();
+        let codesHTML = '';
+        if (codes.length > 0) {
+          codesHTML = codes.map((item, idx) => `
+                        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between hover:border-purple-400 hover:shadow-md transition-all group">
+                          <div class="flex items-center gap-4">
+                            <div class="w-20 h-16 flex items-center justify-center bg-gradient-to-br from-purple-50 to-pink-50 text-purple-700 font-black rounded-xl text-2xl border border-purple-100 shadow-sm">
+                              ${item.abbr}
+                            </div>
+                            <div>
+                              <h3 class="font-black text-slate-800 text-xl">${item.name}</h3>
+                              <p class="text-xs text-slate-400 font-bold uppercase tracking-tight">${item.en}</p>
+                            </div>
+                          </div>
+                          <button 
+                            onclick="searchForCode('${item.abbr}')"
+                            class="p-3 bg-slate-50 text-slate-400 group-hover:text-purple-600 group-hover:bg-purple-50 rounded-xl transition-all active:scale-95"
+                            title="跳轉至機器清單"
+                          >
+                            <i data-lucide="layers" class="w-5 h-5"></i>
+                          </button>
+                        </div>
+                    `).join('');
+        } else {
+          codesHTML = `
+                      <div class="text-center py-24 text-slate-400 font-bold">
+                          <i data-lucide="search" class="w-12 h-12 mx-auto mb-4 opacity-20 block"></i>
+                          找不到相符的設備代碼
+                      </div>
+                    `;
+        }
+
+        contentHTML = `<div class="grid grid-cols-1 gap-3 animate-fade-in">${codesHTML}</div>`;
+      } else {
+        const machines = getFilteredMachines();
+        let machinesHTML = '';
+        if (machines.length > 0) {
+          if (state.searchTerm.trim()) {
+            machinesHTML = `
+                        <div class="space-y-3">
+                           <div class="flex items-center justify-between px-1">
+                              <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">搜尋結果 (${machines.length})</p>
+                              <button onclick="clearSearch()" class="text-[10px] font-bold text-purple-500 hover:underline">重設</button>
+                           </div>
+                           ${machines.map(m => getMachineCardHTML(m)).join('')}
+                        </div>
+                        `;
+          } else {
+            const grouped = groupBy(machines, 'floor');
+            machinesHTML = grouped.map(([floor, items]) => `
+                          <div class="space-y-3">
+                            <div class="flex items-center gap-3 px-1 sticky top-[165px] z-10 py-1 bg-slate-50/90 backdrop-blur-sm shadow-sm rounded-lg">
+                              <div class="bg-slate-800 text-white text-[10px] font-black px-2 py-0.5 rounded shadow-sm">
+                                ${floor}
+                              </div>
+                              <div class="h-px flex-1 bg-slate-200"></div>
+                              <span class="text-[10px] font-bold text-slate-400">${items.length} 設備</span>
+                            </div>
+                            <div class="grid grid-cols-1 gap-3">
+                              ${items.map(m => getMachineCardHTML(m)).join('')}
+                            </div>
+                          </div>
+                        `).join('');
+          }
+        } else {
+          machinesHTML = `
+                      <div class="text-center py-24 text-slate-400 font-bold">
+                          <i data-lucide="search" class="w-12 h-12 mx-auto mb-4 opacity-20 block"></i>
+                          找不到相符的機器
+                      </div>
+                    `;
+        }
+        contentHTML = `<div class="space-y-8 animate-fade-in">${machinesHTML}</div>`;
+      }
+
+      appEl.innerHTML = headerHTML + `
+              <main class="max-w-2xl mx-auto p-4 pt-6">
+                ${contentHTML}
+              </main>
+              <div class="max-w-2xl mx-auto px-6 mt-8 pb-12 text-center">
+                <div class="p-6 bg-white rounded-3xl border border-slate-200 shadow-sm inline-block w-full">
+                    <p class="text-[10px] text-slate-400 font-black uppercase tracking-widest mb-2">機電巡檢系統 · 設備資料庫 (離線版本)</p>
+                    <p class="text-xs text-slate-600 font-mono bg-slate-50 py-2 px-4 rounded-xl border border-slate-100 inline-block truncate max-w-full shadow-inner">
+                        MODE: LOCAL / SYNC: OFF
+                    </p>
+                    <p class="text-[10px] text-slate-400 mt-4 font-bold">原生 JavaScript 版 · 高效輕量 · 支援無網路查詢</p>
+                </div>
+              </div>
+            `;
+
+      lucide.createIcons();
+
+      // Refocus logic
+      const input = document.getElementById('searchInput');
+      if (input) {
+        // To keep cursor context naturally:
+        input.focus();
+        // Simple trick to keep cursor on edge
+        const val = input.value;
+        input.value = '';
+        input.value = val;
+      }
+    }
+
+    function setSearchTerm(val) {
+      state.searchTerm = val;
+      render();
+    }
+
+    function clearSearch() {
+      state.searchTerm = '';
+      render();
+    }
+
+    function setActiveTab(tab) {
+      state.activeTab = tab;
+      render();
+    }
+
+    function searchForCode(abbr) {
+      state.searchTerm = abbr;
+      state.activeTab = 'machines';
+      render();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        alert('已複製： ' + text);
+      }).catch(err => {
+        const el = document.createElement('textarea');
+        el.value = text;
+        document.body.appendChild(el);
+        el.select();
+        try {
+          document.execCommand('copy');
+          alert('已複製： ' + text);
+        } catch (e) {
+          alert('複製失敗，請手動選取複製');
+        }
+        document.body.removeChild(el);
+      });
+    }
+
+    // Initialize App
+    window.onload = render;
+  </script>
+</body>
+
+</html>

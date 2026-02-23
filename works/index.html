@@ -14,8 +14,8 @@
     <meta property="og:description" content="包含 A/B 棟巡檢清單、平日與假日工作指引、組圖示範及即時回報彙整。">
     <meta property="og:image" content="https://raw.githubusercontent.com/username/repo/main/og_image.png">
 
-    <script src="./lib/tailwindcss.js"></script>
-    <script src="./lib/lucide.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
 
@@ -249,7 +249,8 @@
                 items: [
                     { id: 'buildingA', title: 'A 棟', icon: 'building-2', color: 'bg-blue-600', desc: '巡檢週期與詳細指則' },
                     { id: 'buildingB', title: 'B 棟', icon: 'building', color: 'bg-indigo-600', desc: '大樓機房與公共設施' },
-                    { id: 'map', title: '區域地圖', icon: 'map', color: 'bg-emerald-600', desc: '全區設備位置分布' }
+                    { id: 'map', title: '區域地圖', icon: 'map', color: 'bg-emerald-600', desc: '全區設備位置分布' },
+                    { id: 'search', title: '設備代碼檢索', icon: 'search', color: 'bg-purple-600', desc: '快速查詢設備代碼與分佈位置', isExternal: true, link: 'search.html' }
                 ]
             },
             buildingA: {
@@ -1059,6 +1060,10 @@
                     <i data-lucide="chevron-right" class="text-gray-200 group-hover:text-blue-500 group-hover:translate-x-1 transition-all"></i>
                         `;
                         card.onclick = () => {
+                            if (item.isExternal) {
+                                window.location.href = item.link;
+                                return;
+                            }
                             currentPath.push(item.id);
                             render();
                             window.scrollTo({ top: 0, behavior: 'smooth' });
