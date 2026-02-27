@@ -621,6 +621,17 @@
         }
 
         lucide.createIcons();
+
+        // 判斷平假日並更新標題
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const type = urlParams.get('type');
+            if (type === 'weekday') {
+                document.getElementById('headerTitle').innerText = 'B 棟平日巡檢';
+            } else if (type === 'holiday') {
+                document.getElementById('headerTitle').innerText = 'B 棟假日巡檢';
+            }
+        });
     </script>
 </body>
 

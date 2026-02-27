@@ -36,34 +36,33 @@
 
 <body class="min-h-screen bg-slate-50 pb-10 font-sans">
   <div id="app"></div>
-
   <script>
     const INITIAL_CODES = [
-      { abbr: "PAH", name: "預冷空調箱", en: "Primary Air Handling Unit" },
       { abbr: "AH", name: "空調箱", en: "Air Handling Unit" },
-      { abbr: "ZP", name: "中繼泵", en: "Zone Pump (空調冰水水泵)" },
-      { abbr: "CHP", name: "冰水水泵", en: "Chilled Water Pump" },
-      { abbr: "CWP", name: "冷卻水泵", en: "Cooling Water Pump" },
-      { abbr: "HWP", name: "熱水泵", en: "Hot Water Pump" },
-      { abbr: "BP", name: "滷水泵", en: "Brine Pump" },
-      { abbr: "FC", name: "小型冷風機", en: "Fan Coil Unit" },
-      { abbr: "CB", name: "冷卻樑板", en: "Chilled Beam" },
-      { abbr: "EF", name: "排氣風機", en: "Exhaust Fan" },
-      { abbr: "TEF", name: "廁所排氣風機", en: "Toilet Exhaust Fan" },
-      { abbr: "KEF", name: "廚房排氣風機", en: "Kitchen Exhaust Fan" },
-      { abbr: "SF", name: "進氣風機", en: "Supply Fan" },
-      { abbr: "JAF", name: "誘導式風機", en: "Jet Air Fan" },
-      { abbr: "CH", name: "冰水主機", en: "Chiller" },
       { abbr: "BCH", name: "滷水主機", en: "Brine Chiller" },
-      { abbr: "SAC", name: "分離式冷氣", en: "Split Air Conditioner" },
-      { abbr: "PAC", name: "直立式冷氣", en: "Packaged Air Conditioner" },
-      { abbr: "WAC", name: "箱型冷氣機", en: "Water-cooled Air Conditioner" },
+      { abbr: "BP", name: "滷水泵", en: "Brine Pump" },
+      { abbr: "CB", name: "冷卻樑板", en: "Chilled Beam" },
+      { abbr: "CH", name: "冰水主機", en: "Chiller" },
+      { abbr: "CHP", name: "冰水水泵", en: "Chilled Water Pump" },
       { abbr: "CT", name: "冷卻水塔", en: "Cooling Tower" },
+      { abbr: "CWP", name: "冷卻水泵", en: "Cooling Water Pump" },
+      { abbr: "EF", name: "排氣風機", en: "Exhaust Fan" },
+      { abbr: "EXP", name: "膨脹水箱", en: "Expansion Tank" },
+      { abbr: "FC", name: "小型冷風機", en: "Fan Coil Unit" },
+      { abbr: "HWP", name: "熱水泵", en: "Hot Water Pump" },
       { abbr: "HX", name: "板熱式交換器", en: "Heat Exchanger" },
       { abbr: "IT", name: "儲冰槽", en: "Ice Tank" },
-      { abbr: "EXP", name: "膨脹水箱", en: "Expansion Tank" },
+      { abbr: "JAF", name: "誘導式風機", en: "Jet Air Fan" },
+      { abbr: "KEF", name: "廚房排氣風機", en: "Kitchen Exhaust Fan" },
       { abbr: "MFC", name: "冷卻水處理器", en: "Magnetic Flow Conditioner" },
-      { abbr: "WDA", name: "微氣泡處理機", en: "Water De-Aerator" }
+      { abbr: "PAC", name: "直立式冷氣", en: "Packaged Air Conditioner" },
+      { abbr: "PAH", name: "預冷空調箱", en: "Primary Air Handling Unit" },
+      { abbr: "SAC", name: "分離式冷氣", en: "Split Air Conditioner" },
+      { abbr: "SF", name: "進氣風機", en: "Supply Fan" },
+      { abbr: "TEF", name: "廁所排氣風機", en: "Toilet Exhaust Fan" },
+      { abbr: "WAC", name: "箱型冷氣機", en: "Water-cooled Air Conditioner" },
+      { abbr: "WDA", name: "微氣泡處理機", en: "Water De-Aerator" },
+      { abbr: "ZP", name: "中繼泵", en: "Zone Pump (空調冰水水泵)" }
     ];
 
     const INITIAL_MACHINES = [

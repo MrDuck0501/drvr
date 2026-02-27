@@ -260,6 +260,13 @@
                     { id: 'holiday', title: '假日巡檢', icon: 'calendar-heart', color: 'bg-pink-500', desc: '例假日專用巡檢流程' }
                 ]
             },
+            buildingB: {
+                title: 'B 棟 - 巡檢週期',
+                items: [
+                    { id: 'weekday_b', title: '平日巡檢', icon: 'calendar-days', color: 'bg-orange-500', desc: '週一至週五固定項目', isExternal: true, link: 'inspection_b.html?type=weekday' },
+                    { id: 'holiday_b', title: '假日巡檢', icon: 'calendar-heart', color: 'bg-pink-500', desc: '例假日專用巡檢流程', isExternal: true, link: 'inspection_b.html?type=holiday' }
+                ]
+            },
             weekday: {
                 title: '平日巡檢清單',
                 items: [
@@ -478,6 +485,7 @@
                             </div>
                         </section>
 
+                        ${isWeekday ? `
                         <div class="mt-10 mb-2 px-1">
                             <h2 class="font-black text-gray-400 text-xs uppercase tracking-[0.2em]">定時與獨立任務</h2>
                         </div>
@@ -494,7 +502,6 @@
                                 <div class="flex items-center"><span class="bg-red-50 text-red-600 font-black px-4 py-1.5 rounded-xl text-xs mr-4">09:30</span><span class="font-bold text-gray-700">量測辦公室高低樓層溫度</span></div>
                                 <i data-lucide="thermometer" class="text-red-300 w-5 h-5"></i>
                             </div>
-                            <!-- 15:30 項目合併 -->
                             <div class="p-5 flex flex-col hover:bg-gray-50 transition-colors border-t border-gray-50">
                                 <div class="flex items-center justify-between w-full mb-3">
                                     <div class="flex items-center"><span class="bg-red-50 text-red-600 font-black px-4 py-1.5 rounded-xl text-xs mr-4">15:30</span><span class="font-bold text-gray-700">傳群組</span></div>
@@ -510,6 +517,8 @@
                                 </div>
                             </div>
                         </section>
+                        ` : ''}
+
                     </div>
                 `,
                 samples: `
@@ -583,8 +592,9 @@
         const acAllIds = [...acGroups.top, ...acGroups.bottom];
 
 
-        const elevatorContent = {
-            guide: `
+        function getElevatorContent(isWeekday) {
+            return {
+                guide: `
                 <div class="flex items-center justify-between mb-4 px-1">
                     <h2 class="font-black text-gray-400 text-xs uppercase tracking-[0.2em]">電梯冷氣與早晨巡檢</h2>
                     <span class="bg-red-500 text-white text-[10px] font-black px-3 py-1.5 rounded-full">截止 08:00</span>
@@ -773,6 +783,7 @@
                     </div>
                 </section>
 
+                ${isWeekday ? `
                 <div class="mt-10 mb-2 px-1">
                     <h2 class="font-black text-gray-400 text-xs uppercase tracking-[0.2em]">定時與獨立任務</h2>
                 </div>
@@ -789,7 +800,6 @@
                         <div class="flex items-center"><span class="bg-red-50 text-red-600 font-black px-4 py-1.5 rounded-xl text-xs mr-4">09:30</span><span class="font-bold text-gray-700">量測辦公室高低樓層溫度</span></div>
                         <i data-lucide="thermometer" class="text-red-300 w-5 h-5"></i>
                     </div>
-                     <!-- 15:30 項目合併 -->
                     <div class="p-5 flex flex-col hover:bg-gray-50 transition-colors border-t border-gray-50">
                         <div class="flex items-center justify-between w-full mb-3">
                             <div class="flex items-center"><span class="bg-red-50 text-red-600 font-black px-4 py-1.5 rounded-xl text-xs mr-4">15:30</span><span class="font-bold text-gray-700">傳群組</span></div>
@@ -805,8 +815,9 @@
                         </div>
                     </div>
                 </section>
+                ` : ''}
         `,
-            samples: `
+                samples: `
             <div class="space-y-6 pb-12">
                 <section class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
                     <div class="bg-blue-600 p-5 text-white flex justify-between items-center"><span class="font-black tracking-tight">電梯巡檢組圖範例</span></div>
@@ -833,7 +844,8 @@
                 </section>
             </div>
             `
-        };
+            };
+        }
 
         function toggleSection(id) {
             const section = document.getElementById(id);
@@ -965,6 +977,7 @@
                 if (headerTitle) headerTitle.innerText = currentLevel === 'elevator' ? `A 棟${dayType}電梯巡檢` : `A 棟${dayType}機械樓層`;
 
                 if (currentLevel === 'elevator') {
+                    const elevatorContent = getElevatorContent(isWeekday);
                     document.getElementById('contentGuide').innerHTML = elevatorContent.guide;
                     document.getElementById('contentSamples').innerHTML = elevatorContent.samples;
                     setTimeout(ac_updateUI, 50); // Initialize AC UI
