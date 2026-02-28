@@ -1,23 +1,23 @@
 <!-- Last Updated: 2026-01-22 10:55:00 - Images Moved to Works Folder -->
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-TW">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>機電巡檢系統 - 專業設備維護</title>
 
     <!-- Open Graph / Social Media -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://mrduck.my.canva.site/inspection">
-    <meta property="og:title" content="機電巡檢系統 - 專業設備維護">
-    <meta property="og:description" content="包含 A/B 棟巡檢清單、平日與假日工作指引、組圖示範及即時回報彙整。">
-    <meta property="og:image" content="https://raw.githubusercontent.com/username/repo/main/og_image.png">
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://mrduck.my.canva.site/inspection" />
+    <meta property="og:title" content="機電巡檢系統 - 專業設備維護" />
+    <meta property="og:description" content="包含 A/B 棟巡檢清單、平日與假日工作指引、組圖示範及即時回報彙整。" />
+    <meta property="og:image" content="https://raw.githubusercontent.com/username/repo/main/og_image.png" />
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
+        @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap");
 
         :root {
             --primary-blue: #2563eb;
@@ -27,7 +27,7 @@
         }
 
         body {
-            font-family: 'Noto+Sans+TC', sans-serif;
+            font-family: "Noto+Sans+TC", sans-serif;
             background-color: var(--bg-gray);
             -webkit-tap-highlight-color: transparent;
             color: #1e293b;
@@ -56,7 +56,7 @@
         }
 
         .tab-active::after {
-            content: '';
+            content: "";
             position: absolute;
             bottom: 0;
             left: 50%;
@@ -76,7 +76,9 @@
         }
 
         .card-shadow {
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+            box-shadow:
+                0 4px 6px -1px rgb(0 0 0 / 0.05),
+                0 2px 4px -2px rgb(0 0 0 / 0.05);
         }
 
         .image-modal {
@@ -161,7 +163,6 @@
 </head>
 
 <body class="min-h-screen pb-20">
-
     <!-- 頂部導航 -->
     <header class="bg-blue-600 text-white sticky top-0 z-50 shadow-lg h-16 flex items-center px-4">
         <div class="max-w-4xl mx-auto flex items-center justify-between w-full">
@@ -171,7 +172,9 @@
                     <i data-lucide="arrow-left"></i>
                 </button>
                 <div class="flex flex-col">
-                    <h1 id="headerTitle" class="text-lg font-black tracking-tight leading-none">機電巡檢系統</h1>
+                    <h1 id="headerTitle" class="text-lg font-black tracking-tight leading-none">
+                        機電巡檢系統
+                    </h1>
                     <span id="headerDate" class="text-[10px] font-bold opacity-70 mt-1">載入中...</span>
                 </div>
             </div>
@@ -192,7 +195,6 @@
 
         <!-- 巡檢指引容器 -->
         <div id="guideContainer" class="hidden fade-in space-y-4">
-
             <!-- 分頁切換 -->
             <div class="flex bg-white rounded-2xl sticky-tabs card-shadow overflow-hidden">
                 <button onclick="switchTab('guide')" id="tabBtnGuide"
@@ -213,10 +215,11 @@
 
     <!-- 圖片放大 Modal -->
     <div id="imageModal" class="image-modal" onclick="closeModal()">
-        <img id="modalImg" src="" alt="放大圖">
+        <img id="modalImg" src="" alt="放大圖" />
         <div
             class="text-white mt-6 text-sm bg-white/10 px-6 py-2 rounded-full font-medium border border-white/20 backdrop-blur-md">
-            點擊任何地方關閉</div>
+            點擊任何地方關閉
+        </div>
     </div>
 
     <!-- 懸浮底部資訊 -->
@@ -229,62 +232,141 @@
         // 即時時鐘功能
         function updateClock() {
             const now = new Date();
-            const timeStr = now.toLocaleTimeString('zh-TW', { hour12: false });
-            const dateStr = now.toLocaleDateString('zh-TW', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' });
+            const timeStr = now.toLocaleTimeString("zh-TW", { hour12: false });
+            const dateStr = now.toLocaleDateString("zh-TW", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+                weekday: "long",
+            });
 
-            const clockEl = document.getElementById('digitalClock');
-            const dateEl = document.getElementById('headerDate');
+            const clockEl = document.getElementById("digitalClock");
+            const dateEl = document.getElementById("headerDate");
             if (clockEl) clockEl.innerText = timeStr;
             if (dateEl) dateEl.innerText = dateStr;
         }
         setInterval(updateClock, 1000);
         updateClock();
 
-        let currentPath = ['home'];
-        let currentTab = 'guide';
+        let currentPath = ["home"];
+        let currentTab = "guide";
 
         const data = {
             home: {
-                title: '機電巡檢系統',
+                title: "機電巡檢系統",
                 items: [
-                    { id: 'buildingA', title: 'A 棟', icon: 'building-2', color: 'bg-blue-600', desc: '巡檢週期與詳細指則' },
-                    { id: 'buildingB', title: 'B 棟', icon: 'building', color: 'bg-indigo-600', desc: '大樓機房與公共設施', isExternal: true, link: 'inspection_b.html' },
-                    { id: 'map', title: '區域地圖', icon: 'map', color: 'bg-emerald-600', desc: '全區設備位置分布' },
-                    { id: 'search', title: '設備代碼檢索', icon: 'search', color: 'bg-purple-600', desc: '快速查詢設備代碼與分佈位置', isExternal: true, link: 'search.html' }
-                ]
+                    {
+                        id: "buildingA",
+                        title: "A 棟",
+                        icon: "building-2",
+                        color: "bg-blue-600",
+                        desc: "巡檢週期與詳細指則",
+                    },
+                    {
+                        id: "buildingB",
+                        title: "B 棟",
+                        icon: "building",
+                        color: "bg-indigo-600",
+                        desc: "大樓機房與公共設施",
+                        isExternal: true,
+                        link: "inspection_b.html",
+                    },
+                    {
+                        id: "map",
+                        title: "區域地圖",
+                        icon: "map",
+                        color: "bg-emerald-600",
+                        desc: "全區設備位置分布",
+                    },
+                    {
+                        id: "search",
+                        title: "設備代碼檢索",
+                        icon: "search",
+                        color: "bg-purple-600",
+                        desc: "快速查詢設備代碼與分佈位置",
+                        isExternal: true,
+                        link: "search.html",
+                    },
+                ],
             },
             buildingA: {
-                title: 'A 棟 - 巡檢週期',
+                title: "A 棟 - 巡檢週期",
                 items: [
-                    { id: 'weekday', title: '平日巡檢', icon: 'calendar-days', color: 'bg-orange-500', desc: '週一至週五固定項目' },
-                    { id: 'holiday', title: '假日巡檢', icon: 'calendar-heart', color: 'bg-pink-500', desc: '例假日專用巡檢流程' }
-                ]
+                    {
+                        id: "weekday",
+                        title: "平日巡檢",
+                        icon: "calendar-days",
+                        color: "bg-orange-500",
+                        desc: "週一至週五固定項目",
+                    },
+                    {
+                        id: "holiday",
+                        title: "假日巡檢",
+                        icon: "calendar-heart",
+                        color: "bg-pink-500",
+                        desc: "例假日專用巡檢流程",
+                    },
+                ],
             },
             buildingB: {
-                title: 'B 棟 - 巡檢週期',
+                title: "B 棟 - 巡檢週期",
                 items: [
-                    { id: 'weekday_b', title: '平日巡檢', icon: 'calendar-days', color: 'bg-orange-500', desc: '週一至週五固定項目', isExternal: true, link: 'inspection_b.html?type=weekday' },
-                    { id: 'holiday_b', title: '假日巡檢', icon: 'calendar-heart', color: 'bg-pink-500', desc: '例假日專用巡檢流程', isExternal: true, link: 'inspection_b.html?type=holiday' }
-                ]
+                    {
+                        id: "weekday_b",
+                        title: "平日巡檢",
+                        icon: "calendar-days",
+                        color: "bg-orange-500",
+                        desc: "週一至週五固定項目",
+                        isExternal: true,
+                        link: "inspection_b.html?type=weekday",
+                    },
+                    {
+                        id: "holiday_b",
+                        title: "假日巡檢",
+                        icon: "calendar-heart",
+                        color: "bg-pink-500",
+                        desc: "例假日專用巡檢流程",
+                        isExternal: true,
+                        link: "inspection_b.html?type=holiday",
+                    },
+                ],
             },
             weekday: {
-                title: '平日巡檢清單',
+                title: "平日巡檢清單",
                 items: [
-                    { id: 'elevator', title: '電梯設備', icon: 'arrow-up-down', color: 'bg-slate-700', desc: '08:00 前巡查完畢' },
-                    { id: 'machineFloor', title: '機械樓層', icon: 'settings', color: 'bg-slate-700', desc: '08:30 前完成回報' }
-                ]
+                    {
+                        id: "elevator",
+                        title: "電梯設備",
+                        icon: "arrow-up-down",
+                        color: "bg-slate-700",
+                        desc: "08:00 前巡查完畢",
+                    },
+                    {
+                        id: "machineFloor",
+                        title: "機械樓層",
+                        icon: "settings",
+                        color: "bg-slate-700",
+                        desc: "08:30 前完成回報",
+                    },
+                ],
             },
             holiday: {
-                title: '假日巡檢清單',
+                title: "假日巡檢清單",
                 items: [
-                    { id: 'elevator', title: '電梯設備', icon: 'arrow-up-down', color: 'bg-slate-700', desc: '08:00 前巡查完畢' },
-                    { id: 'machineFloor', title: '機械樓層', icon: 'settings', color: 'bg-slate-700', desc: '08:30 前完成回報' }
-                ]
-            }
+                    {
+                        id: "machineFloor",
+                        title: "機械樓層",
+                        icon: "settings",
+                        color: "bg-slate-700",
+                        desc: "08:30 前完成回報",
+                    },
+                ],
+            },
         };
 
         function getMachineFloorContent(isWeekday) {
-            const gymSection = isWeekday ? `
+            const gymSection = isWeekday
+                ? `
                 <section class="bg-white rounded-3xl shadow-sm overflow-hidden border border-gray-100 mb-4 transition-all hover:shadow-md">
                     <div class="bg-blue-600 px-6 py-4 flex justify-between items-center text-white cursor-pointer" onclick="toggleSection('section-17f')">
                         <h3 class="font-bold flex items-center"><i data-lucide="dumbbell" class="w-5 h-5 mr-3"></i> 17F 巡檢項目</h3>
@@ -310,7 +392,8 @@
                             </div>
                         </div>
                     </div>
-                </section>` : '';
+                </section>`
+                : "";
 
             return {
                 guide: `
@@ -447,8 +530,8 @@
                                 <div class="bg-slate-800/30 rounded-2xl p-5 border border-slate-700/50">
                                     <div class="flex justify-between items-center mb-6">
                                         <div class="space-y-1">
-                                            <span class="bg-blue-600 text-white text-xl font-black px-5 py-2 rounded-full shadow-lg">大群組回報 (${isWeekday ? '五合一' : '四合一'})</span>
-                                            <p class="text-sm text-slate-400 font-bold mt-2 ml-1">*務必將以下${isWeekday ? '五' : '四'}張圖組成一張發送</p>
+                                            <span class="bg-blue-600 text-white text-xl font-black px-5 py-2 rounded-full shadow-lg">大群組回報 (${isWeekday ? "五合一" : "四合一"})</span>
+                                            <p class="text-sm text-slate-400 font-bold mt-2 ml-1">*務必將以下${isWeekday ? "五" : "四"}張圖組成一張發送</p>
                                         </div>
                                     </div>
                                     
@@ -461,31 +544,35 @@
                                             <span class="w-6 h-6 bg-blue-500 text-white rounded-lg flex items-center justify-center text-[10px] font-black mr-3">2</span>
                                             18F 水壓壓力表
                                         </div>
-                                        ${isWeekday ? `
+                                        ${isWeekday
+                        ? `
                                         <div class="flex items-center text-slate-300 bg-slate-800/80 p-3 rounded-xl border border-slate-700/30">
                                             <span class="w-6 h-6 bg-blue-500 text-white rounded-lg flex items-center justify-center text-[10px] font-black mr-3">3</span>
                                             17F 健身房風機 (平日)
-                                        </div>` : ''}
+                                        </div>`
+                        : ""
+                    }
                                         <div class="flex items-center text-slate-300 bg-slate-800/80 p-3 rounded-xl border border-slate-700/30">
-                                            <span class="w-6 h-6 bg-blue-500 text-white rounded-lg flex items-center justify-center text-[10px] font-black mr-3">${isWeekday ? '4' : '3'}</span>
+                                            <span class="w-6 h-6 bg-blue-500 text-white rounded-lg flex items-center justify-center text-[10px] font-black mr-3">${isWeekday ? "4" : "3"}</span>
                                             18F 排氣風機
                                         </div>
                                         <div class="flex items-center text-slate-300 bg-slate-800/80 p-3 rounded-xl border border-slate-700/30">
-                                            <span class="w-6 h-6 bg-blue-500 text-white rounded-lg flex items-center justify-center text-[10px] font-black mr-3">${isWeekday ? '5' : '4'}</span>
+                                            <span class="w-6 h-6 bg-blue-500 text-white rounded-lg flex items-center justify-center text-[10px] font-black mr-3">${isWeekday ? "5" : "4"}</span>
                                             早上簽名表 (含手寫內容)
                                         </div>
                                     </div>
 
                                     <div class="mt-8 space-y-3">
-                                        <div id="img-report-sample" class="relative group cursor-pointer rounded-2xl overflow-hidden border border-slate-700 transition-all hover:border-blue-500/50" onclick="zoomImage('uploaded_image_1768906087236.jpg')">
-                                            <img src="uploaded_image_1768906087236.jpg" class="w-full h-auto">
+                                        <div id="img-report-sample" class="relative group cursor-pointer rounded-2xl overflow-hidden border border-slate-700 transition-all hover:border-blue-500/50" onclick="zoomImage('${isWeekday ? "uploaded_image_1768906087236.jpg" : "0830_report_a.png"}')">
+                                            <img src="${isWeekday ? "uploaded_image_1768906087236.jpg" : "0830_report_a.png"}" class="w-full h-auto">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </section>
 
-                        ${isWeekday ? `
+                        ${isWeekday
+                        ? `
                         <div class="mt-10 mb-2 px-1">
                             <h2 class="font-black text-gray-400 text-xs uppercase tracking-[0.2em]">定時與獨立任務</h2>
                         </div>
@@ -517,7 +604,39 @@
                                 </div>
                             </div>
                         </section>
-                        ` : ''}
+                        `
+                        : `
+                        <div class="mt-10 mb-2 px-1">
+                            <h2 class="font-black text-gray-400 text-xs uppercase tracking-[0.2em]">定時與獨立任務</h2>
+                        </div>
+                        <section class="bg-white rounded-3xl shadow-sm border border-gray-100 divide-y divide-gray-50 overflow-hidden mb-10">
+                            <div class="p-5 flex flex-col hover:bg-gray-50 transition-colors">
+                                <div class="flex items-center justify-between w-full mb-3">
+                                    <div class="flex items-center"><span class="bg-red-50 text-red-600 font-black px-4 py-1.5 rounded-xl text-xs mr-4">15:30</span><span class="font-bold text-gray-700">傳群組</span></div>
+                                    <i data-lucide="send" class="text-blue-400 w-5 h-5"></i>
+                                </div>
+                                <div class="pl-16 space-y-2">
+                                    <div class="bg-blue-50 border border-blue-100 rounded-2xl p-4 cursor-pointer hover:bg-blue-100 transition-colors group relative" onclick="copyToClipboard('1.A棟18F 高低樓層冰水水壓巡檢 正常\\n2.A棟18F 排風機設備巡視正常\\n3.A棟18F，排水溝，落水頭 巡視正常\\n4.A棟27F，進出冰水水壓巡檢正常\\n5.B棟RF，進出冰水水壓巡檢 正常\\n6.B棟RF，排水溝，落水頭巡視正常\\n7.B棟16F，空橋漏水點巡視正常')">
+                                        <div class="absolute top-3 right-3 bg-white p-2 rounded-xl shadow-sm md:opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <i data-lucide="copy" class="w-4 h-4 text-blue-500"></i>
+                                        </div>
+                                        <div class="text-[10px] text-blue-700 font-bold mb-2 pb-2 border-b border-blue-100/50">傳送：大群組 + 空調機構</div>
+                                        <div class="space-y-1.5 text-xs font-black text-blue-900 leading-relaxed tracking-wide">
+                                            <p>1.A棟18F 高低樓層冰水水壓巡檢 正常</p>
+                                            <p>2.A棟18F 排風機設備巡視正常</p>
+                                            <p>3.A棟18F，排水溝，落水頭 巡視正常</p>
+                                            <p>4.A棟27F，進出冰水水壓巡檢正常</p>
+                                            <p>5.B棟RF，進出冰水水壓巡檢 正常</p>
+                                            <p>6.B棟RF，排水溝，落水頭巡視正常</p>
+                                            <p>7.B棟16F，空橋漏水點巡視正常</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-[10px] text-left text-blue-500 mt-2 ml-1 font-bold opacity-60">點擊文字區塊可自動複製全部內容</p>
+                                </div>
+                            </div>
+                        </section>
+                        `
+                    }
 
                     </div>
                 `,
@@ -555,7 +674,8 @@
                                     </div>
                                 </div>
 
-                                ${isWeekday ? `
+                                ${isWeekday
+                        ? `
                                 <div class="space-y-3">
                                     <div class="flex items-center text-xs font-black text-gray-400 uppercase tracking-widest"><span class="w-2 h-2 bg-blue-500 rounded-full mr-2"></span> 17F 健身房風機</div>
                                     <div class="relative group cursor-pointer h-auto rounded-2xl overflow-hidden border border-gray-100 shadow-sm" onclick="zoomImage('uploaded_image_1_1768903703958.jpg')">
@@ -563,12 +683,14 @@
                                         <div class="absolute bottom-0 inset-x-0 bg-black/60 backdrop-blur-sm text-white text-[10px] py-1.5 text-center font-bold">17F 健身房風機巡視正常 (主範例)</div>
                                     </div>
                                 </div>
-                                ` : ''}
+                                `
+                        : ""
+                    }
 
                                 <div class="space-y-3">
                                     <div class="flex items-center text-xs font-black text-gray-400 uppercase tracking-widest"><span class="w-2 h-2 bg-amber-500 rounded-full mr-2"></span> 早上簽名表 (含手寫內容)</div>
-                                    <div class="relative group cursor-pointer h-auto rounded-3xl overflow-hidden border border-gray-100 shadow-sm transition-all hover:ring-4 hover:ring-amber-500/10" onclick="zoomImage('uploaded_image_1768907169123.png')">
-                                        <img src="uploaded_image_1768907169123.png" class="w-full h-auto object-contain">
+                                    <div class="relative group cursor-pointer h-auto rounded-3xl overflow-hidden border border-gray-100 shadow-sm transition-all hover:ring-4 hover:ring-amber-500/10" onclick="zoomImage('${isWeekday ? "uploaded_image_1768907169123.png" : "0830_report_a.png"}')">
+                                        <img src="${isWeekday ? "uploaded_image_1768907169123.png" : "0830_report_a.png"}" class="w-full h-auto object-contain">
                                         <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end justify-center pb-4">
                                             <span class="text-[10px] text-white font-black tracking-widest px-4 py-2 bg-black/40 backdrop-blur-md rounded-full">點擊查看回報組圖範例</span>
                                         </div>
@@ -577,20 +699,18 @@
                             </div>
                         </section>
                     </div>
-                `
+                `,
             };
         }
 
         // Elevator AC Logic - MOVED UP TO PREVENT REFERENCE ERROR
 
-
         // Elevator AC Logic
         const acGroups = {
-            top: ['A7', 'A8', 'A9', 'A10', 'A11', 'A12'],
-            bottom: ['A1', 'A2', 'A3', 'A4', 'A5', 'A6']
+            top: ["A7", "A8", "A9", "A10", "A11", "A12"],
+            bottom: ["A1", "A2", "A3", "A4", "A5", "A6"],
         };
         const acAllIds = [...acGroups.top, ...acGroups.bottom];
-
 
         function getElevatorContent(isWeekday) {
             return {
@@ -783,7 +903,8 @@
                     </div>
                 </section>
 
-                ${isWeekday ? `
+                ${isWeekday
+                        ? `
                 <div class="mt-10 mb-2 px-1">
                     <h2 class="font-black text-gray-400 text-xs uppercase tracking-[0.2em]">定時與獨立任務</h2>
                 </div>
@@ -815,7 +936,9 @@
                         </div>
                     </div>
                 </section>
-                ` : ''}
+                `
+                        : ""
+                    }
         `,
                 samples: `
             <div class="space-y-6 pb-12">
@@ -836,163 +959,177 @@
                 <section class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
                     <div class="bg-slate-800 p-5 text-white flex justify-between items-center"><span class="font-black tracking-tight">回報組圖範例</span></div>
                     <div class="p-6">
-                        <div id="img-elevator-report-sample" class="mt-4 relative group cursor-pointer h-auto rounded-3xl overflow-hidden border border-gray-100 shadow-sm" onclick="zoomImage('uploaded_image_1768907169123.png')">
-                            <img src="uploaded_image_1768907169123.png" class="w-full h-auto object-contain">
+                        <div id="img-elevator-report-sample" class="mt-4 relative group cursor-pointer h-auto rounded-3xl overflow-hidden border border-gray-100 shadow-sm" onclick="zoomImage('${isWeekday ? "uploaded_image_1768907169123.png" : "0830_report_a.png"}')">
+                            <img src="${isWeekday ? "uploaded_image_1768907169123.png" : "0830_report_a.png"}" class="w-full h-auto object-contain">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
                         </div>
                     </div>
                 </section>
             </div>
-            `
+            `,
             };
         }
 
         function toggleSection(id) {
             const section = document.getElementById(id);
-            const icon = document.getElementById(id + '-icon');
+            const icon = document.getElementById(id + "-icon");
             if (!section) return;
-            section.classList.toggle('hidden');
+            section.classList.toggle("hidden");
             if (icon) {
-                icon.style.transform = section.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
+                icon.style.transform = section.classList.contains("hidden")
+                    ? "rotate(0deg)"
+                    : "rotate(180deg)";
             }
         }
 
         function toggleSubSection(id) {
             const section = document.getElementById(id);
             if (!section) return;
-            section.classList.toggle('hidden');
+            section.classList.toggle("hidden");
         }
         window.toggleSection = toggleSection;
         window.toggleSubSection = toggleSubSection;
 
-
-
         function ac_tap(id) {
-            const key = 'ac_' + id;
+            const key = "ac_" + id;
             const current = localStorage.getItem(key);
             if (current) {
                 localStorage.removeItem(key);
             } else {
                 const now = new Date();
-                const timeStr = now.getHours().toString().padStart(2, '0') + ':' +
-                    now.getMinutes().toString().padStart(2, '0');
-                localStorage.setItem(key, JSON.stringify({ status: 'on', time: timeStr }));
+                const timeStr =
+                    now.getHours().toString().padStart(2, "0") +
+                    ":" +
+                    now.getMinutes().toString().padStart(2, "0");
+                localStorage.setItem(
+                    key,
+                    JSON.stringify({ status: "on", time: timeStr }),
+                );
             }
             ac_updateUI();
         }
 
         window.ac_resetData = function () {
-            if (window.confirm('確定要清除今日所有紀錄嗎？')) {
+            if (window.confirm("確定要清除今日所有紀錄嗎？")) {
                 try {
                     // Robust clearing of all keys starting with ac_
                     const keysToRemove = [];
                     for (let i = 0; i < localStorage.length; i++) {
                         const key = localStorage.key(i);
-                        if (key && key.startsWith('ac_')) {
+                        if (key && key.startsWith("ac_")) {
                             keysToRemove.push(key);
                         }
                     }
-                    keysToRemove.forEach(key => localStorage.removeItem(key));
+                    keysToRemove.forEach((key) => localStorage.removeItem(key));
 
                     // Update UI
                     ac_updateUI();
-                    alert('重置成功！所有紀錄已清除。');
+                    alert("重置成功！所有紀錄已清除。");
                 } catch (e) {
-                    console.error('Reset failed:', e);
-                    alert('重置發生錯誤: ' + e.message);
+                    console.error("Reset failed:", e);
+                    alert("重置發生錯誤: " + e.message);
                 }
             }
         };
 
         function ac_copyReport() {
-            let report = `【電梯冷氣巡檢報告】\n日期：${new Date().toLocaleDateString()}\n進度：${document.getElementById('acCardProgressText').innerText}\n`;
+            let report = `【電梯冷氣巡檢報告】\n日期：${new Date().toLocaleDateString()}\n進度：${document.getElementById("acCardProgressText").innerText}\n`;
             report += `------------------\n`;
             report += `[高樓層 A7 - A12]\n`;
-            acGroups.top.forEach(id => {
-                const data = JSON.parse(localStorage.getItem('ac_' + id) || 'null');
-                report += `${id}: ${data ? '✅ (' + data.time + ')' : '❌ 未檢'}\n`;
+            acGroups.top.forEach((id) => {
+                const data = JSON.parse(localStorage.getItem("ac_" + id) || "null");
+                report += `${id}: ${data ? "✅ (" + data.time + ")" : "❌ 未檢"}\n`;
             });
             report += `\n[低樓層 A1 - A6]\n`;
-            acGroups.bottom.forEach(id => {
-                const data = JSON.parse(localStorage.getItem('ac_' + id) || 'null');
-                report += `${id}: ${data ? '✅ (' + data.time + ')' : '❌ 未檢'}\n`;
+            acGroups.bottom.forEach((id) => {
+                const data = JSON.parse(localStorage.getItem("ac_" + id) || "null");
+                report += `${id}: ${data ? "✅ (" + data.time + ")" : "❌ 未檢"}\n`;
             });
 
-            navigator.clipboard.writeText(report).then(() => alert('報告已複製到剪貼簿'));
+            navigator.clipboard
+                .writeText(report)
+                .then(() => alert("報告已複製到剪貼簿"));
         }
 
         function ac_updateUI() {
-            if (!document.getElementById('ac-container')) return;
+            if (!document.getElementById("ac-container")) return;
 
             let count = 0;
-            acAllIds.forEach(id => {
-                const data = JSON.parse(localStorage.getItem('ac_' + id) || 'null');
-                const el = document.getElementById('btn-' + id);
-                const timeEl = document.getElementById('time-' + id);
+            acAllIds.forEach((id) => {
+                const data = JSON.parse(localStorage.getItem("ac_" + id) || "null");
+                const el = document.getElementById("btn-" + id);
+                const timeEl = document.getElementById("time-" + id);
 
                 if (el && timeEl) {
-                    if (data && data.status === 'on') {
-                        el.classList.add('active');
-                        timeEl.innerText = data.time || '';
+                    if (data && data.status === "on") {
+                        el.classList.add("active");
+                        timeEl.innerText = data.time || "";
                         count++;
                     } else {
-                        el.classList.remove('active');
-                        timeEl.innerText = '';
+                        el.classList.remove("active");
+                        timeEl.innerText = "";
                     }
                 }
             });
 
             const percent = (count / acAllIds.length) * 100;
-            const bar = document.getElementById('acCardProgressBar');
-            const text = document.getElementById('acCardProgressText');
-            const badge = document.getElementById('ac-summary-badge');
+            const bar = document.getElementById("acCardProgressBar");
+            const text = document.getElementById("acCardProgressText");
+            const badge = document.getElementById("ac-summary-badge");
 
-            if (bar) bar.style.width = percent + '%';
+            if (bar) bar.style.width = percent + "%";
             if (text) text.innerText = `${count}/${acAllIds.length}`;
             if (badge) badge.innerText = `${count}/${acAllIds.length}`;
         }
 
-        // Helper function removed - content is now hardcoded 
-
+        // Helper function removed - content is now hardcoded
 
         function render() {
-            const navArea = document.getElementById('navigationArea');
-            const guideContainer = document.getElementById('guideContainer');
-            const headerTitle = document.getElementById('headerTitle');
-            const backBtn = document.getElementById('backBtn');
+            const navArea = document.getElementById("navigationArea");
+            const guideContainer = document.getElementById("guideContainer");
+            const headerTitle = document.getElementById("headerTitle");
+            const backBtn = document.getElementById("backBtn");
             const currentLevel = currentPath[currentPath.length - 1];
 
-            const isGuidePage = (currentLevel === 'elevator' || currentLevel === 'machineFloor') &&
-                (currentPath.includes('weekday') || currentPath.includes('holiday')) &&
-                currentPath.includes('buildingA');
-
-
+            const isGuidePage =
+                (currentLevel === "elevator" || currentLevel === "machineFloor") &&
+                (currentPath.includes("weekday") ||
+                    currentPath.includes("holiday")) &&
+                currentPath.includes("buildingA");
 
             if (isGuidePage) {
-                if (navArea) navArea.classList.add('hidden');
-                if (guideContainer) guideContainer.classList.remove('hidden');
+                if (navArea) navArea.classList.add("hidden");
+                if (guideContainer) guideContainer.classList.remove("hidden");
 
-                const isWeekday = currentPath.includes('weekday');
-                const dayType = isWeekday ? '平日' : '假日';
-                if (headerTitle) headerTitle.innerText = currentLevel === 'elevator' ? `A 棟${dayType}電梯巡檢` : `A 棟${dayType}機械樓層`;
+                const isWeekday = currentPath.includes("weekday");
+                const dayType = isWeekday ? "平日" : "假日";
+                if (headerTitle)
+                    headerTitle.innerText =
+                        currentLevel === "elevator"
+                            ? `A 棟${dayType}電梯巡檢`
+                            : `A 棟${dayType}機械樓層`;
 
-                if (currentLevel === 'elevator') {
+                if (currentLevel === "elevator") {
                     const elevatorContent = getElevatorContent(isWeekday);
-                    document.getElementById('contentGuide').innerHTML = elevatorContent.guide;
-                    document.getElementById('contentSamples').innerHTML = elevatorContent.samples;
+                    document.getElementById("contentGuide").innerHTML =
+                        elevatorContent.guide;
+                    document.getElementById("contentSamples").innerHTML =
+                        elevatorContent.samples;
                     setTimeout(ac_updateUI, 50); // Initialize AC UI
                 } else {
                     const machineContent = getMachineFloorContent(isWeekday);
-                    document.getElementById('contentGuide').innerHTML = machineContent.guide;
-                    document.getElementById('contentSamples').innerHTML = machineContent.samples;
+                    document.getElementById("contentGuide").innerHTML =
+                        machineContent.guide;
+                    document.getElementById("contentSamples").innerHTML =
+                        machineContent.samples;
                 }
 
                 switchTab(currentTab);
-            } else if (currentLevel === 'map') {
+            } else if (currentLevel === "map") {
                 // 區域地圖顯示邏輯
-                if (navArea) navArea.classList.remove('hidden');
-                if (guideContainer) guideContainer.classList.add('hidden');
-                if (headerTitle) headerTitle.innerText = '區域地圖';
+                if (navArea) navArea.classList.remove("hidden");
+                if (guideContainer) guideContainer.classList.add("hidden");
+                if (headerTitle) headerTitle.innerText = "區域地圖";
 
                 if (navArea) {
                     navArea.innerHTML = `
@@ -1048,19 +1185,23 @@
                     `;
                 }
             } else {
-                if (navArea) navArea.classList.remove('hidden');
-                if (guideContainer) guideContainer.classList.add('hidden');
+                if (navArea) navArea.classList.remove("hidden");
+                if (guideContainer) guideContainer.classList.add("hidden");
 
-                const levelData = data[currentLevel] || { title: '機電巡檢系統', items: [] };
+                const levelData = data[currentLevel] || {
+                    title: "機電巡檢系統",
+                    items: [],
+                };
                 if (headerTitle) headerTitle.innerText = levelData.title;
 
                 if (navArea) {
-                    navArea.innerHTML = '';
+                    navArea.innerHTML = "";
                     levelData.items.forEach((item, index) => {
-                        const card = document.createElement('div');
-                        card.className = "group cursor-pointer bg-white p-6 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl hover:translate-y-[-4px] active:scale-[0.98] transition-all duration-300 flex items-center space-x-5";
+                        const card = document.createElement("div");
+                        card.className =
+                            "group cursor-pointer bg-white p-6 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl hover:translate-y-[-4px] active:scale-[0.98] transition-all duration-300 flex items-center space-x-5";
                         card.style.animationDelay = `${index * 50}ms`;
-                        card.classList.add('fade-in');
+                        card.classList.add("fade-in");
 
                         card.innerHTML = `
                     <div class="${item.color} p-5 rounded-2xl text-white shadow-lg shadow-gray-200 transition-transform group-hover:rotate-6">
@@ -1068,7 +1209,7 @@
                     </div>
                     <div class="flex-1">
                         <h2 class="text-xl font-black text-gray-800 tracking-tight">${item.title}</h2>
-                        <p class="text-[11px] text-gray-400 font-bold mt-1 uppercase tracking-wider">${item.desc || ''}</p>
+                        <p class="text-[11px] text-gray-400 font-bold mt-1 uppercase tracking-wider">${item.desc || ""}</p>
                     </div>
                     <i data-lucide="chevron-right" class="text-gray-200 group-hover:text-blue-500 group-hover:translate-x-1 transition-all"></i>
                         `;
@@ -1079,7 +1220,7 @@
                             }
                             currentPath.push(item.id);
                             render();
-                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                            window.scrollTo({ top: 0, behavior: "smooth" });
                         };
                         navArea.appendChild(card);
                     });
@@ -1087,8 +1228,8 @@
             }
 
             if (backBtn) {
-                if (currentPath.length > 1) backBtn.classList.remove('hidden');
-                else backBtn.classList.add('hidden');
+                if (currentPath.length > 1) backBtn.classList.remove("hidden");
+                else backBtn.classList.add("hidden");
             }
 
             lucide.createIcons();
@@ -1096,54 +1237,54 @@
 
         function switchTab(tabName) {
             currentTab = tabName;
-            const guideContent = document.getElementById('contentGuide');
-            const sampleContent = document.getElementById('contentSamples');
-            const btnGuide = document.getElementById('tabBtnGuide');
-            const btnSamples = document.getElementById('tabBtnSamples');
+            const guideContent = document.getElementById("contentGuide");
+            const sampleContent = document.getElementById("contentSamples");
+            const btnGuide = document.getElementById("tabBtnGuide");
+            const btnSamples = document.getElementById("tabBtnSamples");
 
-            if (tabName === 'guide') {
-                if (guideContent) guideContent.classList.remove('hidden');
-                if (sampleContent) sampleContent.classList.add('hidden');
-                if (btnGuide) btnGuide.classList.add('tab-active');
-                if (btnSamples) btnSamples.classList.remove('tab-active');
-                if (btnSamples) btnSamples.classList.add('text-gray-400');
+            if (tabName === "guide") {
+                if (guideContent) guideContent.classList.remove("hidden");
+                if (sampleContent) sampleContent.classList.add("hidden");
+                if (btnGuide) btnGuide.classList.add("tab-active");
+                if (btnSamples) btnSamples.classList.remove("tab-active");
+                if (btnSamples) btnSamples.classList.add("text-gray-400");
             } else {
-                if (guideContent) guideContent.classList.add('hidden');
-                if (sampleContent) sampleContent.classList.remove('hidden');
-                if (btnSamples) btnSamples.classList.add('tab-active');
-                if (btnSamples) btnSamples.classList.remove('text-gray-400');
-                if (btnGuide) btnGuide.classList.remove('tab-active');
-                if (btnGuide) btnGuide.classList.add('text-gray-400');
+                if (guideContent) guideContent.classList.add("hidden");
+                if (sampleContent) sampleContent.classList.remove("hidden");
+                if (btnSamples) btnSamples.classList.add("tab-active");
+                if (btnSamples) btnSamples.classList.remove("text-gray-400");
+                if (btnGuide) btnGuide.classList.remove("tab-active");
+                if (btnGuide) btnGuide.classList.add("text-gray-400");
             }
             lucide.createIcons();
         }
 
         function zoomImage(src) {
-            const modal = document.getElementById('imageModal');
-            const modalImg = document.getElementById('modalImg');
+            const modal = document.getElementById("imageModal");
+            const modalImg = document.getElementById("modalImg");
             if (modalImg) modalImg.src = src;
-            if (modal) modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
+            if (modal) modal.style.display = "flex";
+            document.body.style.overflow = "hidden";
         }
 
         function closeModal() {
-            const modal = document.getElementById('imageModal');
-            if (modal) modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
+            const modal = document.getElementById("imageModal");
+            if (modal) modal.style.display = "none";
+            document.body.style.overflow = "auto";
         }
 
         function copyToClipboard(text) {
             navigator.clipboard.writeText(text).then(() => {
-                alert('已複製：' + text);
+                alert("已複製：" + text);
             });
         }
 
-        const backBtnEl = document.getElementById('backBtn');
+        const backBtnEl = document.getElementById("backBtn");
         if (backBtnEl) {
             backBtnEl.onclick = () => {
                 if (currentPath.length > 1) {
                     currentPath.pop();
-                    currentTab = 'guide';
+                    currentTab = "guide";
                     render();
                 }
             };

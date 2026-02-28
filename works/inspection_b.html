@@ -1,21 +1,21 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-TW">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>B 棟巡檢系統 - 專業設備維護</title>
 
     <!-- Open Graph / Social Media -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://mrduck.my.canva.site/inspection-b">
-    <meta property="og:title" content="B 棟巡檢系統">
-    <meta property="og:description" content="B 棟 RF, 20F, 19F, 17F, 16F, 空橋巡檢項目。">
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://mrduck.my.canva.site/inspection-b" />
+    <meta property="og:title" content="B 棟巡檢系統" />
+    <meta property="og:description" content="B 棟 RF, 20F, 19F, 17F, 16F, 空橋巡檢項目。" />
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
+        @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap");
 
         :root {
             --primary-blue: #2563eb;
@@ -25,7 +25,7 @@
         }
 
         body {
-            font-family: 'Noto+Sans+TC', sans-serif;
+            font-family: "Noto+Sans+TC", sans-serif;
             background-color: var(--bg-gray);
             -webkit-tap-highlight-color: transparent;
             color: #1e293b;
@@ -79,17 +79,18 @@
 </head>
 
 <body class="min-h-screen pb-20">
-
     <!-- 頂部導航 -->
     <header class="bg-indigo-600 text-white sticky top-0 z-50 shadow-lg h-16 flex items-center px-4">
         <div class="max-w-4xl mx-auto flex items-center justify-between w-full">
             <div class="flex items-center">
-                <button id="backBtn" onclick="window.location.href='inspection.html'"
+                <button id="backBtn" onclick="window.location.href = 'inspection.html'"
                     class="mr-4 hover:bg-white/20 p-2 rounded-full transition-colors active:scale-90">
                     <i data-lucide="arrow-left"></i>
                 </button>
                 <div class="flex flex-col">
-                    <h1 id="headerTitle" class="text-lg font-black tracking-tight leading-none">B 棟巡檢系統</h1>
+                    <h1 id="headerTitle" class="text-lg font-black tracking-tight leading-none">
+                        B 棟巡檢系統
+                    </h1>
                     <span id="headerDate" class="text-[10px] font-bold opacity-70 mt-1">載入中...</span>
                 </div>
             </div>
@@ -103,57 +104,68 @@
     </header>
 
     <main class="max-w-4xl mx-auto p-4 md:p-6 fade-in">
-
-        <div id="indexMenu" class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6" style="display: none;">
+        <div id="indexMenu" class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6" style="display: none">
             <div class="group cursor-pointer bg-white p-6 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-1 active:scale-95 transition-all duration-300 flex items-center space-x-5"
-                onclick="window.location.href='?type=weekday'">
+                onclick="window.location.href = '?type=weekday'">
                 <div
                     class="bg-orange-500 p-5 rounded-2xl text-white shadow-lg shadow-orange-200 transition-transform group-hover:rotate-6">
                     <i data-lucide="calendar-days" class="w-6 h-6"></i>
                 </div>
                 <div class="flex-1">
-                    <h2 class="text-xl font-black text-gray-800 tracking-tight">平日巡檢</h2>
-                    <p class="text-[11px] text-gray-400 font-bold mt-1 uppercase tracking-wider">週一至週五固定項目</p>
+                    <h2 class="text-xl font-black text-gray-800 tracking-tight">
+                        平日巡檢
+                    </h2>
+                    <p class="text-[11px] text-gray-400 font-bold mt-1 uppercase tracking-wider">
+                        週一至週五固定項目
+                    </p>
                 </div>
                 <i data-lucide="chevron-right"
                     class="text-gray-200 group-hover:text-blue-500 group-hover:translate-x-1 transition-all"></i>
             </div>
 
             <div class="group cursor-pointer bg-white p-6 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-1 active:scale-95 transition-all duration-300 flex items-center space-x-5"
-                onclick="window.location.href='?type=holiday'">
+                onclick="window.location.href = '?type=holiday'">
                 <div
                     class="bg-pink-500 p-5 rounded-2xl text-white shadow-lg shadow-pink-200 transition-transform group-hover:rotate-6">
                     <i data-lucide="calendar-heart" class="w-6 h-6"></i>
                 </div>
                 <div class="flex-1">
-                    <h2 class="text-xl font-black text-gray-800 tracking-tight">假日巡檢</h2>
-                    <p class="text-[11px] text-gray-400 font-bold mt-1 uppercase tracking-wider">例假日專用巡檢流程</p>
+                    <h2 class="text-xl font-black text-gray-800 tracking-tight">
+                        假日巡檢
+                    </h2>
+                    <p class="text-[11px] text-gray-400 font-bold mt-1 uppercase tracking-wider">
+                        例假日專用巡檢流程
+                    </p>
                 </div>
                 <i data-lucide="chevron-right"
                     class="text-gray-200 group-hover:text-blue-500 group-hover:translate-x-1 transition-all"></i>
             </div>
         </div>
 
-        <div id="inspectionContent" class="space-y-4" style="display: none;">
-
+        <div id="inspectionContent" class="space-y-4" style="display: none">
             <!-- RF 樓層 -->
             <section
                 class="bg-white rounded-3xl shadow-sm overflow-hidden border border-gray-100 transition-all hover:shadow-md">
                 <div class="bg-indigo-600 px-6 py-4 flex justify-between items-center text-white cursor-pointer"
                     onclick="toggleSection('section-rf')">
-                    <h3 class="font-bold flex items-center"><i data-lucide="sun" class="w-5 h-5 mr-3"></i> RF 樓層</h3>
+                    <h3 class="font-bold flex items-center">
+                        <i data-lucide="sun" class="w-5 h-5 mr-3"></i> RF 樓層
+                    </h3>
                     <i data-lucide="chevron-down" id="section-rf-icon"
                         class="w-5 h-5 transition-transform duration-300"></i>
                 </div>
                 <div id="section-rf" class="p-6 hidden">
-
                     <!-- 1. 電梯機房溫度 -->
                     <div id="rf-elevator-temp" class="flex items-start mb-8 border-b border-gray-100 pb-8">
-                        <div class="bg-blue-50 text-blue-600 rounded-2xl p-3 mr-4 shadow-sm shadow-blue-100"><i
-                                data-lucide="thermometer" class="w-6 h-6"></i></div>
+                        <div class="bg-blue-50 text-blue-600 rounded-2xl p-3 mr-4 shadow-sm shadow-blue-100">
+                            <i data-lucide="thermometer" class="w-6 h-6"></i>
+                        </div>
                         <div class="flex-1">
-                            <p class="font-black text-xl text-gray-800 tracking-tight">B1-6 B7-8 電梯機房溫度</p>
-                            <p class="text-sm text-gray-500 mt-3 leading-relaxed">拍照紀錄現況並<span
+                            <p class="font-black text-xl text-gray-800 tracking-tight">
+                                B1-6 B7-8 電梯機房溫度
+                            </p>
+                            <p class="text-sm text-gray-500 mt-3 leading-relaxed">
+                                拍照紀錄現況並<span
                                     class="text-blue-600 font-bold underline decoration-2 underline-offset-4">上傳：「4空調技研團」</span>。
                             </p>
 
@@ -162,11 +174,13 @@
                                 <div class="relative group cursor-pointer h-auto rounded-2xl overflow-hidden border border-gray-100 shadow-sm"
                                     onclick="zoomImage('placeholder_temp.jpg')">
                                     <img src="placeholder_temp.jpg" alt="電梯機房溫度示範"
-                                        class="w-full h-auto object-cover bg-gray-100"
-                                        onerror="this.src='https://placehold.co/400x300?text=Img+Error'">
+                                        class="w-full h-auto object-cover bg-gray-100" onerror="
+                        this.src = 'https://placehold.co/400x300?text=Img+Error'
+                      " />
                                     <div
                                         class="absolute bottom-0 inset-x-0 bg-black/60 backdrop-blur-sm text-white text-[10px] py-1.5 text-center font-bold">
-                                        B1-6 B7-8 溫度紀錄範例</div>
+                                        B1-6 B7-8 溫度紀錄範例
+                                    </div>
                                 </div>
 
                                 <!-- Quick Copy Added -->
@@ -182,11 +196,15 @@
 
                     <!-- 2. B-RF 冰水壓力 -->
                     <div class="flex items-start mb-8 border-b border-gray-100 pb-8">
-                        <div class="bg-indigo-50 text-indigo-600 rounded-2xl p-3 mr-4 shadow-sm shadow-indigo-100"><i
-                                data-lucide="gauge" class="w-6 h-6"></i></div>
+                        <div class="bg-indigo-50 text-indigo-600 rounded-2xl p-3 mr-4 shadow-sm shadow-indigo-100">
+                            <i data-lucide="gauge" class="w-6 h-6"></i>
+                        </div>
                         <div class="flex-1">
-                            <p class="font-black text-xl text-gray-800 tracking-tight">B-RF 冰水壓力巡視正常</p>
-                            <p class="text-sm text-gray-500 mt-3 leading-relaxed">拍照紀錄現況並<span
+                            <p class="font-black text-xl text-gray-800 tracking-tight">
+                                B-RF 冰水壓力巡視正常
+                            </p>
+                            <p class="text-sm text-gray-500 mt-3 leading-relaxed">
+                                拍照紀錄現況並<span
                                     class="text-blue-600 font-bold underline decoration-2 underline-offset-4">組圖上傳：「空調群組」</span>。
                             </p>
 
@@ -195,11 +213,13 @@
                                 <div class="relative group cursor-pointer h-auto rounded-2xl overflow-hidden border border-gray-100 shadow-sm"
                                     onclick="zoomImage('placeholder_pressure_rf.jpg')">
                                     <img src="placeholder_pressure_rf.jpg" alt="B-RF 冰水壓力示範"
-                                        class="w-full h-auto object-cover bg-gray-100"
-                                        onerror="this.src='https://placehold.co/400x300?text=Img+Error'">
+                                        class="w-full h-auto object-cover bg-gray-100" onerror="
+                        this.src = 'https://placehold.co/400x300?text=Img+Error'
+                      " />
                                     <div
                                         class="absolute bottom-0 inset-x-0 bg-black/60 backdrop-blur-sm text-white text-[10px] py-1.5 text-center font-bold">
-                                        B-RF 冰水壓力範例</div>
+                                        B-RF 冰水壓力範例
+                                    </div>
                                 </div>
 
                                 <!-- Quick Copy -->
@@ -215,26 +235,34 @@
 
                     <!-- 3. B 冰水壓力 (抄表) -->
                     <div id="rf-pressure-meter" class="flex items-start mb-8 border-b border-gray-100 pb-8">
-                        <div class="bg-slate-50 text-slate-600 rounded-2xl p-3 mr-4 shadow-sm shadow-slate-100"><i
-                                data-lucide="clipboard-pen" class="w-6 h-6"></i></div>
+                        <div class="bg-slate-50 text-slate-600 rounded-2xl p-3 mr-4 shadow-sm shadow-slate-100">
+                            <i data-lucide="clipboard-pen" class="w-6 h-6"></i>
+                        </div>
                         <div class="flex-1">
-                            <p class="font-black text-xl text-gray-800 tracking-tight">B 冰水壓力巡視</p>
+                            <p class="font-black text-xl text-gray-800 tracking-tight">
+                                B 冰水壓力巡視
+                            </p>
                             <div class="mt-3 flex items-start">
                                 <span
                                     class="bg-orange-100 text-orange-700 px-2 py-0.5 rounded-md text-xs font-black mr-2 mt-0.5 whitespace-nowrap">抄表任務</span>
-                                <p class="text-sm text-gray-500 leading-relaxed">僅需記錄數值於表格中，<span
-                                        class="font-bold text-red-500">不用拍照</span>。</p>
+                                <p class="text-sm text-gray-500 leading-relaxed">
+                                    僅需記錄數值於表格中，<span class="font-bold text-red-500">不用拍照</span>。
+                                </p>
                             </div>
                         </div>
                     </div>
 
                     <!-- 4. RF 落水頭/地板 -->
                     <div class="flex items-start">
-                        <div class="bg-emerald-50 text-emerald-600 rounded-2xl p-3 mr-4 shadow-sm shadow-emerald-100"><i
-                                data-lucide="scan-line" class="w-6 h-6"></i></div>
+                        <div class="bg-emerald-50 text-emerald-600 rounded-2xl p-3 mr-4 shadow-sm shadow-emerald-100">
+                            <i data-lucide="scan-line" class="w-6 h-6"></i>
+                        </div>
                         <div class="flex-1">
-                            <p class="font-black text-xl text-gray-800 tracking-tight">B棟 RF 落水頭/排水頭/地板</p>
-                            <p class="text-sm text-gray-500 mt-3 leading-relaxed">拍照紀錄現況並<span
+                            <p class="font-black text-xl text-gray-800 tracking-tight">
+                                B棟 RF 落水頭/排水頭/地板
+                            </p>
+                            <p class="text-sm text-gray-500 mt-3 leading-relaxed">
+                                拍照紀錄現況並<span
                                     class="text-blue-600 font-bold underline decoration-2 underline-offset-4">組圖上傳：「大群」</span>。
                             </p>
 
@@ -243,59 +271,24 @@
                                 <div class="relative group cursor-pointer h-auto rounded-2xl overflow-hidden border border-gray-100 shadow-sm"
                                     onclick="zoomImage('placeholder_floor.jpg')">
                                     <img src="placeholder_floor.jpg" alt="落水頭與地板示範"
-                                        class="w-full h-auto object-cover bg-gray-100"
-                                        onerror="this.src='https://placehold.co/400x300?text=Img+Error'">
+                                        class="w-full h-auto object-cover bg-gray-100" onerror="
+                        this.src = 'https://placehold.co/400x300?text=Img+Error'
+                      " />
                                     <div
                                         class="absolute bottom-0 inset-x-0 bg-black/60 backdrop-blur-sm text-white text-[10px] py-1.5 text-center font-bold">
-                                        RF 落水頭/地板範例</div>
+                                        RF 落水頭/地板範例
+                                    </div>
                                 </div>
 
                                 <!-- Quick Copy -->
                                 <div class="p-3 bg-blue-50 border border-blue-100 rounded-xl flex items-center justify-between group cursor-pointer hover:bg-blue-100 transition-colors"
-                                    onclick="copyToClipboard('B棟RF落水頭，排水頭，地板，巡視正常')">
+                                    onclick="
+                      copyToClipboard('B棟RF落水頭，排水頭，地板，巡視正常')
+                    ">
                                     <span
                                         class="text-xs font-black text-blue-800 tracking-tight">「B棟RF落水頭，排水頭，地板，巡視正常」</span>
                                     <i data-lucide="copy"
                                         class="w-4 h-4 text-blue-400 group-hover:scale-110 transition-transform"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </section>
-
-            <!-- 假日追加：19、20樓層面板檢查 -->
-            <section id="section-holiday-panel-wrapper"
-                class="bg-white rounded-3xl shadow-sm overflow-hidden border border-gray-100 transition-all hover:shadow-md"
-                style="display: none;">
-                <div class="bg-indigo-600 px-6 py-4 flex justify-between items-center text-white cursor-pointer"
-                    onclick="toggleSection('section-holiday-panel')">
-                    <h3 class="font-bold flex items-center"><i data-lucide="monitor" class="w-5 h-5 mr-3"></i>
-                        19、20樓層面板檢查
-                    </h3>
-                    <i data-lucide="chevron-down" id="section-holiday-panel-icon"
-                        class="w-5 h-5 transition-transform duration-300"></i>
-                </div>
-                <div id="section-holiday-panel" class="p-6 hidden">
-                    <div class="flex items-start">
-                        <div class="bg-blue-50 text-blue-600 rounded-2xl p-3 mr-4 shadow-sm shadow-blue-100"><i
-                                data-lucide="camera" class="w-6 h-6"></i></div>
-                        <div class="flex-1">
-                            <p class="font-black text-xl text-gray-800 tracking-tight">櫃檯後方面板顯示</p>
-                            <p class="text-sm text-gray-500 mt-3 leading-relaxed">拍照紀錄：<span
-                                    class="text-blue-600 font-bold">面板顯示正常</span>，並<span
-                                    class="text-blue-600 font-bold underline decoration-2 underline-offset-4">組圖上傳：「大群」</span>。
-                            </p>
-
-                            <div class="mt-4">
-                                <div class="relative group cursor-pointer h-auto rounded-2xl overflow-hidden border border-gray-100 shadow-sm"
-                                    onclick="zoomImage('47257.jpg')">
-                                    <img src="47257.jpg" alt="櫃檯後方面板示範" class="w-full h-auto object-cover bg-gray-100"
-                                        onerror="this.src='https://placehold.co/400x300?text=Image+Not+Found'">
-                                    <div
-                                        class="absolute bottom-0 inset-x-0 bg-black/60 backdrop-blur-sm text-white text-[10px] py-1.5 text-center font-bold">
-                                        面板顯示範例</div>
                                 </div>
                             </div>
                         </div>
@@ -308,7 +301,8 @@
                 class="bg-white rounded-3xl shadow-sm overflow-hidden border border-gray-100 transition-all hover:shadow-md">
                 <div class="bg-indigo-600 px-6 py-4 flex justify-between items-center text-white cursor-pointer"
                     onclick="toggleSection('section-20f')">
-                    <h3 class="font-bold flex items-center"><i data-lucide="building" class="w-5 h-5 mr-3"></i> 20樓
+                    <h3 class="font-bold flex items-center">
+                        <i data-lucide="building" class="w-5 h-5 mr-3"></i> 20樓
                     </h3>
                     <i data-lucide="chevron-down" id="section-20f-icon"
                         class="w-5 h-5 transition-transform duration-300"></i>
@@ -316,12 +310,15 @@
                 <div id="section-20f" class="p-6 hidden">
                     <!-- 1. 櫃檯後方面板 -->
                     <div class="flex items-start mb-8 border-b border-gray-100 pb-8">
-                        <div class="bg-blue-50 text-blue-600 rounded-2xl p-3 mr-4 shadow-sm shadow-blue-100"><i
-                                data-lucide="camera" class="w-6 h-6"></i></div>
+                        <div class="bg-blue-50 text-blue-600 rounded-2xl p-3 mr-4 shadow-sm shadow-blue-100">
+                            <i data-lucide="camera" class="w-6 h-6"></i>
+                        </div>
                         <div class="flex-1">
-                            <p class="font-black text-xl text-gray-800 tracking-tight">櫃檯後方面板顯示</p>
-                            <p class="text-sm text-gray-500 mt-3 leading-relaxed">拍照紀錄：<span
-                                    class="text-blue-600 font-bold">面板顯示正常</span>，並<span
+                            <p class="font-black text-xl text-gray-800 tracking-tight">
+                                櫃檯後方面板顯示
+                            </p>
+                            <p class="text-sm text-gray-500 mt-3 leading-relaxed">
+                                拍照紀錄：<span class="text-blue-600 font-bold">面板顯示正常</span>，並<span
                                     class="text-blue-600 font-bold underline decoration-2 underline-offset-4">組圖上傳：「大群」</span>。
                             </p>
 
@@ -329,10 +326,14 @@
                                 <div class="relative group cursor-pointer h-auto rounded-2xl overflow-hidden border border-gray-100 shadow-sm"
                                     onclick="zoomImage('47257.jpg')">
                                     <img src="47257.jpg" alt="櫃檯後方面板示範" class="w-full h-auto object-cover bg-gray-100"
-                                        onerror="this.src='https://placehold.co/400x300?text=Image+Not+Found'">
+                                        onerror="
+                        this.src =
+                          'https://placehold.co/400x300?text=Image+Not+Found'
+                      " />
                                     <div
                                         class="absolute bottom-0 inset-x-0 bg-black/60 backdrop-blur-sm text-white text-[10px] py-1.5 text-center font-bold">
-                                        面板顯示範例</div>
+                                        面板顯示範例
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -344,7 +345,9 @@
                             <i data-lucide="clipboard-list" class="w-6 h-6"></i>
                         </div>
                         <div class="flex-1">
-                            <p class="font-black text-xl text-gray-800 tracking-tight">20F 環境溫度</p>
+                            <p class="font-black text-xl text-gray-800 tracking-tight">
+                                20F 環境溫度
+                            </p>
                             <div class="mt-3 flex items-start flex-wrap gap-2">
                                 <span
                                     class="bg-orange-100 text-orange-700 px-2 py-0.5 rounded-md text-xs font-black whitespace-nowrap">抄表任務</span>
@@ -354,8 +357,8 @@
                             </p>
                             <p class="text-sm text-red-500 mt-2 font-bold bg-red-50 p-3 rounded-xl border border-red-100 cursor-pointer hover:bg-red-100 transition-colors"
                                 onclick="zoomImage('ting.jpg')">
-                                注意：如 A、B、C 廳有使用，須拍照 (3張組圖) 上傳「大群」。<span
-                                    class="underline decoration-2 ml-1 text-red-600">(點擊開啟範例)</span>
+                                注意：如 A、B、C 廳有使用，須拍照 (3張組圖)
+                                上傳「大群」。<span class="underline decoration-2 ml-1 text-red-600">(點擊開啟範例)</span>
                             </p>
                         </div>
                     </div>
@@ -367,7 +370,8 @@
                 class="bg-white rounded-3xl shadow-sm overflow-hidden border border-gray-100 transition-all hover:shadow-md">
                 <div class="bg-indigo-600 px-6 py-4 flex justify-between items-center text-white cursor-pointer"
                     onclick="toggleSection('section-19f')">
-                    <h3 class="font-bold flex items-center"><i data-lucide="building" class="w-5 h-5 mr-3"></i> 19樓
+                    <h3 class="font-bold flex items-center">
+                        <i data-lucide="building" class="w-5 h-5 mr-3"></i> 19樓
                     </h3>
                     <i data-lucide="chevron-down" id="section-19f-icon"
                         class="w-5 h-5 transition-transform duration-300"></i>
@@ -375,12 +379,15 @@
                 <div id="section-19f" class="p-6 hidden">
                     <!-- 1. 櫃檯後方面板 -->
                     <div class="flex items-start mb-8 border-b border-gray-100 pb-8">
-                        <div class="bg-blue-50 text-blue-600 rounded-2xl p-3 mr-4 shadow-sm shadow-blue-100"><i
-                                data-lucide="camera" class="w-6 h-6"></i></div>
+                        <div class="bg-blue-50 text-blue-600 rounded-2xl p-3 mr-4 shadow-sm shadow-blue-100">
+                            <i data-lucide="camera" class="w-6 h-6"></i>
+                        </div>
                         <div class="flex-1">
-                            <p class="font-black text-xl text-gray-800 tracking-tight">櫃檯後方面板顯示</p>
-                            <p class="text-sm text-gray-500 mt-3 leading-relaxed">拍照紀錄：<span
-                                    class="text-blue-600 font-bold">面板顯示正常</span>，並<span
+                            <p class="font-black text-xl text-gray-800 tracking-tight">
+                                櫃檯後方面板顯示
+                            </p>
+                            <p class="text-sm text-gray-500 mt-3 leading-relaxed">
+                                拍照紀錄：<span class="text-blue-600 font-bold">面板顯示正常</span>，並<span
                                     class="text-blue-600 font-bold underline decoration-2 underline-offset-4">組圖上傳：「大群」</span>。
                             </p>
 
@@ -388,10 +395,14 @@
                                 <div class="relative group cursor-pointer h-auto rounded-2xl overflow-hidden border border-gray-100 shadow-sm"
                                     onclick="zoomImage('47257.jpg')">
                                     <img src="47257.jpg" alt="櫃檯後方面板示範" class="w-full h-auto object-cover bg-gray-100"
-                                        onerror="this.src='https://placehold.co/400x300?text=Image+Not+Found'">
+                                        onerror="
+                        this.src =
+                          'https://placehold.co/400x300?text=Image+Not+Found'
+                      " />
                                     <div
                                         class="absolute bottom-0 inset-x-0 bg-black/60 backdrop-blur-sm text-white text-[10px] py-1.5 text-center font-bold">
-                                        面板顯示範例</div>
+                                        面板顯示範例
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -403,7 +414,9 @@
                             <i data-lucide="clipboard-list" class="w-6 h-6"></i>
                         </div>
                         <div class="flex-1">
-                            <p class="font-black text-xl text-gray-800 tracking-tight">19F 環境溫度</p>
+                            <p class="font-black text-xl text-gray-800 tracking-tight">
+                                19F 環境溫度
+                            </p>
                             <div class="mt-3 flex items-start flex-wrap gap-2">
                                 <span
                                     class="bg-orange-100 text-orange-700 px-2 py-0.5 rounded-md text-xs font-black whitespace-nowrap">抄表任務</span>
@@ -413,8 +426,8 @@
                             </p>
                             <p class="text-sm text-red-500 mt-2 font-bold bg-red-50 p-3 rounded-xl border border-red-100 cursor-pointer hover:bg-red-100 transition-colors"
                                 onclick="zoomImage('ting.jpg')">
-                                注意：如 A、B、C 廳有使用，須拍照 (3張組圖) 上傳「大群」。<span
-                                    class="underline decoration-2 ml-1 text-red-600">(點擊開啟範例)</span>
+                                注意：如 A、B、C 廳有使用，須拍照 (3張組圖)
+                                上傳「大群」。<span class="underline decoration-2 ml-1 text-red-600">(點擊開啟範例)</span>
                             </p>
                         </div>
                     </div>
@@ -426,7 +439,8 @@
                 class="bg-white rounded-3xl shadow-sm overflow-hidden border border-gray-100 transition-all hover:shadow-md">
                 <div class="bg-indigo-600 px-6 py-4 flex justify-between items-center text-white cursor-pointer"
                     onclick="toggleSection('section-17f')">
-                    <h3 class="font-bold flex items-center"><i data-lucide="building" class="w-5 h-5 mr-3"></i> 17樓
+                    <h3 class="font-bold flex items-center">
+                        <i data-lucide="building" class="w-5 h-5 mr-3"></i> 17樓
                     </h3>
                     <i data-lucide="chevron-down" id="section-17f-icon"
                         class="w-5 h-5 transition-transform duration-300"></i>
@@ -438,7 +452,9 @@
                             <i data-lucide="clipboard-list" class="w-6 h-6"></i>
                         </div>
                         <div class="flex-1">
-                            <p class="font-black text-xl text-gray-800 tracking-tight">17F 環境溫度</p>
+                            <p class="font-black text-xl text-gray-800 tracking-tight">
+                                17F 環境溫度
+                            </p>
                             <div class="mt-3 flex items-start flex-wrap gap-2">
                                 <span
                                     class="bg-orange-100 text-orange-700 px-2 py-0.5 rounded-md text-xs font-black whitespace-nowrap">抄表任務</span>
@@ -451,10 +467,13 @@
 
                     <!-- 2. 會議室檢查 -->
                     <div class="flex items-start">
-                        <div class="bg-blue-50 text-blue-600 rounded-2xl p-3 mr-4 shadow-sm shadow-blue-100"><i
-                                data-lucide="snowflake" class="w-6 h-6"></i></div>
+                        <div class="bg-blue-50 text-blue-600 rounded-2xl p-3 mr-4 shadow-sm shadow-blue-100">
+                            <i data-lucide="snowflake" class="w-6 h-6"></i>
+                        </div>
                         <div class="flex-1">
-                            <p class="font-black text-xl text-gray-800 tracking-tight">17F 會議室檢查</p>
+                            <p class="font-black text-xl text-gray-800 tracking-tight">
+                                17F 會議室檢查
+                            </p>
                             <p class="text-sm text-gray-500 mt-3 leading-relaxed">
                                 <span class="font-bold text-blue-600">若有會議</span>：需開啟冷氣，並<span
                                     class="font-bold text-gray-700">記錄溫度</span>。
@@ -467,7 +486,9 @@
                             <i data-lucide="gauge" class="w-6 h-6"></i>
                         </div>
                         <div class="flex-1">
-                            <p class="font-black text-xl text-gray-800 tracking-tight">17F 進出水壓及頻率</p>
+                            <p class="font-black text-xl text-gray-800 tracking-tight">
+                                17F 進出水壓及頻率
+                            </p>
                             <div class="mt-3 flex items-start flex-wrap gap-2">
                                 <span
                                     class="bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-md text-xs font-black whitespace-nowrap">抄表任務</span>
@@ -485,7 +506,8 @@
                 class="bg-white rounded-3xl shadow-sm overflow-hidden border border-gray-100 transition-all hover:shadow-md">
                 <div class="bg-indigo-600 px-6 py-4 flex justify-between items-center text-white cursor-pointer"
                     onclick="toggleSection('section-16f')">
-                    <h3 class="font-bold flex items-center"><i data-lucide="building" class="w-5 h-5 mr-3"></i> 16樓
+                    <h3 class="font-bold flex items-center">
+                        <i data-lucide="building" class="w-5 h-5 mr-3"></i> 16樓
                     </h3>
                     <i data-lucide="chevron-down" id="section-16f-icon"
                         class="w-5 h-5 transition-transform duration-300"></i>
@@ -497,7 +519,9 @@
                             <i data-lucide="clipboard-list" class="w-6 h-6"></i>
                         </div>
                         <div class="flex-1">
-                            <p class="font-black text-xl text-gray-800 tracking-tight">16F 環境溫度</p>
+                            <p class="font-black text-xl text-gray-800 tracking-tight">
+                                16F 環境溫度
+                            </p>
                             <div class="mt-3 flex items-start flex-wrap gap-2">
                                 <span
                                     class="bg-orange-100 text-orange-700 px-2 py-0.5 rounded-md text-xs font-black whitespace-nowrap">抄表任務</span>
@@ -510,10 +534,13 @@
 
                     <!-- 2. 會議室檢查 -->
                     <div class="flex items-start mb-8 border-b border-gray-100 pb-8">
-                        <div class="bg-blue-50 text-blue-600 rounded-2xl p-3 mr-4 shadow-sm shadow-blue-100"><i
-                                data-lucide="snowflake" class="w-6 h-6"></i></div>
+                        <div class="bg-blue-50 text-blue-600 rounded-2xl p-3 mr-4 shadow-sm shadow-blue-100">
+                            <i data-lucide="snowflake" class="w-6 h-6"></i>
+                        </div>
                         <div class="flex-1">
-                            <p class="font-black text-xl text-gray-800 tracking-tight">16F 會議室檢查</p>
+                            <p class="font-black text-xl text-gray-800 tracking-tight">
+                                16F 會議室檢查
+                            </p>
                             <p class="text-sm text-gray-500 mt-3 leading-relaxed">
                                 <span class="font-bold text-blue-600">若有會議</span>：需開啟冷氣，並<span
                                     class="font-bold text-gray-700">記錄溫度</span>。
@@ -527,7 +554,9 @@
                             <i data-lucide="gauge" class="w-6 h-6"></i>
                         </div>
                         <div class="flex-1">
-                            <p class="font-black text-xl text-gray-800 tracking-tight">16F 進出水壓及頻率</p>
+                            <p class="font-black text-xl text-gray-800 tracking-tight">
+                                16F 進出水壓及頻率
+                            </p>
                             <div class="mt-3 flex items-start flex-wrap gap-2">
                                 <span
                                     class="bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-md text-xs font-black whitespace-nowrap">抄表任務</span>
@@ -545,19 +574,22 @@
                 class="bg-white rounded-3xl shadow-sm overflow-hidden border border-gray-100 transition-all hover:shadow-md">
                 <div class="bg-emerald-600 px-6 py-4 flex justify-between items-center text-white cursor-pointer"
                     onclick="toggleSection('section-skybridge')">
-                    <h3 class="font-bold flex items-center"><i data-lucide="footprints" class="w-5 h-5 mr-3"></i> 空橋
+                    <h3 class="font-bold flex items-center">
+                        <i data-lucide="footprints" class="w-5 h-5 mr-3"></i> 空橋
                     </h3>
                     <i data-lucide="chevron-down" id="section-skybridge-icon"
                         class="w-5 h-5 transition-transform duration-300"></i>
                 </div>
                 <div id="section-skybridge" class="p-6 hidden">
                     <!-- 1. 空橋環境溫度 -->
-                    <div class="flex items-start">
+                    <div id="skybridge-temp" class="flex items-start">
                         <div class="bg-emerald-50 text-emerald-600 rounded-2xl p-3 mr-4 shadow-sm shadow-emerald-100">
                             <i data-lucide="thermometer-sun" class="w-6 h-6"></i>
                         </div>
                         <div class="flex-1">
-                            <p class="font-black text-xl text-gray-800 tracking-tight">空橋環境溫度檢測</p>
+                            <p class="font-black text-xl text-gray-800 tracking-tight">
+                                空橋環境溫度檢測
+                            </p>
                             <p class="text-sm text-gray-500 mt-3 leading-relaxed">
                                 拍攝以下 3 處溫度：
                                 <span class="font-bold text-gray-700">A棟側、中段、B棟側</span>。
@@ -571,15 +603,23 @@
                                 <div class="relative group cursor-pointer h-auto rounded-2xl overflow-hidden border border-gray-100 shadow-sm"
                                     onclick="zoomImage('kunk.jpg')">
                                     <img src="kunk.jpg" alt="空橋溫度測量示範" class="w-full h-auto object-cover bg-gray-100"
-                                        onerror="this.src='https://placehold.co/400x300?text=Skybridge+Temp'">
+                                        onerror="
+                        this.src =
+                          'https://placehold.co/400x300?text=Skybridge+Temp'
+                      " />
                                     <div
                                         class="absolute bottom-0 inset-x-0 bg-black/60 backdrop-blur-sm text-white text-[10px] py-1.5 text-center font-bold">
-                                        空橋溫度紀錄範例</div>
+                                        空橋溫度紀錄範例
+                                    </div>
                                 </div>
 
                                 <!-- Quick Copy 1 -->
                                 <div class="p-3 bg-blue-50 border border-blue-100 rounded-xl flex items-center justify-between group cursor-pointer hover:bg-blue-100 transition-colors"
-                                    onclick="copyToClipboard('B棟17樓空橋環境溫度量測完成因外氣溫度過低已更改為送風模式')">
+                                    onclick="
+                      copyToClipboard(
+                        'B棟17樓空橋環境溫度量測完成因外氣溫度過低已更改為送風模式',
+                      )
+                    ">
                                     <span
                                         class="text-xs font-black text-blue-800 tracking-tight">「B棟17樓空橋環境溫度量測完成因外氣溫度過低已更改為送風模式」</span>
                                     <i data-lucide="copy"
@@ -599,10 +639,13 @@
 
                     <!-- 2. 空橋漏水點巡視 -->
                     <div class="flex items-start mt-8 border-t border-gray-100 pt-8">
-                        <div class="bg-blue-50 text-blue-600 rounded-2xl p-3 mr-4 shadow-sm shadow-blue-100"><i
-                                data-lucide="droplets" class="w-6 h-6"></i></div>
+                        <div class="bg-blue-50 text-blue-600 rounded-2xl p-3 mr-4 shadow-sm shadow-blue-100">
+                            <i data-lucide="droplets" class="w-6 h-6"></i>
+                        </div>
                         <div class="flex-1">
-                            <p class="font-black text-xl text-gray-800 tracking-tight">空橋漏水點巡視</p>
+                            <p class="font-black text-xl text-gray-800 tracking-tight">
+                                空橋漏水點巡視
+                            </p>
                             <p class="text-sm text-gray-500 mt-3 leading-relaxed">
                                 巡視 16F 空橋漏水點，<span
                                     class="text-blue-600 font-bold underline decoration-2 underline-offset-4">拍照並上傳「大群」</span>。
@@ -613,10 +656,14 @@
                                 <div class="relative group cursor-pointer h-auto rounded-2xl overflow-hidden border border-gray-100 shadow-sm"
                                     onclick="zoomImage('229846.jpg')">
                                     <img src="229846.jpg" alt="空橋漏水點示範" class="w-full h-auto object-cover bg-gray-100"
-                                        onerror="this.src='https://placehold.co/400x300?text=Leak+Check'">
+                                        onerror="
+                        this.src =
+                          'https://placehold.co/400x300?text=Leak+Check'
+                      " />
                                     <div
                                         class="absolute bottom-0 inset-x-0 bg-black/60 backdrop-blur-sm text-white text-[10px] py-1.5 text-center font-bold">
-                                        漏水點巡視範例</div>
+                                        漏水點巡視範例
+                                    </div>
                                 </div>
 
                                 <!-- Quick Copy 1 -->
@@ -630,9 +677,12 @@
 
                                 <!-- Quick Copy 2 -->
                                 <div class="p-3 bg-blue-50 border border-blue-100 rounded-xl flex items-center justify-between group cursor-pointer hover:bg-blue-100 transition-colors"
-                                    onclick="copyToClipboard('空橋漏水點一處漏水已放置水桶接水 其餘巡視 正常')">
-                                    <span class="text-xs font-black text-blue-800 tracking-tight">「空橋漏水點一處漏水已放置水桶接水
-                                        其餘巡視
+                                    onclick="
+                      copyToClipboard(
+                        '空橋漏水點一處漏水已放置水桶接水 其餘巡視 正常',
+                      )
+                    ">
+                                    <span class="text-xs font-black text-blue-800 tracking-tight">「空橋漏水點一處漏水已放置水桶接水 其餘巡視
                                         正常」</span>
                                     <i data-lucide="copy"
                                         class="w-4 h-4 text-blue-400 group-hover:scale-110 transition-transform flex-shrink-0 ml-2"></i>
@@ -642,34 +692,119 @@
                     </div>
                 </div>
             </section>
+
+            <!-- 08:30 回報 -->
+            <section
+                class="bg-slate-900 rounded-3xl shadow-xl overflow-hidden mt-8 border border-slate-800 transition-all hover:shadow-md">
+                <div class="px-6 py-5 border-b border-slate-800 text-white bg-slate-800/50 flex justify-between items-center cursor-pointer"
+                    onclick="toggleSection('section-b-report')">
+                    <h3 class="font-black flex items-center text-lg">
+                        <i data-lucide="clipboard-signature" class="w-5 h-5 mr-3 text-blue-400"></i>
+                        08:30 簽名表與巡檢總表回傳
+                    </h3>
+                    <i data-lucide="chevron-down" id="section-b-report-icon"
+                        class="w-5 h-5 transition-transform duration-300"></i>
+                </div>
+                <div id="section-b-report" class="p-6 hidden bg-white">
+                    <div class="flex items-center justify-center space-x-2 mb-6 mt-2">
+                        <span
+                            class="text-[10px] font-black bg-red-500 text-white px-3 py-1.5 rounded-full shadow-sm">截止時間
+                            08:30</span>
+                        <span
+                            class="text-xs font-bold bg-blue-50 text-blue-700 px-4 py-1.5 rounded-full border border-blue-100">完成後組圖上傳：大群組</span>
+                    </div>
+
+                    <div class="mt-4 space-y-3">
+                        <div class="relative group cursor-pointer h-auto rounded-3xl overflow-hidden border border-gray-100 shadow-sm transition-all hover:ring-4 hover:ring-blue-500/10"
+                            onclick="zoomImage('0830_report_b.png')">
+                            <img src="0830_report_b.png" alt="簽名表與巡檢總表示範"
+                                class="w-full h-auto object-cover bg-gray-100 min-h-[200px]" onerror="
+                    this.src =
+                      'https://placehold.co/400x300?text=Image+Placeholder'
+                  " />
+                            <div
+                                class="absolute bottom-0 inset-x-0 bg-black/60 backdrop-blur-sm text-white text-[10px] py-1.5 text-center font-bold">
+                                點擊查看回報組圖範例
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
 
         <!-- 定時與獨立任務 (預設隱藏，由JS判斷是否為平日開啟) -->
-        <div id="section-timed-tasks" style="display: none;">
+        <div id="section-timed-tasks" style="display: none">
             <div class="mt-10 mb-2 px-1">
-                <h2 class="font-black text-gray-400 text-xs uppercase tracking-[0.2em]">定時與獨立任務</h2>
+                <h2 class="font-black text-gray-400 text-xs uppercase tracking-[0.2em]">
+                    定時與獨立任務
+                </h2>
             </div>
             <section
                 class="bg-white rounded-3xl shadow-sm border border-gray-100 divide-y divide-gray-50 overflow-hidden mb-10">
                 <div class="p-5 flex items-center justify-between hover:bg-gray-50 transition-colors">
-                    <div class="flex items-center"><span
+                    <div class="flex items-center">
+                        <span
                             class="bg-red-50 text-red-600 font-black px-4 py-1.5 rounded-xl text-xs mr-4">07:50</span><span
-                            class="font-bold text-gray-700">排紅龍</span></div>
+                            class="font-bold text-gray-700">排紅龍</span>
+                    </div>
                     <i data-lucide="arrow-right-circle" class="text-red-300 w-5 h-5"></i>
                 </div>
                 <div class="p-5 flex items-center justify-between hover:bg-gray-50 transition-colors">
-                    <div class="flex items-center"><span
+                    <div class="flex items-center">
+                        <span
                             class="bg-red-50 text-red-600 font-black px-4 py-1.5 rounded-xl text-xs mr-4">09:20</span><span
-                            class="font-bold text-gray-700">收紅龍</span></div>
+                            class="font-bold text-gray-700">收紅龍</span>
+                    </div>
                     <i data-lucide="arrow-right-circle" class="text-red-300 w-5 h-5"></i>
                 </div>
                 <div class="p-5 flex items-center justify-between hover:bg-gray-50 transition-colors">
-                    <div class="flex items-center"><span
+                    <div class="flex items-center">
+                        <span
                             class="bg-red-50 text-red-600 font-black px-4 py-1.5 rounded-xl text-xs mr-4">09:30</span><span
-                            class="font-bold text-gray-700">量測辦公室高低樓層溫度</span></div>
+                            class="font-bold text-gray-700">量測辦公室高低樓層溫度</span>
+                    </div>
                     <i data-lucide="thermometer" class="text-red-300 w-5 h-5"></i>
                 </div>
                 <div class="p-5 flex flex-col hover:bg-gray-50 transition-colors border-t border-gray-50">
+                    <div class="flex items-center justify-between w-full mb-3">
+                        <div class="flex items-center">
+                            <span
+                                class="bg-red-50 text-red-600 font-black px-4 py-1.5 rounded-xl text-xs mr-4">15:30</span><span
+                                class="font-bold text-gray-700">傳群組</span>
+                        </div>
+                        <i data-lucide="send" class="text-blue-400 w-5 h-5"></i>
+                    </div>
+                    <div class="pl-16 space-y-2">
+                        <div
+                            class="text-xs text-gray-500 font-bold bg-blue-50/50 p-3 rounded-xl border border-blue-100/50">
+                            <div class="flex items-center mb-2">
+                                <span class="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></span>空調溫度總表
+                            </div>
+                            <div class="flex items-center mb-2">
+                                <span class="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></span>A棟高樓層辦公室環境溫度
+                            </div>
+                            <div class="flex items-center mb-2">
+                                <span class="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></span>A棟低樓層辦公室環境溫度
+                            </div>
+                            <div class="text-[10px] text-blue-600 mt-2 font-black border-t border-blue-100 pt-2">
+                                傳送：大群組 + 空調機構
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- 定時與獨立任務 (假日專用) -->
+        <div id="section-holiday-tasks" style="display: none">
+            <div class="mt-10 mb-2 px-1">
+                <h2 class="font-black text-gray-400 text-xs uppercase tracking-[0.2em]">
+                    定時與獨立任務
+                </h2>
+            </div>
+            <section
+                class="bg-white rounded-3xl shadow-sm border border-gray-100 divide-y divide-gray-50 overflow-hidden mb-10">
+                <div class="p-5 flex flex-col hover:bg-gray-50 transition-colors">
                     <div class="flex items-center justify-between w-full mb-3">
                         <div class="flex items-center"><span
                                 class="bg-red-50 text-red-600 font-black px-4 py-1.5 rounded-xl text-xs mr-4">15:30</span><span
@@ -677,30 +812,39 @@
                         <i data-lucide="send" class="text-blue-400 w-5 h-5"></i>
                     </div>
                     <div class="pl-16 space-y-2">
-                        <div
-                            class="text-xs text-gray-500 font-bold bg-blue-50/50 p-3 rounded-xl border border-blue-100/50">
-                            <div class="flex items-center mb-2"><span
-                                    class="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></span>空調溫度總表</div>
-                            <div class="flex items-center mb-2"><span
-                                    class="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></span>A棟高樓層辦公室環境溫度</div>
-                            <div class="flex items-center mb-2"><span
-                                    class="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></span>A棟低樓層辦公室環境溫度</div>
-                            <div class="text-[10px] text-blue-600 mt-2 font-black border-t border-blue-100 pt-2">傳送：大群組
-                                + 空調機構</div>
+                        <div class="bg-blue-50 border border-blue-100 rounded-2xl p-4 cursor-pointer hover:bg-blue-100 transition-colors group relative"
+                            onclick="copyToClipboard('1.A棟18F 高低樓層冰水水壓巡檢 正常\\n2.A棟18F 排風機設備巡視正常\\n3.A棟18F，排水溝，落水頭 巡視正常\\n4.A棟27F，進出冰水水壓巡檢正常\\n5.B棟RF，進出冰水水壓巡檢 正常\\n6.B棟RF，排水溝，落水頭巡視正常\\n7.B棟16F，空橋漏水點巡視正常')">
+                            <div
+                                class="absolute top-3 right-3 bg-white p-2 rounded-xl shadow-sm md:opacity-0 group-hover:opacity-100 transition-opacity">
+                                <i data-lucide="copy" class="w-4 h-4 text-blue-500"></i>
+                            </div>
+                            <div class="text-[10px] text-blue-700 font-bold mb-2 pb-2 border-b border-blue-100/50">
+                                傳送：大群組</div>
+                            <div class="space-y-1.5 text-xs font-black text-blue-900 leading-relaxed tracking-wide">
+                                <p>1.A棟18F 高低樓層冰水水壓巡檢 正常</p>
+                                <p>2.A棟18F 排風機設備巡視正常</p>
+                                <p>3.A棟18F，排水溝，落水頭 巡視正常</p>
+                                <p>4.A棟27F，進出冰水水壓巡檢正常</p>
+                                <p>5.B棟RF，進出冰水水壓巡檢 正常</p>
+                                <p>6.B棟RF，排水溝，落水頭巡視正常</p>
+                                <p>7.B棟16F，空橋漏水點巡視正常</p>
+                            </div>
                         </div>
+                        <p class="text-[10px] text-left text-blue-500 mt-2 ml-1 font-bold opacity-60">點擊文字區塊可自動複製全部內容
+                        </p>
                     </div>
                 </div>
             </section>
         </div>
-
     </main>
 
     <!-- 圖片放大 Modal -->
     <div id="imageModal" class="image-modal" onclick="closeModal()">
-        <img id="modalImg" src="" alt="放大圖">
+        <img id="modalImg" src="" alt="放大圖" />
         <div
             class="text-white mt-6 text-sm bg-white/10 px-6 py-2 rounded-full font-medium border border-white/20 backdrop-blur-md">
-            點擊任何地方關閉</div>
+            點擊任何地方關閉
+        </div>
     </div>
 
     <!-- 懸浮底部資訊 -->
@@ -713,11 +857,16 @@
         // 即時時鐘功能
         function updateClock() {
             const now = new Date();
-            const timeStr = now.toLocaleTimeString('zh-TW', { hour12: false });
-            const dateStr = now.toLocaleDateString('zh-TW', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' });
+            const timeStr = now.toLocaleTimeString("zh-TW", { hour12: false });
+            const dateStr = now.toLocaleDateString("zh-TW", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+                weekday: "long",
+            });
 
-            const clockEl = document.getElementById('digitalClock');
-            const dateEl = document.getElementById('headerDate');
+            const clockEl = document.getElementById("digitalClock");
+            const dateEl = document.getElementById("headerDate");
             if (clockEl) clockEl.innerText = timeStr;
             if (dateEl) dateEl.innerText = dateStr;
         }
@@ -726,109 +875,141 @@
 
         function toggleSection(id) {
             const section = document.getElementById(id);
-            const icon = document.getElementById(id + '-icon');
+            const icon = document.getElementById(id + "-icon");
             if (!section) return;
-            section.classList.toggle('hidden');
+            section.classList.toggle("hidden");
             if (icon) {
-                icon.style.transform = section.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
+                icon.style.transform = section.classList.contains("hidden")
+                    ? "rotate(0deg)"
+                    : "rotate(180deg)";
             }
         }
 
         function zoomImage(src) {
-            const modal = document.getElementById('imageModal');
-            const modalImg = document.getElementById('modalImg');
+            const modal = document.getElementById("imageModal");
+            const modalImg = document.getElementById("modalImg");
             if (modalImg) modalImg.src = src;
-            if (modal) modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
+            if (modal) modal.style.display = "flex";
+            document.body.style.overflow = "hidden";
         }
 
         function closeModal() {
-            const modal = document.getElementById('imageModal');
-            if (modal) modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
+            const modal = document.getElementById("imageModal");
+            if (modal) modal.style.display = "none";
+            document.body.style.overflow = "auto";
         }
 
         function copyToClipboard(text) {
             navigator.clipboard.writeText(text).then(() => {
-                alert('已複製：' + text);
+                alert("已複製：" + text);
             });
         }
 
         lucide.createIcons();
 
         // 判斷平假日並更新標題與顯示區塊
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener("DOMContentLoaded", () => {
             const urlParams = new URLSearchParams(window.location.search);
-            const type = urlParams.get('type');
+            const type = urlParams.get("type");
 
-            const indexMenu = document.getElementById('indexMenu');
-            const inspectionContent = document.getElementById('inspectionContent');
-            const backBtn = document.getElementById('backBtn');
+            const indexMenu = document.getElementById("indexMenu");
+            const inspectionContent = document.getElementById("inspectionContent");
+            const backBtn = document.getElementById("backBtn");
 
             if (!type) {
-                document.getElementById('headerTitle').innerText = 'B 棟巡檢系統';
-                if (indexMenu) indexMenu.style.display = 'grid';
-                if (inspectionContent) inspectionContent.style = 'display: none !important;';
+                document.getElementById("headerTitle").innerText = "B 棟巡檢系統";
+                if (indexMenu) indexMenu.style.display = "grid";
+                if (inspectionContent)
+                    inspectionContent.style = "display: none !important;";
                 // 首頁時隱藏定時與獨立任務
-                const sectionTimedTasks = document.getElementById('section-timed-tasks');
-                if (sectionTimedTasks) sectionTimedTasks.style.display = 'none';
-            } else if (type === 'weekday') {
-                document.getElementById('headerTitle').innerText = 'B 棟平日巡檢';
-                if (indexMenu) indexMenu.style.display = 'none';
-                if (inspectionContent) inspectionContent.style = 'display: block !important;';
+                const sectionTimedTasks = document.getElementById(
+                    "section-timed-tasks",
+                );
+                if (sectionTimedTasks) sectionTimedTasks.style.display = "none";
+                const sectionHolidayTasks = document.getElementById(
+                    "section-holiday-tasks",
+                );
+                if (sectionHolidayTasks) sectionHolidayTasks.style.display = "none";
+            } else if (type === "weekday") {
+                document.getElementById("headerTitle").innerText = "B 棟平日巡檢";
+                if (indexMenu) indexMenu.style.display = "none";
+                if (inspectionContent)
+                    inspectionContent.style = "display: block !important;";
                 // 更新返回按鈕行為
                 if (backBtn) {
                     backBtn.onclick = (e) => {
                         e.preventDefault();
-                        window.location.href = 'inspection_b.html';
+                        window.location.href = "inspection_b.html";
                     };
                 }
 
                 // 平日顯示定時與獨立任務
-                const sectionTimedTasks = document.getElementById('section-timed-tasks');
+                const sectionTimedTasks = document.getElementById(
+                    "section-timed-tasks",
+                );
                 if (sectionTimedTasks) {
-                    sectionTimedTasks.style.display = 'block';
+                    sectionTimedTasks.style.display = "block";
                 }
-            } else if (type === 'holiday') {
-                document.getElementById('headerTitle').innerText = 'B 棟假日巡檢';
-                if (indexMenu) indexMenu.style.display = 'none';
-                if (inspectionContent) inspectionContent.style = 'display: block !important;';
+                const sectionHolidayTasks = document.getElementById(
+                    "section-holiday-tasks",
+                );
+                if (sectionHolidayTasks) {
+                    sectionHolidayTasks.style.display = "none";
+                }
+            } else if (type === "holiday") {
+                document.getElementById("headerTitle").innerText = "B 棟假日巡檢";
+                if (indexMenu) indexMenu.style.display = "none";
+                if (inspectionContent)
+                    inspectionContent.style = "display: block !important;";
                 // 更新返回按鈕行為
                 if (backBtn) {
                     backBtn.onclick = (e) => {
                         e.preventDefault();
-                        window.location.href = 'inspection_b.html';
+                        window.location.href = "inspection_b.html";
                     };
                 }
 
                 // 假日巡檢只顯示 RF 跟空橋，隱藏其餘樓層
-                const sectionsToHide = ['section-20f', 'section-19f', 'section-17f', 'section-16f'];
-                sectionsToHide.forEach(id => {
+                const sectionsToHide = [
+                    "section-20f",
+                    "section-19f",
+                    "section-17f",
+                    "section-16f",
+                ];
+                sectionsToHide.forEach((id) => {
                     const contentDiv = document.getElementById(id);
                     if (contentDiv) {
-                        const parentSection = contentDiv.closest('section');
+                        const parentSection = contentDiv.closest("section");
                         if (parentSection) {
-                            parentSection.style.display = 'none';
+                            parentSection.style.display = "none";
                         }
                     }
                 });
 
                 // 移除假日的 電梯機房溫度
-                const rfElevatorTemp = document.getElementById('rf-elevator-temp');
+                const rfElevatorTemp = document.getElementById("rf-elevator-temp");
                 if (rfElevatorTemp) {
-                    rfElevatorTemp.style.display = 'none';
+                    rfElevatorTemp.style.display = "none";
                 }
 
                 // 移除假日的 B 冰水壓力巡視
-                const rfPressureMeter = document.getElementById('rf-pressure-meter');
+                const rfPressureMeter = document.getElementById("rf-pressure-meter");
                 if (rfPressureMeter) {
-                    rfPressureMeter.style.display = 'none';
+                    rfPressureMeter.style.display = "none";
                 }
 
-                // 顯示假日的 19、20樓層面板檢查獨立區塊
-                const holidayPanelWrapper = document.getElementById('section-holiday-panel-wrapper');
-                if (holidayPanelWrapper) {
-                    holidayPanelWrapper.style.display = 'block';
+                // 移除假日的 空橋環境溫度
+                const skybridgeTemp = document.getElementById("skybridge-temp");
+                if (skybridgeTemp) {
+                    skybridgeTemp.style.display = "none";
+                }
+
+                // 顯示假日的 定時與獨立任務
+                const sectionHolidayTasks = document.getElementById(
+                    "section-holiday-tasks",
+                );
+                if (sectionHolidayTasks) {
+                    sectionHolidayTasks.style.display = "block";
                 }
             }
         });
