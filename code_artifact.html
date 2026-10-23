@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>台灣家用電路速查計算機 (超簡易版)</title>
+  <!-- 載入 Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- 載入 Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@600;700;800&display=swap');
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased selection:bg-amber-500 selection:text-slate-950">
+
+  <!-- 頂部標題區 -->
+  <header class="border-b border-slate-800 bg-slate-900/90 backdrop-blur sticky top-0 z-40">
+    <div class="max-w-4xl mx-auto px-4 py-3.5 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-slate-950 font-black shadow-lg shadow-amber-500/20 shrink-0">
+          <i data-lucide="zap" class="w-5 h-5 stroke-[2.5]"></i>
+        </div>
+        <div>
+          <h1 class="text-base sm:text-lg font-bold text-white tracking-tight flex items-center gap-2">
+            家用電路速查計算機
+            <span class="text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full font-mono font-medium">超簡易版</span>
+          </h1>
+          <p class="text-xs text-slate-400">只做兩件事：開關能用多少瓦？用幾瓦該配多大開關？</p>
+        </div>
+      </div>
+      <div class="hidden sm:block text-right">
+        <span class="text-xs font-mono text-emerald-400 font-medium flex items-center gap-1.5 justify-end">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          離線直接可用
+        </span>
+        <span class="text-[11px] text-slate-400">依台灣用電設備規則</span>
+      </div>
+    </div>
+
+    <!-- 模式切換大按鈕 (一目了然) -->
+    <div class="max-w-4xl mx-auto px-4 py-2 border-t border-slate-800/80">
+      <div class="grid grid-cols-2 gap-2">
+        <button type="button" onclick="switchMode('mode1')" id="btn_mode1" class="mode-tab-btn py-2.5 px-3 rounded-xl text-xs sm:text-sm font-bold transition flex items-center justify-center gap-2 bg-amber-500 text-slate-950 shadow-md shadow-amber-500/10">
+          <i data-lucide="shield-check" class="w-4 h-4"></i>
+          <span>1. 開關查瓦數 (能用多少W？)</span>
+        </button>
+        <button type="button" onclick="switchMode('mode2')" id="btn_mode2" class="mode-tab-btn py-2.5 px-3 rounded-xl text-xs sm:text-sm font-bold transition flex items-center justify-center gap-2 bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700">
+          <i data-lucide="calculator" class="w-4 h-4"></i>
+          <span>2. 瓦數查開關 (該配多大A？)</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 主內容區 -->
+  <main class="flex-1 max-w-4xl w-full mx-auto px-4 py-6">
+
+    <!-- ================= 功能一：開關查瓦數 (我的開關能承受多少W？) ================= -->
+    <section id="sec_mode1" class="mode-sec space-y-5">
+      
+      <!-- 輸入卡片 -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl space-y-5">
+        <div>
+          <span class="text-xs font-bold text-amber-400 uppercase tracking-wider block mb-1">功能一</span>
+          <h2 class="text-lg font-bold text-white flex items-center gap-2">
+            我的開關 (NFB) 可以承受多少 W 不會跳脫？
+          </h2>
+          <p class="text-xs text-slate-400 mt-1">看看家裡配電箱上的黑開關寫幾 A，立刻算給你看：</p>
+        </div>
+
+        <!-- 選擇電壓 (大按鈕) -->
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-2">步驟 1：選擇插座電壓</label>
+          <div class="grid grid-cols-2 gap-2.5">
+            <button type="button" onclick="setM1Voltage(110)" id="m1_v110" class="m1-v-btn py-3 px-4 rounded-xl font-bold text-sm border-2 border-amber-500 bg-amber-500/15 text-amber-300 transition flex items-center justify-center gap-2">
+              <i data-lucide="plug" class="w-4 h-4"></i>
+              <span>110 V (一般家庭插座)</span>
+            </button>
+            <button type="button" onclick="setM1Voltage(220)" id="m1_v220" class="m1-v-btn py-3 px-4 rounded-xl font-bold text-sm border border-slate-700 bg-slate-950 text-slate-400 hover:text-white transition flex items-center justify-center gap-2">
+              <i data-lucide="zap" class="w-4 h-4"></i>
+              <span>220 V (冷氣 / 電熱水器)</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 選擇開關規格 (大按鈕) -->
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-2">步驟 2：點選開關上標示的安培數 (A)</label>
+          <div class="grid grid-cols-3 sm:grid-cols-6 gap-2">
+            <button type="button" onclick="selectM1Amp(15)" class="m1-amp-btn py-2.5 font-mono font-bold text-base rounded-xl border border-slate-700 bg-slate-950 hover:border-amber-400 transition">15 A</button>
+            <button type="button" onclick="selectM1Amp(20)" class="m1-amp-btn py-2.5 font-mono font-bold text-base rounded-xl border-2 border-amber-500 bg-amber-500/15 text-amber-300 transition">20 A</button>
+            <button type="button" onclick="selectM1Amp(30)" class="m1-amp-btn py-2.5 font-mono font-bold text-base rounded-xl border border-slate-700 bg-slate-950 hover:border-amber-400 transition">30 A</button>
+            <button type="button" onclick="selectM1Amp(40)" class="m1-amp-btn py-2.5 font-mono font-bold text-base rounded-xl border border-slate-700 bg-slate-950 hover:border-amber-400 transition">40 A</button>
+            <button type="button" onclick="selectM1Amp(50)" class="m1-amp-btn py-2.5 font-mono font-bold text-base rounded-xl border border-slate-700 bg-slate-950 hover:border-amber-400 transition">50 A</button>
+            <button type="button" onclick="selectM1Amp(60)" class="m1-amp-btn py-2.5 font-mono font-bold text-base rounded-xl border border-slate-700 bg-slate-950 hover:border-amber-400 transition">60 A</button>
+          </div>
+          <!-- 自訂輸入 -->
+          <div class="mt-2.5 flex items-center gap-2">
+            <span class="text-xs text-slate-400">或者手動輸入特殊安培：</span>
+            <input type="number" id="m1_custom_amp" value="20" min="1" max="500" oninput="onM1CustomAmpInput()" class="w-24 bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1 text-sm font-mono font-bold text-amber-400 text-center focus:outline-none focus:border-amber-400">
+            <span class="text-xs text-slate-400 font-mono">A</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 計算結果卡片 (超大字) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        
+        <!-- 安全長時上限 -->
+        <div class="bg-slate-900 border-2 border-emerald-500/50 rounded-2xl p-5 shadow-xl relative overflow-hidden">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold text-emerald-400 flex items-center gap-1.5">
+              <i data-lucide="check-circle" class="w-4 h-4"></i>
+              安全長時用電 (80% 法則)
+            </span>
+            <span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full font-mono">強烈推薦</span>
+          </div>
+          <div class="flex items-baseline gap-1 my-2">
+            <span id="m1_res_power80" class="text-4xl sm:text-5xl font-mono font-extrabold text-white">1,760</span>
+            <span class="text-base font-mono text-slate-400 font-semibold">W (瓦)</span>
+          </div>
+          <p class="text-xs text-slate-300 leading-relaxed mt-2 pt-2 border-t border-slate-800">
+            👉 <strong>平常開著不發燙的理想上限。</strong>此迴路插接的電器加起來不超過這個瓦數，保證安全不跳電！
+          </p>
+        </div>
+
+        <!-- 瞬間跳脫極限 -->
+        <div class="bg-slate-900 border border-rose-500/40 rounded-2xl p-5 shadow-xl">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold text-rose-400 flex items-center gap-1.5">
+              <i data-lucide="alert-octagon" class="w-4 h-4"></i>
+              瞬間跳脫極限 (100% 頂限)
+            </span>
+            <span class="text-[10px] bg-rose-500/20 text-rose-300 px-2 py-0.5 rounded-full font-mono">超載必跳</span>
+          </div>
+          <div class="flex items-baseline gap-1 my-2">
+            <span id="m1_res_power100" class="text-4xl sm:text-5xl font-mono font-extrabold text-rose-400">2,200</span>
+            <span class="text-base font-mono text-slate-400 font-semibold">W (瓦)</span>
+          </div>
+          <p class="text-xs text-slate-300 leading-relaxed mt-2 pt-2 border-t border-slate-800">
+            👉 <strong>開關能忍受的極限。</strong>電器總瓦數一旦超過這個數字，開關就會自動「啪」一聲跳開斷電！
+          </p>
+        </div>
+
+      </div>
+
+      <!-- 附贈線徑提示 (防止電線太細起火) -->
+      <div id="m1_wire_tip_card" class="bg-gradient-to-r from-amber-500/15 via-slate-900 to-slate-900 border border-amber-500/40 rounded-2xl p-5 shadow-lg space-y-2">
+        <div class="flex items-center justify-between">
+          <span class="text-xs sm:text-sm font-bold text-amber-300 flex items-center gap-2">
+            <i data-lucide="shield-alert" class="w-4 h-4 text-amber-400"></i>
+            重要安全提示：確認你牆壁內的電線夠粗嗎？
+          </span>
+          <span class="text-[10px] bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded-full font-mono">防走火檢查</span>
+        </div>
+        <p class="text-xs sm:text-sm text-slate-200 leading-relaxed" id="m1_wire_tip_text">
+          此 <span class="font-bold text-white font-mono">20A</span> 開關，牆壁內依法規必須搭配至少 <span class="font-bold text-amber-300 underline font-mono">2.0 mm 單芯線</span>（或 5.5mm² 絞線）。<br>
+          <span class="text-amber-200/90 text-xs block mt-1">⚠️ 警示：如果牆壁內是早期老房子的 1.6mm 細線，電線耐流不足，用電過載時開關可能還沒跳、電線就先發燙走火！</span>
+        </p>
+      </div>
+
+    </section>
+
+
+    <!-- ================= 功能二：瓦數查開關 (我用幾W，該配多大A的開關？) ================= -->
+    <section id="sec_mode2" class="mode-sec hidden space-y-5">
+      
+      <!-- 輸入卡片 -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl space-y-5">
+        <div>
+          <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider block mb-1">功能二</span>
+          <h2 class="text-lg font-bold text-white flex items-center gap-2">
+            逆向思考：我用幾 W，需要配多大 A 的 NFB 才合用？
+          </h2>
+          <p class="text-xs text-slate-400 mt-1">買了新家電或裝潢規劃，輸入預計總瓦數，直接告訴你開關與電線規格：</p>
+        </div>
+
+        <!-- 選擇電壓 -->
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-2">步驟 1：選擇插座電壓</label>
+          <div class="grid grid-cols-2 gap-2.5">
+            <button type="button" onclick="setM2Voltage(110)" id="m2_v110" class="m2-v-btn py-3 px-4 rounded-xl font-bold text-sm border-2 border-emerald-500 bg-emerald-500/15 text-emerald-300 transition flex items-center justify-center gap-2">
+              <i data-lucide="plug" class="w-4 h-4"></i>
+              <span>110 V (一般家電插座)</span>
+            </button>
+            <button type="button" onclick="setM2Voltage(220)" id="m2_v220" class="m2-v-btn py-3 px-4 rounded-xl font-bold text-sm border border-slate-700 bg-slate-950 text-slate-400 hover:text-white transition flex items-center justify-center gap-2">
+              <i data-lucide="zap" class="w-4 h-4"></i>
+              <span>220 V (冷氣 / 電熱水器)</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 輸入瓦數 (大字直球對決) -->
+        <div>
+          <label class="block text-xs sm:text-sm font-bold text-amber-300 mb-2">
+            步驟 2：💬 這個迴路你想使用多少 W 請輸入：
+          </label>
+          <div class="relative max-w-md">
+            <input type="number" id="m2_input_watts" value="1500" min="1" step="50" oninput="calculateMode2()" class="w-full bg-slate-950 border-2 border-amber-500/80 rounded-2xl px-4 py-3.5 text-2xl sm:text-3xl font-mono font-extrabold text-amber-400 focus:outline-none focus:border-amber-400 pr-16 shadow-inner">
+            <span class="absolute right-4 top-4 text-base font-mono font-bold text-slate-400">W</span>
+          </div>
+
+          <!-- 常見生活數值快捷鍵 (點了直接填入) -->
+          <div class="mt-3">
+            <span class="text-[11px] text-slate-400 block mb-1.5">或者點擊常用生活功率快速填入：</span>
+            <div class="flex flex-wrap gap-1.5">
+              <button type="button" onclick="setM2Watts(800)" class="px-2.5 py-1 text-xs rounded-lg bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-300">
+                800W (電鍋/電水瓶)
+              </button>
+              <button type="button" onclick="setM2Watts(1200)" class="px-2.5 py-1 text-xs rounded-lg bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-300">
+                1200W (微波爐/電磁爐)
+              </button>
+              <button type="button" onclick="setM2Watts(1400)" class="px-2.5 py-1 text-xs rounded-lg bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-300">
+                1400W (吹風機/氣炸鍋)
+              </button>
+              <button type="button" onclick="setM2Watts(2000)" class="px-2.5 py-1 text-xs rounded-lg bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-300">
+                2000W (廚房雙電器同時開)
+              </button>
+              <button type="button" onclick="setM2Watts(3000)" class="px-2.5 py-1 text-xs rounded-lg bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-300">
+                3000W (重度大功率專線)
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 計算結果卡片 (超大字) -->
+      <div class="bg-gradient-to-b from-slate-900 to-slate-950 border-2 border-cyan-500/50 rounded-2xl p-6 shadow-2xl space-y-4">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold text-cyan-400 flex items-center gap-1.5">
+            <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+            合用開關推薦結果
+          </span>
+          <span class="text-[10px] bg-cyan-500/20 text-cyan-300 px-2 py-0.5 rounded-full font-mono">已計入 80% 安全緩衝</span>
+        </div>
+
+        <div class="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-4 my-2">
+          <div class="flex items-baseline gap-1">
+            <span id="m2_res_nfb" class="text-5xl sm:text-6xl font-mono font-extrabold text-white">20</span>
+            <span class="text-2xl font-mono font-bold text-cyan-400">A</span>
+          </div>
+          <span class="text-sm text-slate-300 font-medium" id="m2_res_current_text">
+            (實際用電電流約 13.6 A，預留足夠安全裕度)
+          </span>
+        </div>
+
+        <!-- 附贈線徑提示（交代水電小抄） -->
+        <div class="p-4 bg-slate-950/80 rounded-xl border border-slate-800 space-y-1.5">
+          <span class="text-xs font-bold text-amber-300 flex items-center gap-1.5">
+            <i data-lucide="wrench" class="w-3.5 h-3.5 text-amber-400"></i>
+            請水電拉線時，指定交代這句話：
+          </span>
+          <p class="text-xs sm:text-sm text-slate-200 leading-relaxed font-sans" id="m2_wire_tip_text">
+            「師傅，我這個迴路要用 <span class="font-bold text-amber-300 font-mono">1,500W</span>，請幫我配一組 <span class="font-bold text-white underline font-mono">20A</span> 無熔絲開關，電線請拉 <span class="font-bold text-white underline font-mono">2.0mm 單芯線</span>（或 5.5mm² 絞線）。」
+          </p>
+        </div>
+
+        <div id="m2_safety_warning" class="text-xs p-3 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 leading-normal">
+          法規提醒：大功率用電迴路切勿貪圖便宜使用細線。
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- 頁尾 -->
+  <footer class="border-t border-slate-800/80 bg-slate-950 py-4 text-center text-xs text-slate-400">
+    <p>依據經濟部《用戶用電設備裝置規則》60°C PVC 導線管安培容量標準</p>
+    <p class="text-[11px] text-slate-400 mt-1">單檔自給自足，可存於手機與電腦隨時離線速查</p>
+  </footer>
+
+  <script>
+    /* ================= 核心常數與資料 ================= */
+    // 標準 NFB 安培階層
+    const STANDARD_NFB = [15, 20, 30, 40, 50, 60, 75, 100, 125, 150];
+
+    // 狀態變數
+    let m1_voltage = 110;
+    let m1_amp = 20;
+
+    let m2_voltage = 110;
+
+    /* ================= 模式切換 ================= */
+    function switchMode(mode) {
+      document.querySelectorAll('.mode-sec').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.mode-tab-btn').forEach(btn => {
+        btn.className = 'mode-tab-btn py-2.5 px-3 rounded-xl text-xs sm:text-sm font-bold transition flex items-center justify-center gap-2 bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700';
+      });
+
+      const activeSec = document.getElementById(mode === 'mode1' ? 'sec_mode1' : 'sec_mode2');
+      const activeBtn = document.getElementById(mode === 'mode1' ? 'btn_mode1' : 'btn_mode2');
+      if (activeSec) activeSec.classList.remove('hidden');
+      if (activeBtn) {
+        activeBtn.className = 'mode-tab-btn py-2.5 px-3 rounded-xl text-xs sm:text-sm font-bold transition flex items-center justify-center gap-2 bg-amber-500 text-slate-950 shadow-md shadow-amber-500/10';
+      }
+
+      if (mode === 'mode1') calculateMode1();
+      if (mode === 'mode2') calculateMode2();
+    }
+
+    /* ================= 功能一：開關查瓦數 ================= */
+    function setM1Voltage(v) {
+      m1_voltage = v;
+      const btn110 = document.getElementById('m1_v110');
+      const btn220 = document.getElementById('m1_v220');
+
+      if (v === 110) {
+        btn110.className = 'm1-v-btn py-3 px-4 rounded-xl font-bold text-sm border-2 border-amber-500 bg-amber-500/15 text-amber-300 transition flex items-center justify-center gap-2';
+        btn220.className = 'm1-v-btn py-3 px-4 rounded-xl font-bold text-sm border border-slate-700 bg-slate-950 text-slate-400 hover:text-white transition flex items-center justify-center gap-2';
+      } else {
+        btn220.className = 'm1-v-btn py-3 px-4 rounded-xl font-bold text-sm border-2 border-amber-500 bg-amber-500/15 text-amber-300 transition flex items-center justify-center gap-2';
+        btn110.className = 'm1-v-btn py-3 px-4 rounded-xl font-bold text-sm border border-slate-700 bg-slate-950 text-slate-400 hover:text-white transition flex items-center justify-center gap-2';
+      }
+      calculateMode1();
+    }
+
+    function selectM1Amp(amp) {
+      m1_amp = amp;
+      document.getElementById('m1_custom_amp').value = amp;
+      updateM1AmpButtons();
+      calculateMode1();
+    }
+
+    function onM1CustomAmpInput() {
+      const val = parseFloat(document.getElementById('m1_custom_amp').value) || 1;
+      m1_amp = val;
+      updateM1AmpButtons();
+      calculateMode1();
+    }
+
+    function updateM1AmpButtons() {
+      document.querySelectorAll('.m1-amp-btn').forEach(btn => {
+        if (btn.innerText === m1_amp + ' A') {
+          btn.className = 'm1-amp-btn py-2.5 font-mono font-bold text-base rounded-xl border-2 border-amber-500 bg-amber-500/15 text-amber-300 transition';
+        } else {
+          btn.className = 'm1-amp-btn py-2.5 font-mono font-bold text-base rounded-xl border border-slate-700 bg-slate-950 hover:border-amber-400 transition';
+        }
+      });
+    }
+
+    function calculateMode1() {
+      const p100 = Math.round(m1_voltage * m1_amp);
+      const p80 = Math.round(p100 * 0.8);
+
+      document.getElementById('m1_res_power80').innerText = p80.toLocaleString();
+      document.getElementById('m1_res_power100').innerText = p100.toLocaleString();
+
+      // 安全線徑提示
+      const tipCard = document.getElementById('m1_wire_tip_card');
+      const tipText = document.getElementById('m1_wire_tip_text');
+
+      if (m1_amp <= 15) {
+        tipText.innerHTML = `此 <span class="font-bold text-white font-mono">${m1_amp}A</span> 開關，牆壁內請搭配至少 <span class="font-bold text-amber-300 underline font-mono">1.6 mm 單芯線</span>（或 2.0mm 單芯線更佳）。一般用於照明或輕負載迴路。`;
+      } else if (m1_amp <= 20) {
+        tipText.innerHTML = `此 <span class="font-bold text-white font-mono">${m1_amp}A</span> 開關，牆壁內依法規必須搭配至少 <span class="font-bold text-amber-300 underline font-mono">2.0 mm 單芯線</span>（或 5.5mm² 絞線）。<br><span class="text-amber-200/90 text-xs block mt-1">⚠️ 警示：若牆內是早期老房子的 1.6mm 細線，耐流僅 15A，用電過載時開關可能還沒跳脫、電線就先發燙走火！</span>`;
+      } else if (m1_amp <= 30) {
+        tipText.innerHTML = `🚨 <span class="font-bold text-white underline font-mono">${m1_amp}A</span> 開關屬於高瓦數專線，依法規<strong>絕對嚴禁搭配 5.5mm² 絞線</strong>（耐流僅 25A，會燒線起火！），必須拉 <span class="font-bold text-amber-300 underline font-mono">8.0 mm² 粗絞線</span> (耐流 33A)。`;
+      } else if (m1_amp <= 50) {
+        tipText.innerHTML = `此 <span class="font-bold text-white font-mono">${m1_amp}A</span> 開關屬於大容量動力迴路，依法規必須使用 <span class="font-bold text-amber-300 underline font-mono">14.0 mm² 粗絞線</span> (耐流 50A)，切勿使用細線。`;
+      } else {
+        tipText.innerHTML = `此 <span class="font-bold text-white font-mono">${m1_amp}A</span> 特大容量開關，依法規必須使用 <span class="font-bold text-amber-300 underline font-mono">22.0 mm² 以上特規電纜</span>。`;
+      }
+    }
+
+    /* ================= 功能二：瓦數查開關 ================= */
+    function setM2Voltage(v) {
+      m2_voltage = v;
+      const btn110 = document.getElementById('m2_v110');
+      const btn220 = document.getElementById('m2_v220');
+
+      if (v === 110) {
+        btn110.className = 'm2-v-btn py-3 px-4 rounded-xl font-bold text-sm border-2 border-emerald-500 bg-emerald-500/15 text-emerald-300 transition flex items-center justify-center gap-2';
+        btn220.className = 'm2-v-btn py-3 px-4 rounded-xl font-bold text-sm border border-slate-700 bg-slate-950 text-slate-400 hover:text-white transition flex items-center justify-center gap-2';
+      } else {
+        btn220.className = 'm2-v-btn py-3 px-4 rounded-xl font-bold text-sm border-2 border-emerald-500 bg-emerald-500/15 text-emerald-300 transition flex items-center justify-center gap-2';
+        btn110.className = 'm2-v-btn py-3 px-4 rounded-xl font-bold text-sm border border-slate-700 bg-slate-950 text-slate-400 hover:text-white transition flex items-center justify-center gap-2';
+      }
+      calculateMode2();
+    }
+
+    function setM2Watts(w) {
+      document.getElementById('m2_input_watts').value = w;
+      calculateMode2();
+    }
+
+    function calculateMode2() {
+      const watts = parseFloat(document.getElementById('m2_input_watts').value) || 0;
+      
+      // 計算實際運轉電流 I = P / V
+      const current = watts > 0 ? (watts / m2_voltage) : 0;
+      
+      // 以 80% 安全法則反推所需最小額定開關 (I_req = current / 0.8)
+      const requiredAmp = current / 0.8;
+
+      // 匹配標準 NFB
+      let matchedNFB = STANDARD_NFB.find(n => n >= requiredAmp) || STANDARD_NFB[STANDARD_NFB.length - 1];
+
+      document.getElementById('m2_res_nfb').innerText = matchedNFB;
+      document.getElementById('m2_res_current_text').innerText = `(實際運轉電流約 ${current.toFixed(1)} A，預留安全緩衝)`;
+
+      // 附贈線徑提示（交代水電一句話）
+      const tipText = document.getElementById('m2_wire_tip_text');
+      const warningBox = document.getElementById('m2_safety_warning');
+
+      let wireSpec = '2.0mm 單芯線';
+      if (matchedNFB <= 15) wireSpec = '1.6mm 或 2.0mm 單芯線';
+      else if (matchedNFB <= 20) wireSpec = '2.0mm 單芯線（或 5.5mm² 絞線）';
+      else if (matchedNFB <= 30) wireSpec = '8.0mm² 粗絞線（法規嚴禁使用 5.5mm²）';
+      else if (matchedNFB <= 50) wireSpec = '14.0mm² 粗絞線';
+      else wireSpec = '22.0mm² 粗絞線';
+
+      tipText.innerHTML = `「師傅，我這個迴路要用 <span class="font-bold text-amber-300 font-mono">${watts.toLocaleString()}W</span>，請幫我配一組 <span class="font-bold text-white underline font-mono">${matchedNFB}A</span> 無熔絲開關，電線請拉 <span class="font-bold text-white underline font-mono">${wireSpec}</span>。」`;
+
+      if (matchedNFB >= 30) {
+        warningBox.className = 'text-xs p-3 rounded-xl bg-amber-500/15 border border-amber-500/40 text-amber-200 leading-normal';
+        warningBox.innerHTML = `⚠️ <span class="font-bold text-amber-300">水電常見違規警示：</span>此瓦數需要 ${matchedNFB}A 開關，依法規嚴禁使用 5.5mm² 絞線（耐流不足跳脫前線會燒融），必須拉 8.0mm² 以上粗線！`;
+      } else {
+        warningBox.className = 'text-xs p-3 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 leading-normal';
+        warningBox.innerHTML = `標準配置提示：${matchedNFB}A 開關一般插座常態配置 2.0mm 單芯線，安全有保障。`;
+      }
+    }
+
+    /* 頁面載入初始化 */
+    window.onload = function() {
+      lucide.createIcons();
+      calculateMode1();
+      calculateMode2();
+    };
+  </script>
+</body>
+</html>
